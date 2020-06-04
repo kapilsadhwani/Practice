@@ -1,4 +1,4 @@
-package com.implement.linkedlist;
+package com.implement.design;
 
 // Java program to implement LRU cache using HashMap and DoublyLL 
 import java.util.*;
