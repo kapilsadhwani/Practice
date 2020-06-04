@@ -36,6 +36,47 @@ public class SortedArray {
 		return targetRange;
 	}
 	
+	// returns leftmost (or rightmost) index at which `target` is present in sorted array 
+	// `nums` via binary search. If target is not available, returns -1
+	private static int extremeLeftIndex(int[] nums, int target, boolean left) {
+		int low = 0;
+		int high = nums.length - 1;
+		int res = -1;
+
+		while (low <= high) {
+			int mid = low + (high - low) / 2;
+			if (nums[mid] == target){
+				res = mid;
+				
+				if(left)
+					high = mid - 1;
+				else
+					low = mid + 1;
+			}else if (nums[mid] > target){
+				high = mid - 1;
+			}else
+				low = mid + 1;
+		}
+		return res;
+	}
+
+	public static int[] searchRangeAV(int[] nums, int target) {
+		int[] targetRange = { -1, -1 };
+
+		int leftIdx = extremeLeftIndex(nums, target, true);
+
+		// assert that `leftIdx` is within the array bounds and that `target`
+		// is actually in `nums`.
+		if (leftIdx == -1 || nums[leftIdx] != target) {
+			return targetRange;
+		}
+
+		targetRange[0] = leftIdx;
+		targetRange[1] = extremeLeftIndex(nums, target, false);
+
+		return targetRange;
+	}
+	
 	public static int searchInsert(int[] nums, int target) {
 		int len = nums.length;
 		if ((len == 0) || (target <= nums[0]))
@@ -133,9 +174,13 @@ public class SortedArray {
 		int target = 8;
 		int[] range = searchRange(arr,target);
 		System.out.println("First and Last occurence of " + target + " : [" + range[0] + ", " + range[1] + "]");
+		range = searchRangeAV(arr, target);
+		System.out.println("First and Last occurence of " + target + " : [" + range[0] + ", " + range[1] + "]");
 		
 		target = 2;
 		range = searchRange(arr,target);
+		System.out.println("First and Last occurence of " + target + " : [" + range[0] + ", " + range[1] + "]");
+		range = searchRangeAV(arr, target);
 		System.out.println("First and Last occurence of " + target + " : [" + range[0] + ", " + range[1] + "]");
 		
 		arr = new int[]{1, 3, 5, 6};
