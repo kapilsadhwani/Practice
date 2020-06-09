@@ -40,5 +40,3 @@ class ModularExponentiation {
 		System.out.println("Power is " + power(x, y, p));
 	}
 }
-
-// This code is contributed by Nikita Tiwari.

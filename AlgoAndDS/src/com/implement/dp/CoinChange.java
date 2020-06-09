@@ -7,7 +7,7 @@ public class CoinChange {
 		if (change == 0) 
         	return 0;
 
-        if (cache[change] != -2)
+        if (cache[change] != -2)	//retrieve value
             return cache[change];
 
         int min = Integer.MAX_VALUE;
@@ -17,8 +17,9 @@ public class CoinChange {
 	        	
 	        	if(count == -1) continue;
 	        	
-	        	if (count + 1 < min)
+	        	if (count + 1 < min){	// +1 is for this coin
 	                min = count + 1;
+	        	}
         	}
         }
 
@@ -36,23 +37,40 @@ public class CoinChange {
         return coinChangeMemo(coins, change, cache);
     }
     
-    private static int coinChangeAVMemo(int[] coins, int C, int n,	int[][] cache) {
+    private static int coinChangeAVMemo(int[] coins, int C, int n, int[][] cache) {
 		if (C == 0) {
 			return 0;
 		}
 		
 		if(n == 0)
-			return C + 1;	// Some invalid number
+			return -1;	// Some invalid number
 
-		if (cache[n][C] != -1) {
+		if (cache[n][C] != -2) {
 			return cache[n][C];
 		}
-
+		
 		if (coins[n - 1] <= C) {
-			cache[n][C] = Math.min(
+			/*cache[n][C] = Math.min(
 					1 + coinChangeAVMemo(coins, C - coins[n - 1], n, cache),
-					coinChangeAVMemo(coins, C, n - 1, cache));
-		} else {
+					coinChangeAVMemo(coins, C, n - 1, cache));*/
+			
+			// Select this coin
+			int minCoins = Integer.MAX_VALUE;
+
+			int count = coinChangeAVMemo(coins, C - coins[n - 1], n, cache);
+        	
+        	if(count != -1 && count + 1 < minCoins){		// +1 is for this coin
+        		minCoins = count + 1;
+        	}
+        	
+        	// Do not select this coin
+        	count = coinChangeAVMemo(coins, C, n - 1, cache);
+        	if (count != -1 && count < minCoins){
+        		minCoins = count;
+        	}
+			
+        	cache[n][C] = minCoins == Integer.MAX_VALUE ? -1 : minCoins;
+		} else {        	
 			cache[n][C] = coinChangeAVMemo(coins, C, n - 1, cache);
 		}
 
@@ -65,7 +83,7 @@ public class CoinChange {
 
 		for (int i = 0; i < n + 1; i++) {
 			for (int j = 0; j < C + 1; j++) {
-				cache[i][j] = -1;
+				cache[i][j] = -2;
 			}
 		}
 
@@ -90,7 +108,7 @@ public class CoinChange {
 
 
     public static void main(String[] args) {
-        int[] coins = new int[]{1, 5, 10, 25};
+        int[] coins = new int[]{1, 2, 5};
 
         for (int change = 1; change < 45; ++change) {
             System.out.print(" Change for " + change + " : Memoization: " + memoization(coins, change));

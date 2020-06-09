@@ -20,16 +20,18 @@ public class MaxDifferenceInArray {
 		return max_diff;
 	}
 	
+	// Return -ve if prices always goes down
 	public int maxProfit(int[] prices) {
-        if(prices == null || prices.length < 2) return 0;
+        if(prices == null || prices.length < 2) 
+        	throw new IllegalArgumentException("Getting a profit requires at least 2 prices");
 		
 		// Minimum number visited so far 
-	    int min_element = prices[0] < prices[1] ? prices[0] : prices[1];
+	    int min_element = prices[0];
 	    
 	    // Maximum difference found so far 
 	    int max_diff = prices[1] - min_element;
 		
-		for (int i = 2; i < prices.length; i++) {
+		for (int i = 1; i < prices.length; i++) {
 			if (prices[i] - min_element > max_diff)
 				max_diff = prices[i] - min_element;
 			
@@ -39,6 +41,7 @@ public class MaxDifferenceInArray {
 		return max_diff;
     }
 	
+	// Return -ve if prices always goes down
 	public int maxProfitExtraSp(int[] prices) {
         if(prices == null || prices.length < 2) return 0;
         
@@ -51,11 +54,11 @@ public class MaxDifferenceInArray {
 		}
 		
 		// Maximum difference found so far 
-	    int max_diff = prices[0] - minVal[0];
+	    int max_diff = prices[1] - minVal[0];
 	   
 	    for (int i = 1; i < prices.length; i++) {
 	    	if(prices[i] - minVal[i] > max_diff)
-	    		max_diff = prices[i] - minVal[i];
+	    		max_diff = prices[i] - minVal[i - 1];
 		}
 
 		return max_diff;
@@ -106,7 +109,7 @@ public class MaxDifferenceInArray {
 		System.out.print(difference.maxProfit(a) + ", ");
 		System.out.println(difference.maxProfitExtraSp(a));
 		
-		a = new int[]{7,6,4,3,1};
+		a = new int[]{17,13,8,4,1};
 		
 		System.out.print(difference.maximumDifference(a) + ", ");
 		System.out.print(difference.maxDifference(a) + ", ");

@@ -5,14 +5,14 @@ import java.util.*;
 
 class CuttingBinaryString {
 	// Function that returns true if n is a power of 5
-	static boolean ispower(long n) {
+	static boolean isPowerOfFive(long n) {
 		if (n < 25) {
 			return (n == 1 || n == 5);
 		}
 		if (n % 25 != 0) {
 			return false;
 		} else {
-			return ispower(n / 25);
+			return isPowerOfFive(n / 25);
 		}
 	}
 
@@ -33,7 +33,7 @@ class CuttingBinaryString {
 		if(s.charAt(i) == '0') return j-i;		// Invalidate by returning some max possible cuts
 		
 		long deci = number(s, i, j);
-		if(ispower(deci)) return 0;
+		if(isPowerOfFive(deci)) return 0;
 		
 		int min = j-i;
 		
@@ -81,7 +81,7 @@ class CuttingBinaryString {
 				long num = number(s, j, i);
 
 				// Check for power of 5
-				if (!ispower(num)) {
+				if (!isPowerOfFive(num)) {
 					continue;
 				}
 
