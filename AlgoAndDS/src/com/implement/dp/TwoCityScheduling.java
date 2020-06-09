@@ -1,6 +1,7 @@
 package com.implement.dp;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class TwoCityScheduling {
 	private static int twoCitySchedCostMemo(int[][] costs, int pos, int N, 
@@ -30,7 +31,7 @@ public class TwoCityScheduling {
 		return minCost;
 	}
 
-	public static int twoCitySchedCost(int[][] costs) {
+	public static int twoCitySchedCostDP(int[][] costs) {
 		int n = costs.length;
 
 		// If input is empty
@@ -51,6 +52,28 @@ public class TwoCityScheduling {
 		return twoCitySchedCostMemo(costs, 0, n / 2, 0, 0, cache);
 	}
 
+	public static int twoCitySchedCost(int[][] costs) {
+		int n = costs.length/2;
+		int minCost = 0;
+		
+		Arrays.sort(costs, new Comparator<int[]>() {
+			@Override
+			public int compare(int[] o1, int[] o2) {
+				return o1[0] - o1[1] - (o2[0] - o2[1]);
+			}
+		});
+
+		/*Arrays.sort(costs, (a, b) -> {
+			return (a[0] - a[1]) - (b[0] - b[1]);
+		});*/
+
+		for (int i = 0; i < n; i++) {
+			minCost = minCost + costs[i][0] + costs[i + n][1];
+		}
+
+		return minCost;
+	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int costs[][] = { 
@@ -61,7 +84,8 @@ public class TwoCityScheduling {
 				{ 840, 118 }, 
 				{ 577, 469 } };
 		
-		System.out.println("Total minimum costs: " + twoCitySchedCost(costs));
+		System.out.println("Total minimum costs (DP): " + twoCitySchedCostDP(costs));
+		System.out.println("Total minimum costs (BS): " + twoCitySchedCost(costs));
 	}
 
 }
