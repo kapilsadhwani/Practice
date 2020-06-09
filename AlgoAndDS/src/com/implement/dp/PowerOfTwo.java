@@ -15,6 +15,14 @@ class PowerOfTwo {
 
 		return isPowerOfTwo(n / 4);
 	}
+	
+	public boolean isPowerOfTwoBW(int n) {
+        if (n == 0) return false;
+        
+        long x = (long) n;
+        
+        return (x & (-x)) == x;
+    }
 
 	// Driver Program to test above functions
 	public static void main(String args[]) {
