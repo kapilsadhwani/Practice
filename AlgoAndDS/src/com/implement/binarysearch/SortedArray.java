@@ -81,9 +81,11 @@ public class SortedArray {
 
 	public static int searchInsert(int[] nums, int target) {
 		int len = nums.length;
-		if ((len == 0) || (target <= nums[0]))
+		if (len == 0 || target <= nums[0])
 			return 0;
-		if (target >= nums[len - 1])
+		if (target == nums[len - 1])
+			return len - 1;
+		if (target > nums[len - 1])
 			return len;
 
 		int low = 0;
@@ -225,5 +227,4 @@ public class SortedArray {
 		System.out.println("Target (" + target + "), Floor : "
 				+ floorBS(nums, target) + ", Ceil : " + ceilBS(nums, target));
 	}
-
 }
