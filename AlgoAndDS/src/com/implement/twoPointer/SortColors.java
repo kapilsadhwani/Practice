@@ -1,15 +1,15 @@
 package com.implement.twoPointer;
 
-class Segregate0s1s2s {
+class SortColors {
 	/* Function to put all 0s on left, all 1s in the middle and all 2s on right */
-	void segregate0s1s2s(int nums[]) {
+	void sortColors(int nums[]) {
 		/* Initialize left and right indexes */
 		int left = 0, current = 0, right = nums.length - 1;
 		int temp;
 
 		while (current < right) {
 			/* Increment left index while we see 0 at left */
-			while (nums[left] == 0 && left < current) {
+			while (nums[left] == 0 && left < right) {
 				left++;
 				current++;
 			}
@@ -72,20 +72,43 @@ class Segregate0s1s2s {
 
 	/* Driver Program to test above functions */
 	public static void main(String[] args) {
-		Segregate0s1s2s seg = new Segregate0s1s2s();
+		SortColors seg = new SortColors();
 		int arr[];
 		int arr_size;
 		
-		//arr = new int[]{ 0, 2, 0, 2, 2, 2, 1, 2, 1, 2, 0, 2, 1, 2 };
-		/*arr_size = arr.length;
-
-		seg.segregate0s1s2s(arr);
+		arr = new int[]{ 0, 2, 0, 2, 2, 2, 1, 2, 1, 2, 0, 2, 1, 2 };
+		arr_size = arr.length;
+		seg.sortColors(arr);
 		System.out.println("Array after seggregation ");
-		printArray(arr, arr_size);*/
+		printArray(arr, arr_size);
 		
 		arr = new int[]{2,0,2,1,1,0};
 		arr_size = arr.length;
-		seg.segregate0s1s2s(arr);
+		seg.sortColors(arr);
+		System.out.println("Array after seggregation ");
+		printArray(arr, arr_size);
+		
+		arr = new int[]{2,0,1};
+		arr_size = arr.length;
+		seg.sortColors(arr);
+		System.out.println("Array after seggregation ");
+		printArray(arr, arr_size);
+		
+		arr = new int[]{0,1,2};
+		arr_size = arr.length;
+		seg.sortColors(arr);
+		System.out.println("Array after seggregation ");
+		printArray(arr, arr_size);
+		
+		arr = new int[]{2,1,0};
+		arr_size = arr.length;
+		seg.sortColors(arr);
+		System.out.println("Array after seggregation ");
+		printArray(arr, arr_size);
+		
+		arr = new int[]{1,0,0};
+		arr_size = arr.length;
+		seg.sortColors(arr);
 		System.out.println("Array after seggregation ");
 		printArray(arr, arr_size);
 	}
