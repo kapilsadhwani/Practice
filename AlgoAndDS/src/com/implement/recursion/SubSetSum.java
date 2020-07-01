@@ -19,9 +19,6 @@ public class SubSetSum {
 		selected.add(elem);
 		allSubsets(nums, pos + 1, selected, result);
 
-		// add selected elements so far to the result set
-		//result.add(new ArrayList<>(selected));
-
 		// do not select the element
 		selected.remove(selected.size() - 1);
 		allSubsets(nums, pos + 1, selected, result);
@@ -48,7 +45,7 @@ public class SubSetSum {
 
 		int elem = nums[pos];
 
-		// duplicate checking (convert && to ||)
+		// Duplicate Check
 		if (pos == 0 || nums[pos] != nums[pos - 1] || include == true) {
 			// select the element and recurse for others
 			selected.add(elem);
@@ -62,6 +59,10 @@ public class SubSetSum {
 		allSubsetsWithDup(nums, pos + 1, selected, result, false);
 	}
 
+	/*
+	 * Given a collection of integers that might contain duplicates, nums, 
+	 * return all possible subsets
+	 */
 	public static List<List<Integer>> subsetsWithDup(int[] nums) {
 		List<List<Integer>> result = new ArrayList<List<Integer>>();
 		List<Integer> selected = new ArrayList<>();
@@ -128,7 +129,7 @@ public class SubSetSum {
 		subsetsWithTargetSum(nums, pos + 1, selected, result, target);
 	}
 
-	public static List<List<Integer>> subsetsWithTargetSum(int[] nums, int pos, int target) {
+	public static List<List<Integer>> subsetsWithTargetSum(int[] nums, int target) {
 		List<List<Integer>> result = new ArrayList<List<Integer>>();
 		List<Integer> selected = new ArrayList<>();
 		
@@ -275,8 +276,13 @@ public class SubSetSum {
 		List<List<Integer>> result;
 		int[] nums = { 4, 11, 5, 10, 6, 20, 1 };
 		int tgtSum = 21;
+		
+		result = subsets(nums);
+		System.out.println(result);
+		
+		System.out.println("\n==========================");
 
-		result = subsetsWithTargetSum(nums, 0, tgtSum);
+		result = subsetsWithTargetSum(nums, tgtSum);
 		System.out.println(result);
 
 		System.out
