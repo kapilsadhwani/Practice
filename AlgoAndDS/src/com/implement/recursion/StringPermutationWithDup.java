@@ -17,11 +17,13 @@ public class StringPermutationWithDup {
 	static Map<Character, Integer> buildFreqTable(String s) {
 		Map<Character, Integer> map = new HashMap<Character, Integer>();
 		for (char c : s.toCharArray()) {
-			if (map.get(c) == null) {
+			/*if (map.get(c) == null) {
 				map.put(c, 0);
 			}
 			
-			map.put(c, map.get(c) + 1);
+			map.put(c, map.get(c) + 1);*/
+			
+			map.put(c, map.getOrDefault(c, 0) + 1);
 		}
 		return map;
 	}
