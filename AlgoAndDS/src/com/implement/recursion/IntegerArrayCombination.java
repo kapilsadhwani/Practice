@@ -40,7 +40,7 @@ public class IntegerArrayCombination {
 		return result;
 	}
 	
-	private void combinationSumMemo(int[] nums, int target, int pos,
+	private void combinationSum(int[] nums, int target, int pos,
 			List<Integer> selected, List<List<Integer>> result) {
 		if (target == 0){
 			result.add(new ArrayList<>(selected));
@@ -59,20 +59,20 @@ public class IntegerArrayCombination {
 		 */
         if(target >= elem){
 		    selected.add(elem);
-		    combinationSumMemo(nums, target - elem, pos, selected, result);
+		    combinationSum(nums, target - elem, pos, selected, result);
 
 		    selected.remove(selected.size() - 1);
         }
         
         // do not select the element
-        combinationSumMemo(nums, target, pos + 1, selected, result);
+        combinationSum(nums, target, pos + 1, selected, result);
 	}
 	
 	public List<List<Integer>> combinationSum(int[] candidates, int target) {
 		List<List<Integer>> result = new ArrayList<List<Integer>>();
 		List<Integer> selected = new ArrayList<>();
 
-		combinationSumMemo(candidates, target, 0, selected, result);
+		combinationSum(candidates, target, 0, selected, result);
 
 		return result;
 	}

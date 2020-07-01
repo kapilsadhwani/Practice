@@ -1,7 +1,6 @@
 package com.implement.recursion;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +65,7 @@ public class IntegerArrayPermutation {
 		}
 
 		/*
-		 * Try remaining letters for next char, and generate remaining permutations.
+		 * Try remaining numbers and generate remaining permutations.
 		 */
 		for (int num : map.keySet()) {
 			int count = map.get(num);
