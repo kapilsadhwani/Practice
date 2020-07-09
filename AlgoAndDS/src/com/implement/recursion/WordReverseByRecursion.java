@@ -58,7 +58,7 @@ public class WordReverseByRecursion {
 	        while(start >= 0 && word.charAt(start) != ' ') start--;
 	        
 	        if(result.length() == 0){
-	        	result.append(word.substring(start+1, end+1));
+	        	result.append(word.substring(start+1, end+1));	// end points to a non-space character
 	        }else{
 	        	result.append(" ");
 	        	result.append(word.substring(start+1, end+1));
