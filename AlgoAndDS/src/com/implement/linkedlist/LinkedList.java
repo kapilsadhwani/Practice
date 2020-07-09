@@ -190,10 +190,10 @@ public class LinkedList {
 		if (headA == null && headB == null)
 			return 1;
 
-		if (headA == null && headB != null)
+		if (headA == null)
 			return 0;
 
-		if (headB == null && headA != null)
+		if (headB == null)
 			return 0;
 
 		Node headAItr = headA;
@@ -506,7 +506,6 @@ public class LinkedList {
 			prev.next = trailingNode.next;
 		}
 		
-		//deleteNode(trailingNode);
 		return head;
 	}
 
