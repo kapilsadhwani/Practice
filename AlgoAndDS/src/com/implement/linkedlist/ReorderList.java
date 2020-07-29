@@ -50,7 +50,7 @@ class ReorderList {
 	}
 	
 	/*
-	 * If there are two middle nodes, return the second middle node.
+	 * If there are two middle nodes, return the first middle node.
 	 */
 	public static ListNode middleNode(ListNode head) {
 		if (head == null)
@@ -82,11 +82,11 @@ class ReorderList {
 	}
 
 	public static void reorderList(ListNode head) {
-		if (head == null)
+		if (head == null || head.next == null)
 			return;
 
 		// find the middle of linked list [Problem 876]
-		// in 1->2->3->4->5->6 find 4
+		// in 1->2->3->4->5->6 find 3
 		ListNode firstHalfEnd = middleNode(head);
 
 		// reverse the second part of the list [Problem 206]

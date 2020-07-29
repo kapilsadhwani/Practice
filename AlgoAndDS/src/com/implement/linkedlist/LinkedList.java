@@ -446,7 +446,7 @@ public class LinkedList {
 
 		Node temp; // keeping it so that last node would be eligible for garbage collection
 
-		if (head.data == val) { // Remove if head is the element with given value
+		while (head.data == val) { // Remove if head is the element with given value
 			temp = head;
 			head = head.next;
 			temp.next = null;

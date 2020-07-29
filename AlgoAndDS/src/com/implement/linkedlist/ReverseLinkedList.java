@@ -367,8 +367,8 @@ public class ReverseLinkedList {
 				
 				// Attach the even list and adjust pointers
 				ptr.next = revList;
-				
 				ptr = revStart;
+				
 				current = revNext;
 			}
 		}

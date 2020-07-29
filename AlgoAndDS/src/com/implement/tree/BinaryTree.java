@@ -1358,9 +1358,6 @@ public class BinaryTree {
 	 */
 
 	private boolean checkValidSequence(TreeNode root, int[] arr, int pos) {
-		if(pos == arr.length)
-			return root == null;
-					
 		if(root == null || root.data != arr[pos])
 			return false;
 		
@@ -1379,8 +1376,11 @@ public class BinaryTree {
 	}
 
 	public boolean isValidSequence(TreeNode root, int[] arr) {
-		if (root == null)
+		if (root == null) 
 			return arr == null || arr.length == 0;
+		
+		if (arr == null || arr.length == 0) 
+			return false;
 
 		return checkValidSequence(root, arr, 0);
 	}
@@ -2524,22 +2524,22 @@ public class BinaryTree {
         System.out.println("Check Valid Sequence");
         
         int arr[] = {0,5,0,1};
-        System.out.println(Arrays.toString(arr) + " : " + bt.checkValidSequence(root7, arr, 0));
+        System.out.println(Arrays.toString(arr) + " : " + bt.isValidSequence(root7, arr));
         
         int arr1[] = {0,0,1};
-        System.out.println(Arrays.toString(arr1) + " : " + bt.checkValidSequence(root7, arr1, 0));
+        System.out.println(Arrays.toString(arr1) + " : " + bt.isValidSequence(root7, arr1));
         
         int arr2[] = {0,1,1};
-        System.out.println(Arrays.toString(arr2) + " : " + bt.checkValidSequence(root7, arr2, 0));
+        System.out.println(Arrays.toString(arr2) + " : " + bt.isValidSequence(root7, arr2));
         
         int arr3[] = {};
-        System.out.println(Arrays.toString(arr3) + " : " + bt.checkValidSequence(root7, arr3, 0));
+        System.out.println(Arrays.toString(arr3) + " : " + bt.isValidSequence(root7, arr3));
         
         int arr4[] = {0,1,1,0};
-        System.out.println(Arrays.toString(arr4) + " : " + bt.checkValidSequence(root7, arr4, 0));
+        System.out.println(Arrays.toString(arr4) + " : " + bt.isValidSequence(root7, arr4));
         
         int arr5[] = {0};
-        System.out.println(Arrays.toString(arr5) + " : " + bt.checkValidSequence(root7, arr5, 0));
+        System.out.println(Arrays.toString(arr5) + " : " + bt.isValidSequence(root7, arr5));
 	}
 
 }
