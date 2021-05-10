@@ -54,13 +54,13 @@ public class CoinChange {
 					1 + coinChangeAVMemo(coins, C - coins[n - 1], n, cache),
 					coinChangeAVMemo(coins, C, n - 1, cache));*/
 			
-			// Select this coin
 			int minCoins = Integer.MAX_VALUE;
 
+			// Select this coin
 			int count = coinChangeAVMemo(coins, C - coins[n - 1], n, cache);
         	
-        	if(count != -1 && count + 1 < minCoins){		// +1 is for this coin
-        		minCoins = count + 1;
+        	if(count != -1){
+        		minCoins = count + 1;	// +1 is for this coin
         	}
         	
         	// Do not select this coin
@@ -90,6 +90,45 @@ public class CoinChange {
 		return coinChangeAVMemo(coins, C, n, cache);
 	}
 
+	// AV - Iterative way
+	static int coinChangeTopDownAV(int[] coins, int C) {
+		int n = coins.length;
+		int t[][] = new int[n + 1][C + 1];
+
+		// Initialization
+		// Amount = 0 then 0 coins
+		for (int i = 1; i < n + 1; i++) {
+			t[i][0] = 0;
+		}
+		
+		// Coin array is empty then INT_MAX - 1  (First Row)
+		for (int j = 1; j < C + 1; j++) {
+			t[0][j] = Integer.MAX_VALUE - 1;
+		}
+		
+		// If there is a single coin and C is divisible by coins[0] 
+		// then (C / coins[0]) else INT_MAX - 1 (Second Row)
+		for (int j = 1; j < C + 1; j++) {
+			if(j % coins[0] == 0)
+				t[1][j] = j / coins[0];
+			else
+				t[1][j] = Integer.MAX_VALUE - 1;
+		}
+
+		for (int i = 2; i < n + 1; i++) {
+			for (int j = 1; j < C + 1; j++) {
+				if (coins[i - 1] <= j) {
+					t[i][j] = Math.min(1 + t[i][j - coins[i - 1]], // Include this item
+										t[i - 1][j]); 				// Exclude this item
+				} else {
+					t[i][j] = t[i - 1][j]; // Exclude this item
+				}
+			}
+		}
+
+		return t[n][C];
+	}
+
     public static int dynamicProgramming(int[] coins, int change) {
         int minCoins[] = new int[change + 1];
 
@@ -97,7 +136,7 @@ public class CoinChange {
 
         for (int c = 1; c <= change; ++c) {  // c is the change of the recursion
             int min = c;
-            for (Integer coin : coins)
+            for (int coin : coins)
                 if (c >= coin)
                     min = Math.min(min, 1 + minCoins[c - coin]);
             minCoins[c] = min;
@@ -108,12 +147,13 @@ public class CoinChange {
 
 
     public static void main(String[] args) {
-        int[] coins = new int[]{1, 2, 5};
+        int[] coins = new int[]{5, 3, 2};
 
-        for (int change = 1; change < 45; ++change) {
-            System.out.print(" Change for " + change + " : Memoization: " + memoization(coins, change));
-            System.out.print(" Dynamic Programming: " + dynamicProgramming(coins, change));
-            System.out.println(" AV: " + coinChangeAV(coins, change));
+        for (int change = 1; change < 100; ++change) {
+            System.out.print(" Change for " + change + " : Memo: " + memoization(coins, change));
+            System.out.print(" Iter: " + dynamicProgramming(coins, change));
+            System.out.print(" AV - Memo: " + coinChangeAV(coins, change));
+            System.out.println(" AV - Iter: " + coinChangeTopDownAV(coins, change));
         }
     }
 }
