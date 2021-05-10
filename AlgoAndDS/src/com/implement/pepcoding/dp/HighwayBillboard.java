@@ -11,13 +11,12 @@ class HighwayBillboard {
 	 * This solution depends on number of boards [Complexity: O(n ^ 2)]
 	 */
 	static int maxRevenueBasedOnBoards(int m, int[] nums, int[] rev, int t) {
+		// DP of revenues
 		int[] dp = new int[nums.length];
 
-		// DP of revenues
-		dp[0] = rev[0];
 		int ans = 0;
 
-		for (int i = 1; i < nums.length; i++) {
+		for (int i = 0; i < nums.length; i++) {
 			int max = 0;
 
 			for (int j = 0; j < i; j++) {
