@@ -1,7 +1,5 @@
 package com.implement.pepcoding.dp;
 
-import java.util.Arrays;
-
 /* Dynamic Programming Java implementation of LBS problem */
 
 class LBS_LongestBitonicSubsequence {
@@ -17,7 +15,7 @@ class LBS_LongestBitonicSubsequence {
 		int[] lis = new int[n];
 		
 		/*
-		 * Compare till previous elements
+		 * Find LIS at each point
 		 */
 		for (int i = 0; i < n; i++) {
 			int max = 0;
@@ -33,6 +31,9 @@ class LBS_LongestBitonicSubsequence {
 			lis[i] = max + 1;
 		}
 		
+		/*
+		 * Find Longest Decreasing Subsequence from each point
+		 */
 		int[] lds = new int[n];
 		
 		for (int i = n - 1; i >= 0; i--) {
@@ -49,6 +50,7 @@ class LBS_LongestBitonicSubsequence {
 			lds[i] = max + 1;
 		}
 		
+		// LBS[i] = LIS[i] + LDS[i] - 1
 		int ans = 0;
 		
 		for (int i = 0; i < n; i++) {

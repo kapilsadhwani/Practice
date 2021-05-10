@@ -2,6 +2,14 @@ package com.implement.pepcoding.dp;
 
 import java.util.Arrays;
 
+/*
+ * Russian Doll Envelopes
+ * 
+ * Given a number n, representing the number of envelopes.
+ * Given n pair of numbers, representing the width and height of each envelope.
+ * Pprint the count of maximum number of envelopes that can be nested inside each other.
+ * Note -> Rotation is not allowed.
+ */
 public class RussianDollEnvelopes {
 	static class Envelope implements Comparable<Envelope> {
 		int w;
@@ -26,6 +34,10 @@ public class RussianDollEnvelopes {
 
 	}
 	
+	/*
+	 * 1. Sort Array based on width
+	 * 2. Take LIS based on height
+	 */
 	public static int maxNumOfNestedEnvlopes(Envelope[] envlps){
 		// Sort input based on northbound
 		Arrays.sort(envlps);

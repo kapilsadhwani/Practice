@@ -2,6 +2,13 @@ package com.implement.pepcoding.dp;
 
 import java.util.Arrays;
 
+/*
+ * Maximum Non-overlapping Bridges
+ * 
+ * Given a number n, representing the number of bridges on a river.
+ * Given n pair of numbers, representing the north bank and south bank co-ordinates of each bridge.
+ * Print the count of maximum number of non-overlapping bridges.
+ */
 public class MaximumNonOverlappingBridges {
 	static class Bridge implements Comparable<Bridge> {
 		int n;
@@ -30,6 +37,10 @@ public class MaximumNonOverlappingBridges {
 
 	}
 	
+	/*
+	 * 1. Sort Array based on northbound coordinates
+	 * 2. Take LIS based on southbound coordinates
+	 */
 	public static int maxNonOverlappingBridges(Bridge[] brdgs){
 		// Sort input based on northbound
 		Arrays.sort(brdgs);
