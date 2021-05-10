@@ -13,6 +13,7 @@ class HighwayBillboard {
 	static int maxRevenueBasedOnBoards(int m, int[] nums, int[] rev, int t) {
 		int[] dp = new int[nums.length];
 
+		// DP of revenues
 		dp[0] = rev[0];
 		int ans = 0;
 
@@ -38,6 +39,7 @@ class HighwayBillboard {
 	static int maxRevenueBasedOnMiles(int m, int[] nums, int[] rev, int t) {
 		Map<Integer, Integer> map = new HashMap<>();
 		
+		// nums[i] is nothing but a mile point
 		for(int i = 0; i < nums.length; i++){
 			map.put(nums[i], rev[i]);
 		}
@@ -46,16 +48,23 @@ class HighwayBillboard {
 		dp[0] = 0;
 		
 		for (int i = 1; i <= m; i++) {
-			if (map.containsKey(i)){
+			
+			// i is a mile point
+			if (map.containsKey(i)){	
+				// Board can be installed or not
+				
 				int exclude = dp[i - 1];
-				int include = map.get(i);
+				int include;
 				
 				if(i > t){
-					include = include + dp[i - t - 1];
+					include = map.get(i) + dp[i - t - 1];
+				}else{
+					include = map.get(i);
 				}
 				
 				dp[i] = Math.max(include, exclude);
 			}else{
+				// No board at i'th mile. Hence, revenue will be same as that of previous mile
 				dp[i] = dp[i - 1];
 			}
 		}
