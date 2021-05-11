@@ -12,16 +12,16 @@ import java.util.Queue;
 
 class LIS_LongestIncreasingSubsequence {
 	static class Pair{
-		int l;
 		int i;
-		int v;
+		int s;
+		int d;
 		String psf;
 		
-		public Pair(int l, int i, int v, String psf) {
+		public Pair(int i, int s, int d, String psf) {
 			super();
-			this.l = l;
 			this.i = i;
-			this.v = v;
+			this.s = s;
+			this.d = d;
 			this.psf = psf;
 		}
 	}
@@ -100,7 +100,7 @@ class LIS_LongestIncreasingSubsequence {
 		
 		for(int j = nums.length - 1; j >= 0; j--){
 			if(dp[j] == ans){
-				queue.add(new Pair(dp[j], j, nums[j], nums[j] + ""));
+				queue.add(new Pair(j, nums[j], dp[j], nums[j] + ""));
 			}
 		}
 		
@@ -108,12 +108,12 @@ class LIS_LongestIncreasingSubsequence {
 		while(queue.size() > 0){
 			rem = queue.poll();
 			
-			if(rem.l == 1){
+			if(rem.d == 1){
 				System.out.println(rem.psf);
 			}else{
 				for(int j = rem.i - 1; j >= 0; j--){
-					if(dp[j] == rem.l - 1 && nums[j] <= rem.v){
-						queue.add(new Pair(dp[j], j, nums[j], nums[j] + " -> " + rem.psf));
+					if(dp[j] == rem.d - 1 && nums[j] <= rem.s){
+						queue.add(new Pair(j, nums[j], dp[j], nums[j] + " -> " + rem.psf));
 					}
 				}
 			}
@@ -139,7 +139,7 @@ class LIS_LongestIncreasingSubsequence {
 		 */
 		for (int end = 1; end < n; end++) {
 			for (int start = 0; start < end; start++)
-				if (nums[start] < nums[end]){
+				if (nums[start] <= nums[end]){
 					if(lengths[end] <= lengths[start]){
 						lengths[end] = lengths[start] + 1;
 						counts[end] = counts[start];
@@ -168,27 +168,27 @@ class LIS_LongestIncreasingSubsequence {
 	public static void main(String args[]) {
 		int nums[];
 		nums = new int[] { 10, 22, 9, 33, 21, 50, 41, 60 };
-		System.out.println("Length of lis is " + findLIS(nums) + ", Count is "
-				+ findCountOfLIS(nums));
+		System.out.println("Length of lis is " + findLIS(nums) + 
+				", Count is " + findCountOfLIS(nums));
 		
 		printAllLIS(nums);
 		System.out.println(" ======================================= ");
 		
 		nums = new int[] { 10, 9, 2, 5, 3, 7, 101, 18 };
-		System.out.println("Length of lis is " + findLIS(nums) + ", Count is "
-				+ findCountOfLIS(nums));
+		System.out.println("Length of lis is " + findLIS(nums) + 
+				", Count is " + findCountOfLIS(nums));
 		printAllLIS(nums);
 		System.out.println(" ======================================= ");
 		
 		nums = new int[] { 1, 3, 5, 4, 7 };
-		System.out.println("Length of lis is " + findLIS(nums) + ", Count is "
-				+ findCountOfLIS(nums));
+		System.out.println("Length of lis is " + findLIS(nums) + 
+				", Count is " + findCountOfLIS(nums));
 		printAllLIS(nums);
 		System.out.println(" ======================================= ");
 		
 		nums = new int[] { 2, 2, 2, 2, 2 };
-		System.out.println("Length of lis is " + findLIS(nums) + ", Count is "
-				+ findCountOfLIS(nums));
+		System.out.println("Length of lis is " + findLIS(nums) + 
+				", Count is " + findCountOfLIS(nums));
 		printAllLIS(nums);
 	}
 }
