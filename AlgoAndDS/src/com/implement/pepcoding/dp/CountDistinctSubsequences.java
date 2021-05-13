@@ -7,7 +7,8 @@ import java.util.Map;
 
 public class CountDistinctSubsequences {
 	public static long countStrings(String str) {
-		long[] dp = new long[str.length() + 1];
+		int n = str.length();
+		long[] dp = new long[n + 1];
 		
 		// Empty string
 		dp[0] = 1;
@@ -29,11 +30,12 @@ public class CountDistinctSubsequences {
 				dp[i] = dp[i] - dp[j - 1];
 			}
 			
+			// Put character and its last occurrence index
 			lo.put(ch, i);
 		}
 
 		// Excluding empty string
-		return dp[str.length()] - 1;
+		return dp[n] - 1;
 	}
 
 	public static void main(String[] args) {

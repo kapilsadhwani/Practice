@@ -12,7 +12,7 @@ public class CountPolygonTriangulation {
 		dp[0] = 1;
 		dp[1] = 1;
 
-		for (int i = 2; i <= n; i++) { // or i < trees.length
+		for (int i = 2; i <= n; i++) { // or i < dp.length
 			/*
 			 * Catalan Number
 			 * T(5) = T(0)*T(4) + T(1)*T(3) + T(2)*T(2) + T(3)*T(1) + T(4)*T(0)

@@ -73,8 +73,10 @@ public class PalindromicSubsequence {
 					dp[i][j] = s.charAt(i) == s.charAt(j) ? 2 : 1;
 				} else {
 					if (s.charAt(i) == s.charAt(j)) {
+						// lps(m) + 2
 						dp[i][j] = 2 + dp[i + 1][j - 1];
 					} else {
+						// Max(c1m, mc2)
 						dp[i][j] = Math.max(dp[i + 1][j], // suffix
 									dp[i][j - 1]);		  // prefix
 					}
