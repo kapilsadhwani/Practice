@@ -8,13 +8,11 @@ public class RotateArray {
 	// Second reverse elements 0 to k-1
 	// Third reverse elements k to n-1
 	private static void rightRotate(int[] nums, int k) {
-		if (nums.length == 0)
-			return;
+		if (nums.length == 0) return;
 
 		k = k % nums.length;
 
-		if (k == 0)
-			return;
+		if (k == 0) return;
 
 		int left = 0, right = nums.length - 1, tmp;
 
@@ -58,10 +56,41 @@ public class RotateArray {
 		k = k % nums.length;
         
         if (k == 0) return;
-		
-		int numOfRightRotations = nums.length - k;
-		
-		rightRotate(nums, numOfRightRotations);
+        
+        int left = 0, right = nums.length - 1, tmp;
+
+		while (left < right) {
+			tmp = nums[left];
+			nums[left] = nums[right];
+			nums[right] = tmp;
+
+			left++;
+			right--;
+		}
+
+		left = 0;
+		right = nums.length - k - 1;
+
+		while (left < right) {
+			tmp = nums[left];
+			nums[left] = nums[right];
+			nums[right] = tmp;
+
+			left++;
+			right--;
+		}
+
+		left = nums.length - k;
+		right = nums.length - 1;
+
+		while (left < right) {
+			tmp = nums[left];
+			nums[left] = nums[right];
+			nums[right] = tmp;
+
+			left++;
+			right--;
+		}
 	}
 	
 	public static void main(String[] args) {

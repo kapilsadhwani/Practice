@@ -5,8 +5,15 @@ public class OptimalBinarySearchTree {
 	private static void optimalBST(int[] keys, int[] frequency, int n){
 		int[][] dp = new int[n][n];
 		
+		// Prefix sum array
+		int[] psa = new int[n];
+		psa[0] = frequency[0];
+
+		for (int i = 1; i < frequency.length; i++) {
+			psa[i] = psa[i - 1] + frequency[i];
+		}
+		
 		for (int g = 0; g < dp.length; g++) {
-			
 			// Traverse diagonally with loop ending in last column
 			for (int i = 0, j = g; j < dp.length; i++, j++) {
 				// Trivial case: Single node tree, height 1. Search time = 1 * frequency[i]
@@ -22,11 +29,24 @@ public class OptimalBinarySearchTree {
 					int min = Integer.MAX_VALUE;
 					int fs = 0;
 					
-					for(int x = i; x <=j ; x++){
-						fs = fs + frequency[x];
-					}
+					// Adding a'+b'+c'+d'
+					/*
+					 * Approach 1:
+					 	for(int x = i; x <=j ; x++){
+							fs = fs + frequency[x];
+						}
+					*/
+					
+					// Approach 2: Using prefix sum
+					fs = psa[j] - (i == 0 ? 0 : psa[i - 1]);
 					
 					for(int k = i; k <=j ; k++){
+						/*
+						 *  k is root
+						 *  Left side  : i...k-1
+						 *  Right side : k+1...j
+						 */
+						
 						int left = k == i ? 0 : dp[i][k - 1];
 						int right = k == j ? 0 : dp[k + 1][j];
 						

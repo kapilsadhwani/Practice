@@ -1,10 +1,5 @@
 package com.implement.pepcoding.dp;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
-
-
 class MinPerfectSquares {
 	/*
 	 *  f(11) = sq(1) + sq(1) + s1(3) = 3

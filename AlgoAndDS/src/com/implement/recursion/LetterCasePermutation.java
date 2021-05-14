@@ -28,7 +28,7 @@ public class LetterCasePermutation {
 			inputChar[pos] = thisChar;
 		} else if (thisChar >= 'A' && thisChar <= 'Z') {
 			// Convert to Lower-Case
-			inputChar[pos] = (char) (thisChar + 'a' - 'A');
+			inputChar[pos] = (char) (thisChar - 'A' + 'a');
 			permute(inputChar, pos + 1);
 			
 			// Revert to original state
@@ -36,8 +36,8 @@ public class LetterCasePermutation {
 		}
 	}
 	
-	public List<String> letterCasePermutation(String S) {
-        char[] charArray = S.toCharArray();
+	public List<String> letterCasePermutation(String str) {
+        char[] charArray = str.toCharArray();
         
         permute(charArray, 0);
         
@@ -46,11 +46,11 @@ public class LetterCasePermutation {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String S = "a1b";
+		String str = "a1b";
 
 		LetterCasePermutation lcp = new LetterCasePermutation();
 
-		List<String> result = lcp.letterCasePermutation(S);
+		List<String> result = lcp.letterCasePermutation(str);
 		
 		System.out.println(result);
 	}

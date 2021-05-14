@@ -44,7 +44,7 @@ public class PhoneNumber {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		PhoneNumber pn = new PhoneNumber();
-		List<String> result = pn.letterCombinations("21");
+		List<String> result = pn.letterCombinations("2334");
 
 		System.out.println(result);
 	}

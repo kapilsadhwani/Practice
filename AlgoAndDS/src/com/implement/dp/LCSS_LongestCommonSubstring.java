@@ -30,18 +30,16 @@ public class LCSS_LongestCommonSubstring {
 	}
 
 	/* Print the LCS for X[0..m-1], Y[0..n-1] */
-	static void print(char[] X, char[] Y, int m, int n) {
-		int L[][] = iterativeLCSS(X, Y, m, n);
+	static void print(char[] X, char[] Y, int n, int m) {
+		int L[][] = iterativeLCSS(X, Y, n, m);
 		int lpssLength = 0;
-		int r=0, c=0;
+		int r = 0;
 		
 		for (int i = 1; i < n + 1; i++) {
 			for (int j = 1; j < m + 1; j++) {
 				if(L[i][j] > lpssLength){
 					lpssLength = L[i][j];
-					r = i;
-					c = j;
-				
+					r = i;				
 				}
 			}
 		}
@@ -50,18 +48,12 @@ public class LCSS_LongestCommonSubstring {
 		char[] lcss = new char[lpssLength];
 		int index = lcss.length;
 		
-		int i = r, j = c;
-		while (index > 0) {
-			// If current character in X[] and Y are same, then
-			// current character is part of LCS
-			if (X[i - 1] == Y[j - 1]) {
-				// Put current character in result
-				lcss[index - 1] = X[i - 1];
-				index--;
-			}
-			
-			i--;
-			j--;
+		int strXPtr = r; 
+
+		while (index > 0) {		
+			lcss[index - 1] = X[strXPtr - 1];
+			index--;
+			strXPtr--;
 		}
 		System.out.println("Substring of " + String.valueOf(X) + " and " 
 						+ String.valueOf(Y) + " is " + String.valueOf(lcss));
@@ -69,7 +61,7 @@ public class LCSS_LongestCommonSubstring {
 
 	public static void main(String[] args) {
 		String s1 = "RJKABCDEG";
-		String s2 = "SWCABFCEK";
+		String s2 = "SWCABCCDEG";
 
 		char[] X = s1.toCharArray();
 		char[] Y = s2.toCharArray();

@@ -14,7 +14,7 @@ public class StockSpanProblem {
 		for (int i = 0; i < nums.length; i++) {
 			if (stack.size() == 0) {
 				index[i] = -1;
-			} else if (stack.size() > 0 && stack.peek().getKey() > nums[i]) {
+			} else if (stack.peek().getKey() > nums[i]) {
 				index[i] = stack.peek().getValue();
 			} else {
 				while (stack.size() > 0 && stack.peek().getKey() <= nums[i]) {

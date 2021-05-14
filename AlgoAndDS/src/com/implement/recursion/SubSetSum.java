@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SubSetSum {
-	private static void allSubsets(int[] nums, int pos, List<Integer> selected,
+	private static void powerSet(int[] nums, int pos, List<Integer> selected,
 			List<List<Integer>> result) {
 		if (pos == nums.length) {
 			// add selected elements so far to the result set
@@ -17,11 +17,11 @@ public class SubSetSum {
 
 		// select the element and recurse for others
 		selected.add(elem);
-		allSubsets(nums, pos + 1, selected, result);
-
-		// do not select the element
+		powerSet(nums, pos + 1, selected, result);
 		selected.remove(selected.size() - 1);
-		allSubsets(nums, pos + 1, selected, result);
+		
+		// do not select the element
+		powerSet(nums, pos + 1, selected, result);
 	}
 
 	public static List<List<Integer>> subsets(int[] nums) {
@@ -30,12 +30,12 @@ public class SubSetSum {
 
 		//result.add(new ArrayList<>()); // Empty set
 
-		allSubsets(nums, 0, selected, result);
+		powerSet(nums, 0, selected, result);
 
 		return result;
 	}
 
-	private static void allSubsetsWithDup(int[] nums, int pos,
+	private static void uniqueSubsets(int[] nums, int pos,
 			List<Integer> selected, List<List<Integer>> result, boolean include) {
 		if (pos == nums.length) {
 			// add selected elements so far to the result set
@@ -50,26 +50,26 @@ public class SubSetSum {
 			// select the element and recurse for others
 			selected.add(elem);
 
-			allSubsetsWithDup(nums, pos + 1, selected, result, true);
+			uniqueSubsets(nums, pos + 1, selected, result, true);
 
 			selected.remove(selected.size() - 1);
 		}
 
 		// do not select the element
-		allSubsetsWithDup(nums, pos + 1, selected, result, false);
+		uniqueSubsets(nums, pos + 1, selected, result, false);
 	}
 
 	/*
 	 * Given a collection of integers that might contain duplicates, nums, 
 	 * return all possible subsets
 	 */
-	public static List<List<Integer>> subsetsWithDup(int[] nums) {
+	public static List<List<Integer>> uniqueSubsets(int[] nums) {
 		List<List<Integer>> result = new ArrayList<List<Integer>>();
 		List<Integer> selected = new ArrayList<>();
 
 		Arrays.sort(nums);
 
-		allSubsetsWithDup(nums, 0, selected, result, true);
+		uniqueSubsets(nums, 0, selected, result, true);
 
 		return result;
 	}
@@ -91,9 +91,9 @@ public class SubSetSum {
 		// select the element and recurse for others
 		selected.add(elem);
 		comboOfSizeK(nums, pos + 1, selected, result, k);
-
-		// do not select the element
 		selected.remove(selected.size() - 1);
+		
+		// do not select the element
 		comboOfSizeK(nums, pos + 1, selected, result, k);
 	}
 	
@@ -120,12 +120,14 @@ public class SubSetSum {
 		
 		int elem = nums[pos];
 
-		// select the element and recurse for others
-		selected.add(elem);
-		subsetsWithTargetSum(nums, pos + 1, selected, result, target - elem);
-
+		if(target >= elem){
+			// select the element and recurse for others
+			selected.add(elem);
+			subsetsWithTargetSum(nums, pos + 1, selected, result, target - elem);
+			selected.remove(selected.size() - 1);
+		}
+		
 		// do not select the element
-		selected.remove(selected.size() - 1);
 		subsetsWithTargetSum(nums, pos + 1, selected, result, target);
 	}
 
@@ -138,7 +140,7 @@ public class SubSetSum {
 		return result;
 	}
 
-	private static int countSubsetsWithGivenSumMemo(int[] nums, int pos, int tgtSum, int[][] cache) {
+	private static int countSubsetsWithTargetSumMemo(int[] nums, int pos, int tgtSum, int[][] cache) {
 		if (tgtSum == 0) {
 			return 1;
 		}
@@ -152,16 +154,16 @@ public class SubSetSum {
 		}
 
 		if (tgtSum >= nums[pos]) {
-			cache[pos][tgtSum] = countSubsetsWithGivenSumMemo(nums, pos+1, tgtSum - nums[pos], cache)
-							+ countSubsetsWithGivenSumMemo(nums, pos+1, tgtSum, cache);
+			cache[pos][tgtSum] = countSubsetsWithTargetSumMemo(nums, pos+1, tgtSum - nums[pos], cache)
+							+ countSubsetsWithTargetSumMemo(nums, pos+1, tgtSum, cache);
 		} else {
-			cache[pos][tgtSum] = countSubsetsWithGivenSumMemo(nums, pos+1, tgtSum, cache);
+			cache[pos][tgtSum] = countSubsetsWithTargetSumMemo(nums, pos+1, tgtSum, cache);
 		}
 
 		return cache[pos][tgtSum];
 	}
 
-	public static int countSubsetsWithGivenSumR(int[] nums, int tgtSum) {
+	public static int countSubsetsWithTargetSumMemo(int[] nums, int tgtSum) {
 		int n = nums.length;
 		int cache[][] = new int[n + 1][tgtSum + 1];
 
@@ -173,7 +175,7 @@ public class SubSetSum {
 			Arrays.fill(cache[i], -1);
 		}
 
-		return countSubsetsWithGivenSumMemo(nums, 0, tgtSum, cache);
+		return countSubsetsWithTargetSumMemo(nums, 0, tgtSum, cache);
 	}
 	
 
@@ -182,14 +184,14 @@ public class SubSetSum {
 		int n = A.length;
 		int cache[][] = new int[n + 1][tgtSum + 1];
 
-		// When n=0
-		for (int c = 1; c < cache[0].length; c++) {
-			cache[0][c] = 0;
+		// When n = 0, no items to choose from, count = 0 except for 1st cell
+		for (int j = 1; j < cache[0].length; j++) {
+			cache[0][j] = 0;
 		}
 
-		// When Target = 0
-		for (int r = 0; r < cache.length; r++) {
-			cache[r][0] = 1;
+		// When Target = 0, One way to achieve it is empty subset
+		for (int i = 0; i < cache.length; i++) {
+			cache[i][0] = 1;
 		}
 
 		for (int i = 1; i < cache.length; i++) {
@@ -242,6 +244,19 @@ public class SubSetSum {
 		return ks_CountSubsetUnboundedAndUniqueMemo(nums, 0, tgtSum, cache);
 	}
 	
+	static long countCombinationsUnboundedAndUniqueIter(int[] nums, int target) {
+		long[] dp = new long[target + 1];
+		dp[0] = 1;
+
+		for (int num : nums) {
+			for (int tgt = num; tgt < dp.length; tgt++) {
+				dp[tgt] = dp[tgt] + dp[tgt - num];
+			}
+		}
+
+		return dp[target];
+	}
+	
 	// Top-down approach - DP: Memoization
     public static int countCombinationUnboundedAndDupMemo(int[] nums, int target, int[] cache) {
     	if (target == 0)
@@ -270,53 +285,78 @@ public class SubSetSum {
     	
         return countCombinationUnboundedAndDupMemo(nums, target, cache);
     }
+    
+	// Permutation i.e. Combinations with duplicates allowed - like 2,1,1 is different from 1,1,2
+	static long countCombinationUnboundedAndDupIter(int[] nums, int target) {
+		long[] dp = new long[target + 1];
+		dp[0] = 1;
+
+		for (int tgt = 1; tgt < dp.length; tgt++) {
+			long total = 0;
+			for (int num : nums) {
+				if (tgt >= num) {
+					total = total + dp[tgt - num];
+				}
+			}
+
+			dp[tgt] = total;
+		}
+
+		return dp[target];
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		List<List<Integer>> result;
 		int[] nums = { 4, 11, 5, 10, 6, 20, 1 };
-		int tgtSum = 21;
 		
 		result = subsets(nums);
 		System.out.println(result);
 		
-		System.out.println("\n==========================");
-
+		System.out.println("\n========== Subsets size K ==========");
+		nums = new int[] { 1, 2, 3, 4 };
+		int k = 2;
+		result = subsetsSizeK(nums, k);
+		System.out.println(result);
+		
+		System.out.println("\n====== Target=21 ==========");
+		nums = new int[] { 4, 11, 5, 10, 6, 20, 1 };
+		int tgtSum = 21;
+		
 		result = subsetsWithTargetSum(nums, tgtSum);
 		System.out.println(result);
 
-		System.out
-				.println("\n Number of ways to reach target (Recursive DP): "
-						+ countSubsetsWithGivenSumR(nums, tgtSum));
+		System.out.println("\n Number of ways to reach target (Memoization): "
+						+ countSubsetsWithTargetSumMemo(nums, tgtSum));
 		System.out.println(" Number of ways to reach target (Iterative DP): "
-				+ countCombinationsBoundedIterative(nums, tgtSum));
+						+ countCombinationsBoundedIterative(nums, tgtSum));
 
 		System.out.println("\n==========================");
 
 		nums = new int[]{ 1, 2 };
 		tgtSum = 4;
 
-		System.out.println(result);
+		System.out.println(Arrays.toString(nums) + ", Tagret: " + tgtSum);
 
 		System.out.println("\n Number of ways to reach target (Bounded) : "
-				+ countSubsetsWithGivenSumR(nums, tgtSum));
+				+ countSubsetsWithTargetSumMemo(nums, tgtSum));
 		
-		System.out.println(" Number of ways to reach target (Unbounded with Unique Combo) : "
+		System.out.println(" Number of ways to reach target (Unbounded with Unique Combo) Memo: "
 				+ countCombinationsUnboundedAndUnique(nums, tgtSum));
 		
-		System.out.println(" Number of combinations to reach target (Unbounded with Duplicates Combo): "
+		System.out.println(" Number of ways to reach target (Unbounded with Unique Combo) Iter: "
+				+ countCombinationsUnboundedAndUniqueIter(nums, tgtSum));
+		
+		System.out.println(" Number of combinations to reach target (Unbounded with Duplicates Combo) Memo: "
 				+ countCombinationUnboundedAndDup(nums, tgtSum));
+		
+		System.out.println(" Number of combinations to reach target (Unbounded with Duplicates Combo) Iter: "
+				+ countCombinationUnboundedAndDupIter(nums, tgtSum));
 
 		System.out.println("\n==========================");
 
 		nums = new int[] { 4, 4, 4, 1, 4 };
-		result = subsetsWithDup(nums);
-		System.out.println(result);
-		
-		System.out.println("\n=== Subsets size K ===");
-		nums = new int[] { 1, 2, 3, 4 };
-		int k=2;
-		result = subsetsSizeK(nums, k);
+		result = uniqueSubsets(nums);
 		System.out.println(result);
 	}
 

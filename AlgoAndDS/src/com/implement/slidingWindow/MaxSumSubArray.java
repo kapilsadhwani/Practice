@@ -80,10 +80,12 @@ class MaxSumSubArray {
 		maxSubArraySum(a);
 
 		int[] arr1 = { 8, -1, -3, 4, -1, 2, 1, -5, 4 };
+		maxSubArraySum(arr1, arr1.length);
 		maxSubArraySum(arr1);
 		System.out.println("Max Sum of Window Size:3 is " + maxSubArraySumSizeK(arr1, arr1.length, 3));
 		
 		int[] arr2 = { 4, 2, 1, 7, 8, 1, 2, 8, 1, 0};
+		maxSubArraySum(arr2, arr2.length);
 		maxSubArraySum(arr2);
 		System.out.println("Max Sum of Window Size:3 is " + maxSubArraySumSizeK(arr2, arr2.length, 3));
 	}

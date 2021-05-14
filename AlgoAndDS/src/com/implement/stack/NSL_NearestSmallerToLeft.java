@@ -12,7 +12,7 @@ public class NSL_NearestSmallerToLeft {
 		for (int i = 0; i < nums.length; i++) {
 			if (stack.size() == 0) {
 				result[i] = -1;
-			} else if (stack.size() > 0 && stack.peek() < nums[i]) {
+			} else if (stack.peek() < nums[i]) {
 				result[i] = stack.peek();
 			} else {
 				while (stack.size() > 0 && stack.peek() >= nums[i]) {

@@ -21,12 +21,13 @@ class MajorityElement {
         int maj_index = 0, count = 1;
 
         for (int i = 1; i < size; i++) {
-            if (a[maj_index] == a[i])
+            if (a[maj_index] == a[i]){
                 count++;
-            else
+            }else{
                 count--;
-            if (count == 0)
-            {
+            }
+            
+            if (count == 0){
                 maj_index = i;
                 count = 1;
             }
@@ -38,8 +39,7 @@ class MajorityElement {
        than n/2 times */
     boolean isMajority(int a[], int size, int cand){
         int count = 0;
-        for (int i = 0; i < size; i++) 
-        {
+        for (int i = 0; i < size; i++) {
             if (a[i] == cand)
                 count++;
         }

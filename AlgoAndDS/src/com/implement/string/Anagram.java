@@ -1,8 +1,11 @@
 package com.implement.string;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Anagram {
 	private static boolean isAnagram(String str1, String str2) {
@@ -30,28 +33,29 @@ public class Anagram {
     }
 	
 	public static List<List<String>> groupAnagrams(String[] strs) {
-	    List<List<String>> groups = new ArrayList<List<String>>();
-	 
-	    HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
-	    for(String str: strs){
-	        char[] apha = new char[26];
-	        for(int i=0; i<str.length(); i++){
-	        	apha[str.charAt(i)-'a']++;
-	        }
-	        String ns = new String(apha);
-	        
-	        if(map.containsKey(ns)){
-	            map.get(ns).add(str);
-	        }else{
-	            ArrayList<String> group = new ArrayList<String>();
-	            group.add(str);
-	            map.put(ns, group);
-	        }
-	    }
-	 
-	    groups.addAll(map.values());
-	 
-	    return groups;
+		Map<String, List<String>> map = new HashMap<>();
+
+		for (String str : strs) {
+			char[] charArray = new char[26];
+			for (int i = 0; i < str.length(); i++) {
+				charArray[str.charAt(i) - 'a']++;
+			}
+
+			/*
+			 * char[] charArray = str.toCharArray(); 
+			 * Arrays.sort(charArray);
+			 */
+
+			String sorted = new String(charArray);
+
+			if (!map.containsKey(sorted)) {
+				map.put(sorted, new LinkedList<String>());
+			}
+
+			map.get(sorted).add(str);
+		}
+
+		return new LinkedList<>(map.values());
 	}
 
 	public static void main(String[] args) {

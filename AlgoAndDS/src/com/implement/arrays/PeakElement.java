@@ -17,7 +17,7 @@ public class PeakElement {
 		return low;
 	}
 	
-	public static int findPeakElementBS(int[] nums) {
+	public static int findPeakElementAS(int[] nums) {
 		if(nums.length < 2) return 0;
 		
 		int low = 0, high = nums.length - 1;
@@ -53,26 +53,30 @@ public class PeakElement {
 		int[] arr = { 4, 5, 6, 1, 2, 3 };
 		int idx = findPeakElement(arr);
 		System.out.println("Peak - Index : " + idx + ", Value is : " + arr[idx]);
-		idx = findPeakElementBS(arr);
-		if(idx != -1) System.out.println("Value is : " + arr[idx]);
+		
+		idx = findPeakElementAS(arr);
+		if(idx != -1) System.out.println("BS Peak - Index : " + idx + ", Value is : " + arr[idx]);
 		
 		int[] arr1 = { 8, 9, 10, 2, 5, 6 };
 		idx = findPeakElement(arr1);
 		System.out.println("Peak - Index : " + idx + ", Value is : " + arr1[idx]);
-		idx = findPeakElementBS(arr1);
-		if(idx != -1) System.out.println("Value is : " + arr1[idx]);
+		
+		idx = findPeakElementAS(arr1);
+		if(idx != -1) System.out.println("BS Peak - Index : " + idx + ", Value is : " + arr1[idx]);
 		
 		int[] arr2 = {10, 20, 30, 40, 50};
 		idx = findPeakElement(arr2);
 		System.out.println("Peak - Index : " + idx + ", Value is : " + arr2[idx]);
-		idx = findPeakElementBS(arr2);
-		if(idx != -1) System.out.println("Value is : " + arr2[idx]);
+		
+		idx = findPeakElementAS(arr2);
+		if(idx != -1) System.out.println("BS Peak - Index : " + idx + ", Value is : " + arr2[idx]);
 		
 		int[] arr3 = { 100, 80, 60, 50, 20 };
 		idx = findPeakElement(arr3);
 		System.out.println("Peak - Index : " + idx + ", Value is : " + arr3[idx]);
-		idx = findPeakElementBS(arr3);
-		if(idx != -1) System.out.println("Value is : " + arr3[idx]);
+		
+		idx = findPeakElementAS(arr3);
+		if(idx != -1) System.out.println("BS Peak - Index : " + idx + ", Value is : " + arr3[idx]);
 	}
 
 }

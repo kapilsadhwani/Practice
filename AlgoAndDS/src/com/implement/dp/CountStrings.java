@@ -21,12 +21,16 @@ class CountStrings {
 
 		// Three cases, we choose, a or b or c
 		// In all three cases n decreases by 1.
+		
+		// Choose a
 		int res = countWaysMemo(cache, n - 1, bCount, cCount);
 		
+		// Choose b
 		if(bCount > 0){
 			res += countWaysMemo(cache, n - 1, bCount - 1, cCount);
 		}
 		
+		// Choose c
 		if(cCount > 0){
 			res += countWaysMemo(cache, n - 1, bCount, cCount - 1);
 		}

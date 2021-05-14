@@ -48,8 +48,7 @@ class CelebrityProblem {
 
 		// Step 5 : Check if the last person is celebrity or not
 		for (int i = 0; i < n; i++) {
-			// If any person doesn't know 'c' or 'c' doesn't
-			// know any person, return -1
+			// If any person doesn't know 'c' or 'c' knows any person, return -1
 			
 			//if (i != c && (MATRIX[c][i] == 1 || MATRIX[i][c] == 0)){
 			if (i != c && (knows(c, i) || !knows(i, c)))			

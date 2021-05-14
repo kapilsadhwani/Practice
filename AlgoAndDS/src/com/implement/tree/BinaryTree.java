@@ -1,7 +1,6 @@
 package com.implement.tree;
 
 import java.util.ArrayList;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,11 +10,24 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.util.Pair;
 
 public class BinaryTree {
+	private static class Counter {
+		int val;
+	}
+	
+	private static class ITPair {
+		TreeNode node;
+		int state;
+		
+		ITPair(TreeNode node, int state) {
+	        this.node = node;
+	        this.state = state;
+	    }
+	}
+	
 	private static class NodeDepthPair {
 	    TreeNode node;
 	    int depth;
@@ -77,10 +89,12 @@ public class BinaryTree {
 		 * it b) push its right child c) push its left child Note that right
 		 * child is pushed first so that left is processed first
 		 */
+		TreeNode current = null;
+		
 		while (!nodeStack.isEmpty()) {
 
 			// Pop the top item from stack and print it
-			TreeNode current = nodeStack.pop();
+			current = nodeStack.pop();
 			System.out.print(current.data + " ");
 
 			// Push right and left children of the popped node to stack
@@ -113,11 +127,13 @@ public class BinaryTree {
 
 		// push root to first stack
 		s1.push(root);
-
+		
+		TreeNode currentS1 = null;
+		
 		// Run while first stack is not empty
 		while (!s1.isEmpty()) {
 			// Pop an item from s1 and push it to s2
-			TreeNode currentS1 = s1.pop();
+			currentS1 = s1.pop();
 			s2.push(currentS1);
 
 			// Push left and right children of removed item to s1
@@ -127,10 +143,12 @@ public class BinaryTree {
 			if (currentS1.right != null)
 				s1.push(currentS1.right);
 		}
+		
+		TreeNode currentS2 = null;
 
 		// Print all elements of second stack
 		while (!s2.isEmpty()) {
-			TreeNode currentS2 = s2.pop();
+			currentS2 = s2.pop();
 			System.out.print(currentS2.data + " ");
 		}
 	}
@@ -174,6 +192,37 @@ public class BinaryTree {
 			 * subtree's turn
 			 */
 			current = current.right;
+		}
+	}
+	
+	private void inOrderIterative(TreeNode root) {
+		if (root == null)
+			return;
+		
+		Stack<ITPair> stack = new Stack<>();
+		stack.push(new ITPair(root,0));
+		
+		ITPair top = null;
+
+		// traverse the tree
+		while (!stack.isEmpty()) {
+			top = stack.peek();
+			
+			// If state is 0, push left
+			if(top.state == 0){
+				if(top.node.left != null){
+					stack.push(new ITPair(top.node.left,0));
+				}
+				top.state++;
+			}else if(top.state == 1){
+				if(top.node.right != null){
+					stack.push(new ITPair(top.node.right,0));
+				}
+				System.out.print(top.node.data + " ");
+				top.state++;
+			}else{
+				stack.pop();
+			}
 		}
 	}
 
@@ -462,6 +511,7 @@ public class BinaryTree {
 		}
 	}
 	
+	// For top view, use level by level and set
 	public List<Integer> topView(TreeNode root) {
 		List<Integer> topView = new ArrayList<Integer>();
 		
@@ -877,14 +927,10 @@ public class BinaryTree {
 			nextRight = queue.peek();
 			
 			if (current == null) {
-				//System.out.println("");
 				if (!queue.isEmpty())
 					queue.offer(null);
 			} else {
 				current.nextRight = nextRight;
-				
-				/*System.out.print(current.data + " --> (" + (current.nextRight==null ? 
-						"NULL)" : current.nextRight.data + ") "));*/
 				
 				if (current.left != null) {
 					queue.offer(current.left);
@@ -914,11 +960,11 @@ public class BinaryTree {
 			current = queue.poll();
 
 			if (current == null) {
-				if (!queue.isEmpty())
-					queue.offer(null);
-				
 				if (!skip)
 					System.out.println("");
+				
+				if (!queue.isEmpty())
+					queue.offer(null);
 
 				skip = !skip;
 			} else {
@@ -1449,7 +1495,7 @@ public class BinaryTree {
 		return result;
 	}
 
-	public int maxPathSumNodeToNode(TreeNode root, AtomicInteger result) {
+	public int maxPathSumNodeToNode(TreeNode root, Counter result) {
 		if (root == null)
 			return 0;
 
@@ -1464,7 +1510,7 @@ public class BinaryTree {
 		int ans = Math.max(temp, maxLeft + maxRight + root.data);
 
 		// Update result
-		result.set(Math.max(result.get(), ans));
+		result.val = Math.max(result.val, ans);
 
 		return temp;
 
@@ -1474,14 +1520,14 @@ public class BinaryTree {
 		if (root == null)
 			return 0;
 
-		AtomicInteger result = new AtomicInteger(Integer.MIN_VALUE);
+		Counter result = new Counter();
 		
 		maxPathSumNodeToNode(root, result);
 		
-		return result.get();
+		return result.val;
 	}
 	
-	public int maxPathSumLeafToLeaf(TreeNode root, AtomicInteger result) {
+	public int maxPathSumLeafToLeaf(TreeNode root, Counter result) {
 		if (root == null)
 			return 0;
 		
@@ -1505,7 +1551,7 @@ public class BinaryTree {
 		int ans = maxLeft + maxRight + root.data;
 
 		// Update result
-		result.set(Math.max(result.get(), ans));
+		result.val = Math.max(result.val, ans);
 
 		return temp;
 
@@ -1524,11 +1570,12 @@ public class BinaryTree {
 		if (root == null)
 			return 0;
 
-		AtomicInteger result = new AtomicInteger(Integer.MIN_VALUE);
+		Counter result = new Counter();
+		result.val = Integer.MIN_VALUE;
 		
 		maxPathSumLeafToLeaf(root, result);
 		
-		return result.get();
+		return result.val;
 	}
 
 	// Print all nodes having k leaves in subtree rooted with them
@@ -1568,7 +1615,8 @@ public class BinaryTree {
 
 		/*
 		 * If counting all nodes
-		 * diameter = Math.max(1 + lheight + rheight, Math.max(ldiameter, rdiameter))
+		 * diameter = Math.max(1 + lheight + rheight, 
+		 * 					Math.max(ldiameter, rdiameter))
 		 * 
 		 * Below code, if counting edges
 		 */
@@ -1846,20 +1894,20 @@ public class BinaryTree {
 
 	// Recursive function to build a BST from a preorder sequence
 	public static TreeNode bstFromPreorder(int[] preorder,
-			AtomicInteger arrIdx, int min, int max) {
-		if (arrIdx.get() == preorder.length) {
+			Counter arrIdx, int min, int max) {
+		if (arrIdx.val == preorder.length) {
 			return null;
 		}
 
 		// Return if next element of preorder traversal is not in the valid range
-		int val = preorder[arrIdx.get()];
+		int val = preorder[arrIdx.val];
 		if (val < min || val > max) {
 			return null;
 		}
 
 		// Construct the root node and increment pIndex
 		TreeNode root = new TreeNode(val);
-		arrIdx.incrementAndGet();
+		arrIdx.val++;
 
 		// Since all elements in the left sub-tree of a BST must be less
 		// than the value of root node, set range as [min, val-1] and recur
@@ -1876,7 +1924,8 @@ public class BinaryTree {
 	public static TreeNode bstFromPreorder(int[] preorder) {
 		// start from the root node (first element in preorder sequence)
 		// use AtomicInteger as Integer is passed by value in Java
-		AtomicInteger arrIdx = new AtomicInteger(0);
+		Counter arrIdx = new Counter();
+		arrIdx.val = 0;
 
 		// set range of the root node as [Integer.MIN_VALUE, Integer.MAX_VALUE] and recurse
 		return bstFromPreorder(preorder, arrIdx, Integer.MIN_VALUE,
@@ -1911,6 +1960,7 @@ public class BinaryTree {
 			count = count + 1;
 			if (count <= k)
 				result.add(current.data);
+			else break;
 
 			/*
 			 * we have visited the node and its left subtree. Now, it's right
@@ -1983,6 +2033,7 @@ public class BinaryTree {
 			count = count + 1;
 			if (count <= k)
 				result.add(current.data);
+			else break;
 
 			/*
 			 * we have visited the node and its left subtree. Now, it's right
@@ -2028,8 +2079,7 @@ public class BinaryTree {
 	}
 
 	/**
-	 * @param root
-	 *            : a TreeNode, the root of the binary tree
+	 * @param root: a TreeNode, the root of the binary tree
 	 * @return: nothing
 	 */
 	public void flattenRecursively(TreeNode root) {
@@ -2204,6 +2254,15 @@ public class BinaryTree {
 
 		System.out.print("In Order : ");
 		bt.inOrder(root);
+		System.out.println("");
+		
+		System.out.print("In Order Iter : ");
+		bt.inOrderIter(root);
+		System.out.println("");
+		
+		System.out.print("In Order Iterative : ");
+		bt.inOrderIter(root);
+		System.out.println("");
 		/**/
 
 		System.out.println("");

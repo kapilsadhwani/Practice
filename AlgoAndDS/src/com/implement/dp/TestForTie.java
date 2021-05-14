@@ -7,7 +7,7 @@ public class TestForTie {
 		int sum = 0;
 		for (int num : nums)
 			sum = sum + num;
-		if (sum % 2 == 1)
+		if (sum % 2 == 1)  // or sum & 1 == 1, i.e. if Odd
 			return false;
 
 		int target = sum / 2;
@@ -17,7 +17,7 @@ public class TestForTie {
 		for (int i = 0; i < cache.length; i++)
 			Arrays.fill(cache[i], -1);
 
-		return canPartition(nums, 0, target, cache) == 1;
+		return canPartition(nums, 0, target, cache) == 1;	// 1: true, 0:false
 	}
 
 	static int canPartition(int[] nums, int pos, int t, int[][] cache) {
@@ -66,14 +66,14 @@ public class TestForTie {
 		boolean[][] dp = new boolean[nums.length + 1][target + 1];
 
 		/*
-		 * For line 17 in the recursion We reversed the order because target==0
+		 * For line 27 in the recursion We reversed the order because target==0
 		 * executes first always even when pos == votes.length in the recursion
 		 */
 		for (int t = 1; t <= target; ++t)
 			dp[nums.length][t] = false;
 
 		/*
-		 * For line 15 in the recursion We reversed the order because target==0
+		 * For line 24 in the recursion We reversed the order because target==0
 		 * executes first always even when pos == votes.length in the recursion
 		 */
 		for (int pos = 0; pos <= nums.length; ++pos)

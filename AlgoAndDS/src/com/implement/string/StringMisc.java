@@ -242,6 +242,17 @@ public class StringMisc {
     		   };
        
        System.out.println(stringShift(s, shift));
+       
+       System.out.println("=============");
+       
+       String hello1 = "hello";
+       String hello2 = "hello";	// Interning : Gets from Intern Pool
+       String hello3 = new String("hello");
+       
+       System.out.println(hello1 == hello2);
+       System.out.println(hello1 == hello3);
+       System.out.println(hello2 == hello3);
+       
 	}
 
 }

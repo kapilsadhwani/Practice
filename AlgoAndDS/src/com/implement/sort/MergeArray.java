@@ -50,9 +50,9 @@ public class MergeArray {
 			// my array must not be exhausted, and EITHER:
 			// 1) Alice's array IS exhausted, or
 			// 2) the current element in my array is less
-			// than the current element in Alice's array
+			// than or equal to the current element in Alice's array
 			if (!isMyArrayExhausted
-					&& (isAlicesArrayExhausted || (myArray[currentIndexMine] < alicesArray[currentIndexAlices]))) {
+					&& (isAlicesArrayExhausted || (myArray[currentIndexMine] <= alicesArray[currentIndexAlices]))) {
 
 				mergedArray[currentIndexMerged] = myArray[currentIndexMine];
 				currentIndexMine++;

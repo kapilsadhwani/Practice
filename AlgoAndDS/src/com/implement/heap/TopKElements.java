@@ -9,7 +9,7 @@ public class TopKElements {
      /*
       * @param nums an integer array
       * @param k an integer
-      * @return the top k largest numbers in array
+      * @return the k largest numbers in array
       */
      public static Integer[] topkMinHeap(Integer[] nums, int k) {
          PriorityQueue<Integer> minheap = new PriorityQueue<Integer>(k);
@@ -30,6 +30,11 @@ public class TopKElements {
          return result;
      }
      
+     /*
+      * @param nums an integer array
+      * @param k an integer
+      * @return the k smallest numbers in array
+      */
      public static Integer[] bottomkMaxHeap(Integer[] nums, int k) {
          PriorityQueue<Integer> maxheap = new PriorityQueue<Integer>(
         		 new Comparator<Integer>(){

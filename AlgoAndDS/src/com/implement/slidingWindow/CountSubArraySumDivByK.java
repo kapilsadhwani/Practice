@@ -4,26 +4,23 @@ public class CountSubArraySumDivByK {
 	// Handles all the cases 
 	// function to find all sub-arrays divisible by k
 	// modified to handle negative numbers as well
-	private int subCount(int arr[], int n, int k){
-	    // create auxiliary hash array to count frequency
-	    // of remainders
-	    int cache[] = new int[k];
-	  
-	    // Traverse original array and compute cumulative
-	    // sum take remainder of this current cumulative
-	    // sum and increase count by 1 for this remainder
-	    // in mod[] array
-	    int cumSum = 0;
-	    for (int i=0; i<n; i++){
-	        cumSum += arr[i];
-	        
-	        if(cumSum < 0){
-	        	// as the sum can be negative, taking modulo twice 
-	        	cache[((cumSum % k) + k) % k]++; 
-	        }else{
-	        	cache[cumSum%k]++;
-	        }
-	    }
+	private int subCount(int arr[], int n, int k) {
+		// create auxiliary hash array to count frequency of remainders
+		int count[] = new int[k];
+
+		// Traverse original array and compute cumulative sum, take remainder of this 
+		// current cumulative sum and increase count by 1 for this remainder in mod[] array
+		int currSum = 0;
+		for (int num : arr) {
+			currSum += num;
+
+			if (currSum < 0) {
+				// as the sum can be negative, taking modulo twice
+				count[((currSum % k) + k) % k]++;
+			} else {
+				count[currSum % k]++;
+			}
+		}
 	  
 	    int result = 0;  // Initialize result
 	     
@@ -31,14 +28,15 @@ public class CountSubArraySumDivByK {
 	    for (int i=0; i<k ; i++)
 	  
 	        // If there are more than one prefix subarrays with a particular mod value.
-	    	// we can choose any two pair of indices for sub-array by 
-	    	// (cache[i] * (cache[i] – 1))/2 number of ways 
-	        if (cache[i] > 1)
-	            result += (cache[i]*(cache[i]-1))/2;
+	    	// we can choose any two pair of indices for sub-array by [nC2 = n * (n-1) / 2] 
+	    	// (counts[i] * (counts[i] – 1))/2 number of ways 
+	        if (count[i] > 1)
+	            result += (count[i]*(count[i]-1))/2;
 	     
 	    // add the elements which are divisible by k itself 
 	    // as their individual set is to be considered as well
-	    result += cache[0];
+	    // i.e for 0, count = [n * (n-1) / 2] + n
+	    result += count[0];	
 	     
 	    return result;
 	}

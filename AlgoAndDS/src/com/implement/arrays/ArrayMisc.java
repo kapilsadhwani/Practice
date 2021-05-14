@@ -244,6 +244,18 @@ public class ArrayMisc {
 
 		return num[low] == key ? low : -1;
 	}
+	
+	public int distributeCandies(int[] candyType) {
+		int size = candyType.length;
+		
+		Set<Integer> setOfInts = new HashSet<Integer>();
+		
+		for (int n: candyType) {
+	        setOfInts.add(n);
+	    }
+
+		return Math.min(size/2,setOfInts.size());
+	}
 
 	public static void main(String[] args) {
 		int[] arrUnSorted = { 2, 5, 2, 3, 5, 7, 2, 5, 8, 3, 3, 5, 3 };

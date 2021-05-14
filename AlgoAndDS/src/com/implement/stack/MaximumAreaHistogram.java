@@ -72,19 +72,20 @@ public class MaximumAreaHistogram {
 		System.out.println(Arrays.toString(idxOfNSR));
 
 		for (int i = 0; i < nums.length; i++) {
-			width[i] = idxOfNSR[i] - idxOfNSL[i] - 1;
+			width[i] = idxOfNSR[i] - idxOfNSL[i] - 1;	// right - left - 1
 			area[i] = nums[i] * width[i];
 
 			if (maxArea < area[i])
 				maxArea = area[i];
 		}
 
+		System.out.println(Arrays.toString(width));
 		return maxArea;
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int nums[] = {1,8,6,2,5,4,8,3,7};
+		int nums[] = {1, 8, 6, 2, 5, 4, 8, 3, 7};
 
 		System.out.println("Maximum Area Histogram: " + maxAreaHistogram(nums));
 	}

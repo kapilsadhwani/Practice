@@ -53,13 +53,13 @@ public class LPSS_LongestPalindromicSubstring {
 				}
 			}
 		}
-		System.out.print("Longest palindrome substring is; ");
+		System.out.print("Longest palindrome substring is: ");
 		printSubStr(str, start, start + maxLength);
 
 		return maxLength; // return length of LPS
 	}
 
-	/* Returns length of LCS for X[0..n-1], Y[0..m-1] */
+	/* Returns length of LCSS for X[0..n-1], Y[0..m-1] */
 	static int[][] iterativeLCSS(char[] X, char[] Y, int n, int m) {
 		int L[][] = new int[n + 1][m + 1];
 
@@ -91,34 +91,27 @@ public class LPSS_LongestPalindromicSubstring {
 		char[] lps = new char[LCS[row][col]];
 		int index = lps.length;
 		
-		int i = row, j = col;
-		while (index >0) {
-			// If current character in X[] and Y are same, then
-			// current character is part of LCS
-			if (X[i - 1] == Y[j - 1]) {
-				// Put current character in result
-				lps[index - 1] = X[i - 1];
-				index--;
-			}
-			
-			i--;
-			j--;
+		int strXPtr = row;
+		while (index > 0) {
+			lps[index - 1] = X[strXPtr - 1];
+			index--;
+			strXPtr--;
 		}
 
-		// Print the lcs
+		// Print the lps
 		System.out.print("LPS of " + String.valueOf(X) + " and "
 				+ String.valueOf(Y) + " is ");
 		System.out.print(String.valueOf(lps));
 	}
 	
 	static String getReverseString(String str){
-		char[] reverse = new char[str.length()];
+		char[] strArray = str.toCharArray();
+		char[] reverseStr = new char[str.length()];
 		
-		int j=0;
-		for(int i=str.length()-1; i>=0; i--)
-			reverse[j++] = str.charAt(i);
+		for(int i=str.length()-1, j=0; i>=0; i--, j++)
+			reverseStr[j] = strArray[i];
 		
-		return String.valueOf(reverse);
+		return String.valueOf(reverseStr);
 	}
 
 	/* 
@@ -133,7 +126,7 @@ public class LPSS_LongestPalindromicSubstring {
 				
 		int L[][] = iterativeLCSS(str.toCharArray(), reverseStr.toCharArray(), n, n);
 		int lpssLength = 0;
-		int r=0, c=0;
+		int r = 0, c = 0;
 		
 		for (int i = 1; i < n + 1; i++) {
 			for (int j = 1; j < n + 1; j++) {
@@ -141,13 +134,63 @@ public class LPSS_LongestPalindromicSubstring {
 					lpssLength = L[i][j];
 					r = i;
 					c = j;
-				
 				}
 			}
 		}
 
 		print(str.toCharArray(), reverseStr.toCharArray(),L, r, c);
 		return L[r][c]; // return length of LPS
+	}
+	
+	public static String longestPalindromicSubstrDPII(String s) {
+		int n = s.length();
+
+		if (n == 0) return "";
+
+		/*
+		 * palindrome[i][j] will be false if substring str[i..j] is not
+		 * palindrome Else table[i][j] will be true
+		 */
+		boolean dp[][] = new boolean[n][n];
+		int len = 0;
+		int startIdx = 0;
+		int endIdx = 0;
+
+		// Gap = 0 to n - 1 OR length = 1 to n
+		for (int g = 0; g < n; g++) {
+
+			// Traverse diagonally with loop ending in last column
+			for (int i = 0, j = g; j < dp[0].length; i++, j++) {
+				// Trivial case: Single letter is always a palindrome
+				if (g == 0) {
+					dp[i][j] = true;
+				}
+				// Trivial case: String of 2 characters
+				else if (g == 1) {
+					if (s.charAt(i) == s.charAt(j)) {
+						dp[i][j] = true;
+					} else {
+						dp[i][j] = false;
+					}
+				} else {
+					if (s.charAt(i) == s.charAt(j) && dp[i + 1][j - 1] == true) {
+						dp[i][j] = true;
+					} else {
+						dp[i][j] = false;
+					}
+				}
+
+				if (dp[i][j] == true) {
+					if(g + 1 > len){
+						len = g + 1;
+						startIdx = i;
+						endIdx = j;
+					}
+				}
+			}
+		}
+
+		return s.substring(startIdx, endIdx + 1);
 	}
 
 	// Driver program to test above functions
@@ -156,20 +199,33 @@ public class LPSS_LongestPalindromicSubstring {
 		String str = "forgeeksskeegfor";
 		System.out.println("Length is: " + longestPalSubstr(str));
 		System.out.println("\nLength is: " + LPS(str));
+		System.out.println(longestPalindromicSubstrDPII(str));
+		
+		System.out.println(" ===================================== ");
 		
 		str = "abcd";
 		//System.out.println("Length is: " + longestPalSubstr(str));
 		int lpsLength = LPS(str);
-		System.out.println("\nLength is: " + lpsLength + ", Number of insertions: " + (str.length()-lpsLength));
+		System.out.println("\nLength is: " + lpsLength + ", "
+				+ "Number of insertions: " + (str.length()-lpsLength));
+		System.out.println(longestPalindromicSubstrDPII(str));
+		
+		System.out.println(" ===================================== ");
 		
 		str = "aba";
 		//System.out.println("Length is: " + longestPalSubstr(str));
 		lpsLength = LPS(str);
-		System.out.println("\nLength is: " + lpsLength + ", Number of insertions: " + (str.length()-lpsLength));
+		System.out.println("\nLength is: " + lpsLength + ", "
+				+ "Number of insertions: " + (str.length()-lpsLength));
+		System.out.println(longestPalindromicSubstrDPII(str));
+		
+		System.out.println(" ===================================== ");
 		
 		str = "geeks";
 		//System.out.println("Length is: " + longestPalSubstr(str));
 		lpsLength = LPS(str);
-		System.out.println("\nLength is: " + lpsLength + ", Number of insertions: " + (str.length()-lpsLength));
+		System.out.println("\nLength is: " + lpsLength + ", "
+				+ "Number of insertions: " + (str.length()-lpsLength));
+		System.out.println(longestPalindromicSubstrDPII(str));
 	}
 }

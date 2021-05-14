@@ -42,6 +42,75 @@ public class SubArrayWithGivenSum {
 		}
 		return count;
 	}
+	
+	public static int smallestSubArrayEqualsGivenSum(int[] nums, int target) {
+		int minWindowSize = Integer.MAX_VALUE;
+		int currentSum = 0;
+		int start = 0;
+		
+		for (int end = 0; end < nums.length; end++) {
+			currentSum = currentSum + nums[end];
+			
+			while(currentSum >= target && start <= end) {
+				if(currentSum == target){
+					minWindowSize = Math.min(minWindowSize, end - start + 1);
+	
+					if(minWindowSize == 1) return minWindowSize;
+				}
+
+				currentSum = currentSum - nums[start];
+				start++;
+			}
+		}
+		return minWindowSize != Integer.MAX_VALUE ? minWindowSize : -1;
+	}
+	
+	/*
+	 *  Arrays can contain only non-negative numbers
+	 *  Smallest SubArray Greater Than Or Equals Given Sum
+	 */
+	
+	public static int smallestSubArrayGreaterThanOrEqualsGivenSum(int[] nums, int target) {
+		if(nums.length == 0 || target <= 0) return 0;
+		
+		int minWindowSize = Integer.MAX_VALUE;
+		int currentSum = 0;
+		int start = 0;
+		
+		for (int end = 0; end < nums.length; end++) {
+			currentSum = currentSum + nums[end];
+			
+			while(currentSum >= target && start <= end) {
+				minWindowSize = Math.min(minWindowSize, end - start + 1);
+				
+				currentSum = currentSum - nums[start];
+				start++;
+			}
+		}
+
+		return minWindowSize == Integer.MAX_VALUE ? 0 : minWindowSize;
+	}
+	
+	public static int largestSubArrayEqualsGivenSum(int[] nums, int target) {
+		int maxWindowSize = 0;
+		int currentSum = 0;
+		int start = 0;
+		
+		for (int end = 0; end < nums.length; end++) {
+			currentSum = currentSum + nums[end];
+			
+			while(currentSum >= target && start <= end) {
+				if(currentSum == target){
+					maxWindowSize = Math.max(maxWindowSize, end - start + 1);
+				}
+
+				currentSum = currentSum - nums[start];
+				start++;
+			}
+		}
+		
+		return maxWindowSize;
+	}
 
 	public static void main(String[] args) {
 		int[] arr = { 1, 2, 3, 7, 5 };
@@ -100,5 +169,50 @@ public class SubArrayWithGivenSum {
 				+ countOfSubarrayWithGivenSum(arr6, target) + ", HashMap: "
 				+ subarraySumHM(arr6, target) + ", Indices: "
 				+ indices[0] + " " + indices[1]);
+		
+		System.out.println("=================== Smallest Subarray ====================");
+		
+		
+		int[] arr7 = { 1, 2, 3, 7, 5 };
+		target = 12;
+		System.out.print("Equals: " + smallestSubArrayEqualsGivenSum(arr7, target));
+		System.out.println(", Greater Than or Equals: " + smallestSubArrayGreaterThanOrEqualsGivenSum(arr7, target));
+
+		int[] arr8 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		target = 15;
+		System.out.print("Equals: " + smallestSubArrayEqualsGivenSum(arr8, target));
+		System.out.println(", Greater Than or Equals: " + smallestSubArrayGreaterThanOrEqualsGivenSum(arr8, target));
+
+		int[] arr9 = { -12, -2, -20, 10 };
+		target = -10;
+		System.out.print("Equals: " + smallestSubArrayEqualsGivenSum(arr9, target));
+		System.out.println(", Greater Than or Equals: " + smallestSubArrayGreaterThanOrEqualsGivenSum(arr9, target));
+		
+		int[] arr10 = { 9, 4, 20, 3, 10, 5 };
+		target = 33;
+		System.out.print("Equals: " + smallestSubArrayEqualsGivenSum(arr10, target));
+		System.out.println(", Greater Than or Equals: " + smallestSubArrayGreaterThanOrEqualsGivenSum(arr10, target));
+		
+		int[] arr11 = { 12, 2, 20, 8 };
+		target = 10;
+		System.out.print("Equals: " + smallestSubArrayEqualsGivenSum(arr11, target));
+		System.out.println(", Greater Than or Equals: " + smallestSubArrayGreaterThanOrEqualsGivenSum(arr11, target));
+
+		int[] arr12 = { 9, 3, 20, 4, 10, 5 };
+		target = 33;
+		System.out.print("Equals: " + smallestSubArrayEqualsGivenSum(arr12, target));
+		System.out.println(", Greater Than or Equals: " + smallestSubArrayGreaterThanOrEqualsGivenSum(arr12, target));
+		
+		int[] arr13 = { 4, 2, 2, 7, 1, 2, 8, 10 };
+		target = 17;
+		System.out.print("Equals: " + smallestSubArrayEqualsGivenSum(arr13, target));
+		System.out.println(", Greater Than or Equals: " + smallestSubArrayGreaterThanOrEqualsGivenSum(arr13, target));
+		
+		
+		System.out.println("=================== Largest Subarray ====================");
+		
+		int[] arr14 = { 4, 1, 1, 1, 2, 3, 5 };
+		target = 5;
+		System.out.print("Largest : " + largestSubArrayEqualsGivenSum(arr14, target));
 	}
 }

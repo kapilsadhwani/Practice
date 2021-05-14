@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class HouseRobberII {
 	public static int robMemo(int[] nums, int pos, int start, int[][] cache) {
-		if(pos <= 0 || (start == 1 && pos == 1)) return 0;
+		if(pos <= 0 || (start == 1 && pos == 1)) return 0; // We can go till pos=2 (nums[pos-1])
 		
 		if(cache[start][pos] != -1) return cache[start][pos];
 		
@@ -36,8 +36,8 @@ public class HouseRobberII {
 		
 		/*
 		 *  Find max of 
-		 *  1. Select last element and exclude first one
-		 *  2. Exclude last element and select first one
+		 *  1. Select first element and exclude last one
+		 *  2. Select last element and exclude first one
 		 */
 		return Math.max(robMemo(nums, n, 1, cache), 
 						robMemo(nums, n - 1, 0, cache));

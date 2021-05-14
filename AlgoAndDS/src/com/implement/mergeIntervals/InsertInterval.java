@@ -7,25 +7,28 @@ class InsertInterval {
 	public static int[][] insert(int[][] intervals, int[] newInterval) {
 		// init data
 		int newStart = newInterval[0], newEnd = newInterval[1];
-		int idx = 0, n = intervals.length;
+		int i = 0, n = intervals.length;
 		ArrayList<int[]> output = new ArrayList<int[]>();
 
 		// add all intervals before newInterval
-		while (idx < n && intervals[idx][1] < newStart)
-			output.add(intervals[idx++]);
+		while (i < n && intervals[i][1] < newStart){
+			output.add(intervals[i]);
+			i++;
+		}
 
 		// merge newInterval
-		while (idx < n && intervals[idx][0] <= newEnd) {
-			newStart = Math.min(newStart, intervals[idx][0]);
-			newEnd = Math.max(newEnd, intervals[idx][1]);
-			++idx;
+		while (i < n && intervals[i][0] <= newEnd) {	// Current start <= New Interval End
+			newStart = Math.min(newStart, intervals[i][0]);
+			newEnd = Math.max(newEnd, intervals[i][1]);
+			i++;
 		}
 		output.add(new int[] { newStart, newEnd });
 
 		// add all intervals after newInterval
-		while (idx < n)
-			output.add(intervals[idx++]);
-
+		while (i < n){
+			output.add(intervals[i++]);
+		}
+		
 		return output.toArray(new int[output.size()][2]);
 	}
 	

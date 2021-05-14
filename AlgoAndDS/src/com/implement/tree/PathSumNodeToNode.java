@@ -40,7 +40,14 @@ class PathSumNodeToNode {
 		PathSumNodeToNode bt = new PathSumNodeToNode();
 
 		/*
-		 * Constructed binary tree is 10 / \ 5 -3 / \ \ 3 2 11 / \ \ 3 -2 1
+		 * Constructed binary tree is 
+		 * 							10 
+		 * 							/ \ 
+		 * 						   5   -3 
+		 * 						  / \    \ 
+		 * 						 3   2   11 
+		 *                      / \   \ 
+		 *                     3  -2   1
 		 */
 
 		TreeNode root = new TreeNode(10);

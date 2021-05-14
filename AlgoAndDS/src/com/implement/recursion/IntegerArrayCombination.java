@@ -78,22 +78,22 @@ public class IntegerArrayCombination {
 	}
 	
 	// Top-down approach - DP: Memoization
-    public static int countCombinationSumWithDupTupleMemo(int[] nums, int T, int[] cache) {
-    	if (T == 0)
+    public static int countCombinationSumWithDupTupleMemo(int[] nums, int tgt, int[] cache) {
+    	if (tgt == 0)
             return 1;
     	
-    	if (cache[T] > 0) return cache[T];
+    	if (cache[tgt] > 0) return cache[tgt];
     	
     	int total = 0;
     	
     	for (int num : nums){
-    		if(T >= num){
-    			total = total + countCombinationSumWithDupTupleMemo(nums, T - num, cache);
+    		if(tgt >= num){
+    			total = total + countCombinationSumWithDupTupleMemo(nums, tgt - num, cache);
     		}
     	}        
         
-		cache[T] = total;
-        return cache[T];
+		cache[tgt] = total;
+        return cache[tgt];
     }
     
     /*

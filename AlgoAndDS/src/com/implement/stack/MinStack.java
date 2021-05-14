@@ -35,7 +35,7 @@ class MinStack {
 		}
 	}
 
-	public int top() {
+	public int top() {	// or peek
 		if(stack.size() == 0) return -1;
 
 		if(stack.peek() >= minElement){

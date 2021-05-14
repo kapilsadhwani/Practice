@@ -35,7 +35,7 @@ class TwoSum{
     public static void main (String[] args)
     {
         int A[] = {2, 7, 11, 15};
-        int n = 9;
+        int n = 14;
         int[] results = twoSum(A,  n);
         
         System.out.println();

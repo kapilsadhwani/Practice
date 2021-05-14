@@ -3,23 +3,11 @@ package com.implement.stack;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-class LastStoneWeight {
-	/*public static int lastStoneWeight(int[] stones) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
-        for (int stone : stones) {
-            pq.offer(stone);
-        }
-
-        for (int i = 0; i < stones.length - 1; i++) {
-            pq.offer(pq.poll() - pq.poll());
-        }
-        return pq.poll();
-    }*/
-	
+class LastStoneWeight {	
 	public static int lastStoneWeight(int[] stones) {
 		PriorityQueue<Integer> pq = new PriorityQueue<Integer>(stones.length, 
 				new Comparator<Integer>() {
-
+					// Place in descending order
 					@Override
 					public int compare(Integer o1, Integer o2) {
 						// TODO Auto-generated method stub
@@ -41,7 +29,7 @@ class LastStoneWeight {
 
 	// Driver Code
 	public static void main(String[] args) {
-		int[] stones = {2,7,4,1,8,1};
+		int[] stones = {1,7,9,5,3,16,22,38};
 		System.out.println(lastStoneWeight(stones));
 	}
 }

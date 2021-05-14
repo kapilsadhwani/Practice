@@ -1,5 +1,7 @@
 package com.implement.recursion;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class GenerateBinaryString {
@@ -52,6 +54,32 @@ public class GenerateBinaryString {
 			printForPattern(pattern, pos + 1, result);
 		}
 	}
+	
+	private static void printNBitBinary(int n, int pos, int zeros, int ones, 
+			char[] combo, List<String> result) {
+		if (n == 0) {
+			result.add(String.valueOf(combo));
+			return;
+		}
+
+		combo[pos] = '1';
+		printNBitBinary(n - 1, pos + 1, zeros, ones + 1, combo, result);
+
+		if (zeros < ones) {
+			combo[pos] = '0';
+			printNBitBinary(n - 1, pos + 1, zeros + 1, ones, combo, result);
+		}
+	}
+	
+	// Print N-bit binary numbers having more or equal 1’s than 0’s for any prefix
+	private static List<String> printNBitBinary(int n){
+		char[] combo = new char[n];
+		List<String> result = new ArrayList<String>();
+		
+		printNBitBinary(n, 0, 0, 0, combo, result);
+		
+		return result;
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -59,6 +87,11 @@ public class GenerateBinaryString {
 		//printForPattern(str, System.out::println);
 		
 		printForPattern(str);
+		
+		System.out.println("\n=============================================\n");
+		
+		List<String> result = printNBitBinary(5);
+		System.out.println(result);
 	}
 
 }

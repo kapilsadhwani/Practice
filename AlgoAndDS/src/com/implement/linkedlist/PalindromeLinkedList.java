@@ -66,6 +66,9 @@ public class PalindromeLinkedList {
         return prev;
     }
 
+    /*
+	 * If there are two middle nodes, return the first middle node.
+	 */
     private ListNode endOfFirstHalf(ListNode head) {
         ListNode fast = head;
         ListNode slow = head;

@@ -103,6 +103,7 @@ public class WordBreak {
 			
 			dfs(validWords, result, sb, pos - s.get(i).length());
 			
+			// Backtrack for next word in validWords[pos]
 			sb.delete(0, s.get(i).length() + 1);	// +1 is for the space
 		}
 	}

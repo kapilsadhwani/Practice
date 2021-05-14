@@ -37,6 +37,8 @@ public class SlidingWindowMaximum {
 			 * If first element goes out of window, remove it and add next new
 			 * element in the sliding window and find out max in the current
 			 * window of size k
+			 * 
+			 * It may not happen all the time, hence checking !!!
 			 */
 			if (!dq.isEmpty() && dq.peekFirst() == i - k) {
 				dq.pollFirst();
