@@ -76,12 +76,41 @@ class Successor {
             p = p.parent; 
         } 
         return p; 
-    } 
+    }
+    
+    static SNode predecessor;
+    static SNode successor;
+    static int state;
+    
+    // Populate in inorder way
+	static void InOrderPredecessorAndSuccessor(SNode root, SNode node) {
+		if(root == null) return;
+		
+		if (root.left != null) {
+			InOrderPredecessorAndSuccessor(root.left, node);
+		}
+
+		if (state == 0) {
+			if (root.data == node.data) {
+				state = 1;
+			} else {
+				predecessor = root;
+			}
+		} else if (state == 1) {
+			successor = root;
+			state = 2;
+		}
+
+		if (root.right != null) {
+			InOrderPredecessorAndSuccessor(root.right, node);
+		}
+	}
   
     /* Given a non-empty binary search tree, return the minimum data   
      value found in that tree. Note that the entire tree does not need 
      to be searched. */
     SNode minValue(SNode node) { 
+    	if (node == null) return null;
     	SNode current = node; 
   
         /* loop down to find the leftmost leaf */
@@ -110,5 +139,25 @@ class Successor {
         } else { 
             System.out.println("Inorder successor does not exist"); 
         } 
+        
+        predecessor = null;
+        successor = null;
+        state = 0;
+        
+        InOrderPredecessorAndSuccessor(root, temp);
+        
+        if (predecessor != null) { 
+            System.out.println("Populated predecessor of " + temp.data +  
+                                                      " is " + predecessor.data); 
+        } else { 
+            System.out.println("Populated predecessor does not exist"); 
+        }
+        
+        if (predecessor != null) { 
+            System.out.println("Populated successor of " + temp.data +  
+                                                      " is " + successor.data); 
+        } else { 
+            System.out.println("Populated successor does not exist"); 
+        }
     } 
 }

@@ -14,7 +14,6 @@ public class RoboInGrid {
 		int j;
 		
 		public Pair(String psf, int i, int j) {
-			super();
 			this.psf = psf;
 			this.i = i;
 			this.j = j;
@@ -162,7 +161,6 @@ public class RoboInGrid {
 	}
  
     public static void main(String args[]){
-        RoboInGrid pam = new RoboInGrid();
         int arr[][] = {{  1,   2,  3,  4},
         			   {  5,   6,  7,  8},
         			   {  9,  10, 11, -3},
@@ -170,11 +168,13 @@ public class RoboInGrid {
         
         bestPath(arr);
         
-        int result[] = new int[arr.length + arr[0].length-1];
-        
-        /*System.out.println("<====================================================>");
-        pam.print(arr, 0, 0, result,0);
-        System.out.println("<====================================================>");*/
+       /*
+        * System.out.println("<====================================================>");
+        * RoboInGrid pam = new RoboInGrid();
+        * int result[] = new int[arr.length + arr[0].length-1];
+        * pam.print(arr, 0, 0, result,0);
+        * System.out.println("<====================================================>");
+        */
         
         System.out.println("\n");
         

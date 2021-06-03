@@ -36,12 +36,15 @@ public class MergeKSortedLists {
 			return null;
 		}
 
-		PriorityQueue<ListNode> queue = new PriorityQueue<ListNode>(
+		/*PriorityQueue<ListNode> queue = new PriorityQueue<ListNode>(
 				lists.length, new Comparator<ListNode>() {
 					public int compare(ListNode n1, ListNode n2) {
 						return n1.val - n2.val;
 					}
-				});
+				});*/
+		
+		PriorityQueue<ListNode> queue = new PriorityQueue<ListNode>(lists.length,
+				(n1, n2) -> n1.val - n2.val);
 
 		ListNode dummyNode = new ListNode(0); // Dummy node to begin with new
 												// list

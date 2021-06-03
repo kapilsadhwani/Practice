@@ -18,7 +18,9 @@ class ClosestKPointsToOrigin {
             return points;
         }
         
-        PriorityQueue<int[]> maxHeap = new PriorityQueue<int[]>(K+1, new PointComparator());
+        //PriorityQueue<int[]> maxHeap = new PriorityQueue<int[]>(K+1, new PointComparator());
+        PriorityQueue<int[]> maxHeap = new 
+        		PriorityQueue<>(K+1, (p0,p1) -> p1[0]*p1[0] + p1[1]*p1[1] - p0[0]*p0[0] + p0[1]*p0[1]);
         
         for (int[] p : points) {
             maxHeap.add(p);

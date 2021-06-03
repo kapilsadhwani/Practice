@@ -67,7 +67,6 @@ public class StringMisc {
 		// Create a char array of given String
 		char ch[] = str.toCharArray();
 		for (int i = 0; i < str.length(); i++) {
-			// If first character of a word is found
 			if (ch[i] != ' ') {
 				// If it is in lower-case
 				if (ch[i] >= 'a' && ch[i] <= 'z') {
@@ -124,6 +123,25 @@ public class StringMisc {
 		// Convert the char array to equivalent String
 		String st = new String(ch);
 		return st;
+	}
+	
+	static String toggleCase(String str) {
+		// Create a char array of given String
+		StringBuilder sb = new StringBuilder(str);
+
+		for (int i = 0; i < sb.length(); i++) {
+			char ch = sb.charAt(i);
+
+			if (ch >= 'a' && ch <= 'z') {
+				char uc = (char) ('A' + ch - 'a');
+				sb.setCharAt(i, uc);
+			} else if (ch >= 'A' && ch <= 'Z') {
+				char lc = (char) ('a' + ch - 'A');
+				sb.setCharAt(i, lc);
+			}
+		}
+
+		return sb.toString();
 	}
 	
 	// function to print string in sorted order 
@@ -199,6 +217,64 @@ public class StringMisc {
 				pos = 0;
 			}
 		}*/
+		
+		return sb.toString();
+	}
+	
+	public static String compression1(String str) {
+		String s = str.charAt(0) + "";
+
+		for (int i = 1; i < str.length(); i++) {
+			char curr = str.charAt(i);
+			char prev = str.charAt(i - 1);
+
+			if (curr != prev) {
+				s += curr;
+			}
+		}
+
+		return s;
+	}
+	
+	public static String compression2(String str) {
+		String s = str.charAt(0) + "";
+		int count = 1;
+
+		for (int i = 1; i < str.length(); i++) {
+			char curr = str.charAt(i);
+			char prev = str.charAt(i - 1);
+
+			if (curr == prev) {
+				count++;
+			} else {
+				if (count > 1) {
+					s += count;
+					count = 1;
+				}
+				s += curr;
+			}
+		}
+
+		if (count > 1) {
+			s += count;
+		}
+
+		return s;
+	}
+	
+	public static String asciiDiffOfChars(String str){
+		StringBuilder sb = new StringBuilder();
+		sb.append(str.charAt(0));
+		
+		for (int i = 1; i < str.length(); i++) {
+			char curr = str.charAt(i);
+			char prev = str.charAt(i - 1);
+			
+			int gap = curr - prev;
+			
+			sb.append(gap);
+			sb.append(curr);
+		}
 		
 		return sb.toString();
 	}

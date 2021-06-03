@@ -71,9 +71,8 @@ class KnightWalkProblem {
 	}
 
 	// To calculate possible moves
-	static int findPossibleMoves(int mat[][], int p, int q) {
+	static int countPossibleMoves(int[][] mat, int p, int q) {
 		// All possible moves of a knight
-
 		int X[] = { 1, 1, 2, 2, -1, -1, -2, -2 };
 		int Y[] = { 2, -2, 1, -1, 2, -2, 1, -1 };
 
@@ -94,6 +93,47 @@ class KnightWalkProblem {
 		// Return number of possible moves
 		return count;
 	}
+	
+	public static void displayBoard(int[][] chess){
+        for(int i = 0; i < chess.length; i++){
+            for(int j = 0; j < chess[0].length; j++){
+                System.out.print(chess[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        System.out.println();
+    }
+	
+	// To calculate possible moves
+	static void printKnightTour(int[][] chess, int r, int c, int move) {
+		if(move == chess.length * chess.length){
+			chess[r][c] = move;
+			displayBoard(chess);
+			chess[r][c] = 0;
+			return;
+		}
+		
+		// All possible moves of a knight
+		int X[] = { 1, 1, 2, 2, -1, -1, -2, -2 };
+		int Y[] = { 2, -2, 1, -1, 2, -2, 1, -1 };
+
+		chess[r][c] = move;
+
+		// Check if each possible move is valid or not
+		for (int i = 0; i < X.length; i++) {
+			// Position of knight after move
+			int x = r + X[i];
+			int y = c + Y[i];
+
+			// count valid moves
+			if (x >= 0 && y >= 0 && x < chess.length && y < chess[0].length
+					&& chess[x][y] == 0)
+				printKnightTour(chess, x, y, move + 1);
+		}
+
+		chess[r][c] = 0;
+	}
 
 	// Driver code
 	public static void main(String[] args) {
@@ -108,6 +148,12 @@ class KnightWalkProblem {
 						{ 0, 1, 1, 1 } }; 
 	
 		int p = 2, q = 2;
-		System.out.println(findPossibleMoves(mat, p, q)); 
+		System.out.println(countPossibleMoves(mat, p, q));
+		
+		int n = 5;
+		p = 2;
+		q = 0;
+		int[][] chess = new int[n][n];
+		printKnightTour(chess, p, q, 1);
 	}
 }

@@ -1,9 +1,6 @@
 package com.implement.google;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-
-import javafx.util.Pair;
 
 class DistanceKBetweenLeafNodes {
 	public class TreeNode {
@@ -17,7 +14,6 @@ class DistanceKBetweenLeafNodes {
 	}
 	
     ArrayList<TreeNode> leaves;
-    HashSet<Pair<Integer, Integer>> set;
     
 	private void leaves(TreeNode node) {
 		if (node == null)
@@ -36,13 +32,13 @@ class DistanceKBetweenLeafNodes {
 		if (root.data == n1 || root.data == n2)
 			return root;
 
-		TreeNode left = LCA(root.left, n1, n2);
-		TreeNode right = LCA(root.right, n1, n2);
+		TreeNode leftLCA = LCA(root.left, n1, n2);
+		TreeNode rightLCA = LCA(root.right, n1, n2);
 
-		if (left != null && right != null)
+		if (leftLCA != null && rightLCA != null)
 			return root;
 		
-		return left != null ? left : right;
+		return leftLCA != null ? leftLCA : rightLCA;
 	}
 
 	public int findLevel(TreeNode root, int data, int level) {
@@ -69,30 +65,21 @@ class DistanceKBetweenLeafNodes {
 		int count = 0;
 
 		this.leaves = new ArrayList<TreeNode>();
-		this.set = new HashSet<Pair<Integer, Integer>>();
 
-		leaves(root); // getting leaves of tree
+		// Getting leaves of tree
+		leaves(root); 
 
-		for (int i = 0; i < leaves.size(); i++) { // for every leaf pair
+		for (int i = 0; i < leaves.size() - 1; i++) { // for every leaf pair
 			TreeNode one = leaves.get(i);
 
 			for (int j = i + 1; j < leaves.size(); j++) {
 				TreeNode two = leaves.get(j);
-				Pair<Integer, Integer> p1 = new Pair<Integer, Integer>(
-						one.data, two.data); // pair of actual values of nodes
-												// can be (n1, n2) or (n2, n1)
-												// already stored in hashset
-				Pair<Integer, Integer> p2 = new Pair<Integer, Integer>(
-						two.data, one.data);
-				if (set.contains(p1) || set.contains(p2)) // so check both
-					continue;
-
-				int d = findDistance(root, one, two); // find shortest distance
-														// using LCA
-				if (d <= K) { // if distance less than k, add to hashset and
-								// increment answer
-					// System.out.println(one.data+" "+two.data);
-					set.add(p1);
+				
+				// find shortest distance using LCA
+				int d = findDistance(root, one, two); 
+								
+				// if distance less than or equals k, increment answer
+				if (d <= K) { 
 					count++;
 				}
 			}
@@ -100,8 +87,8 @@ class DistanceKBetweenLeafNodes {
 
 		return count;
 	}
-    
-    public static void main(String[] args) {
+	
+	public static void main(String[] args) {
     	DistanceKBetweenLeafNodes bt = new DistanceKBetweenLeafNodes();
     	
     	/*
@@ -128,9 +115,8 @@ class DistanceKBetweenLeafNodes {
         root.right.left = bt.new TreeNode(0); 
         root.right.right = bt.new TreeNode(8); 
         
-        int K = 4;
+        int k = 4;
         
-        System.out.println(bt.countPairs(root, K));
-        System.out.println(bt.set);
+        System.out.println(bt.countPairs(root, k));
 	}
 } 

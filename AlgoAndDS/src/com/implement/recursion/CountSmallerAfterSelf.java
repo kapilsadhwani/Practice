@@ -10,36 +10,39 @@ import com.implement.sort.SortUtils;
 public class CountSmallerAfterSelf {
 
 	// Function to count the number of inversions during the merge process
-	private static void mergeAndCount(int[] arr, int l, int m, int r, int[] temp, 
-			HashMap<Integer, Integer> hm) {
-		int left=l, right=m+1, k=0;
+	private static void mergeAndCount(int[] arr, int l, int m, int r,
+			int[] temp, HashMap<Integer, Integer> hm) {
+		int left = l, right = m + 1, k = 0;
 		int swaps = 0;
 
-		while(left<=m && right<=r){
-			if(arr[left] <= arr[right]){
-				// increment inversion count of arr[left] 
-	            hm.put(arr[left], hm.getOrDefault(arr[left], 0) + swaps); 
+		while (left <= m && right <= r) {
+			if (arr[left] <= arr[right]) {
+				// increment inversion count of arr[left]
+				hm.put(arr[left], hm.getOrDefault(arr[left], 0) + swaps);
 				temp[k++] = arr[left++];
-			}else{
+			} else {
 				temp[k++] = arr[right++];
-				
+
 				// inversion found
 				swaps++;
 			}
 		}
-		
+
 		// We need to update Map
-		while(left<=m){
-			// increment inversion count of arr[left] 
+		while (left <= m) {
+			// increment inversion count of arr[left]
 			hm.put(arr[left], hm.getOrDefault(arr[left], 0) + swaps);
-			
+
 			temp[k++] = arr[left++];
 		}
-		while(right<=r){
+		while (right <= r) {
 			temp[k++] = arr[right++];
 		}
-		
-		SortUtils.copyArray(temp,arr,l,r);
+
+		//SortUtils.copyArray(temp, arr, l, r);
+		for (int i = l, j = 0; i <= r; i++) {
+			arr[i] = temp[j++];
+		}
 	}
 
 	// Merge sort function
@@ -75,8 +78,8 @@ public class CountSmallerAfterSelf {
 		int n = arr.length;
 		
 		for(int i=0; i<arr.length; i++){
-			if(hm.get(arr[i]) != null){
-				//Surpasser count = n - 1 – i – inversion-count
+			//if(hm.get(arr[i]) != null){
+			if(hm.containsKey(arr[i])){
 				temp[i] = hm.get(arr[i]);
 			}
 		}
@@ -86,10 +89,12 @@ public class CountSmallerAfterSelf {
 
 	// Driver code
 	public static void main(String[] args) {
-		//int[] arr = { 4, 5, 1, 2, 3 };
-		int[] arr = { 5,2,6,1 };
-		
+		int[] arr = { 2, 7, 5, 3, 0, 8, 1 };
 		printSurpasser(arr);
+		
+		int[] arr1 = { 5,2,6,1 };
+		
+		printSurpasser(arr1);
 
 		/*System.out.println(Arrays.toString(arr) + " - " + mergeSortAndCount(arr, 0, arr.length - 1, temp, hm));
 		

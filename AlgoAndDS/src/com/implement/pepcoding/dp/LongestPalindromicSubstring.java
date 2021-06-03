@@ -100,11 +100,11 @@ public class LongestPalindromicSubstring {
 				}
 
 				if (dp[i][j] == true) {
-					if(g + 1 > len){
+					//if(g + 1 > len){
 						len = g + 1;
 						startIdx = i;
 						endIdx = j;
-					}
+					//}
 				}
 			}
 		}

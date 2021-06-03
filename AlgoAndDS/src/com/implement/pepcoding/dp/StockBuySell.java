@@ -7,6 +7,19 @@ import java.util.Arrays;
 // Solution structure 
 class Interval {
 	int buy, sell;
+	
+	Interval(){}
+	
+	Interval(int b, int s){
+		this.buy = b;
+		this.sell = s;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "[" + this.buy + " " + this.sell + "]";
+	}
 }
 
 class StockBuySell {
@@ -26,7 +39,7 @@ class StockBuySell {
 		while (i < n - 1) {
 			// Find Local Minima. Note that the limit is (n-2) as we are
 			// comparing present element to the next element.
-			while ((i < n - 1) && (price[i + 1] <= price[i]))
+			while ((i < n - 1) && (price[i] >= price[i + 1]))
 				i++;
 
 			// If we reached the end, break as no further solution possible
@@ -72,14 +85,14 @@ class StockBuySell {
 		int min_element = prices[0];
 
 		// Maximum difference found so far
-		int max_diff = prices[1] - min_element;
+		int max_diff = 0;
 
 		for (int i = 1; i < prices.length; i++) {
-			if (prices[i] - min_element > max_diff)
-				max_diff = prices[i] - min_element;
-
 			if (prices[i] < min_element)
 				min_element = prices[i];
+			
+			if (prices[i] - min_element > max_diff)
+				max_diff = prices[i] - min_element;
 		}
 		return max_diff;
 	}
@@ -94,12 +107,19 @@ class StockBuySell {
 		int sellIdx = 0;
 
 		int profit = 0;
+		
+		// solution array
+		ArrayList<Interval> sol = new ArrayList<Interval>();
 
 		for (int i = 1; i < prices.length; i++) {
 			if (prices[i] >= prices[i - 1]) {
 				sellIdx++;
 			} else {
 				profit = profit + prices[sellIdx] - prices[buyIdx];
+				
+				if(buyIdx != sellIdx){
+					sol.add(new Interval(buyIdx, sellIdx));
+				}
 
 				buyIdx = i;
 				sellIdx = i;
@@ -107,6 +127,12 @@ class StockBuySell {
 		}
 
 		profit = profit + prices[sellIdx] - prices[buyIdx];
+		
+		if(buyIdx != sellIdx){
+			sol.add(new Interval(buyIdx, sellIdx));
+		}
+		
+		System.out.println(sol);
 		return profit;
 	}
 	
@@ -186,7 +212,8 @@ class StockBuySell {
 	}
 	
 	// Find maximum profit if sold until today
-	static void maxProfitIfSoldToday(int arr[], int dp[]) {
+	static int[] maxProfitIfSoldToday(int arr[]) {
+		int[] dp = new int[arr.length];
 		int min_so_far = arr[0];
 		int currProfit = 0;
 
@@ -203,10 +230,13 @@ class StockBuySell {
 				dp[i] = dp[i - 1];
 			}
 		}
+		
+		return dp;
 	}
 	
 	// Find maximum profit if bought today
-	static void maxProfitIfBoughtToday(int arr[], int dp[]) {
+	static int[] maxProfitIfBoughtToday(int arr[]) {
+		int[] dp = new int[arr.length];
 		int max_so_far = arr[arr.length - 1];
 		int currProfit = 0;
 
@@ -223,6 +253,8 @@ class StockBuySell {
 				dp[i] = dp[i + 1];
 			}
 		}
+		
+		return dp;
 	}
 
 	// Buy and Sell stock - Two Transactions Allowed
@@ -231,12 +263,9 @@ class StockBuySell {
 			throw new IllegalArgumentException(
 					"Getting a profit requires at least 2 prices");
 
-		int[] dpIfSoldToday = new int[prices.length];
-		int[] dpIfBoughtToday = new int[prices.length];
-		
-		maxProfitIfSoldToday(prices, dpIfSoldToday);
-		maxProfitIfBoughtToday(prices, dpIfBoughtToday);
-		
+		int[] dpIfSoldToday = maxProfitIfSoldToday(prices);
+		int[] dpIfBoughtToday = maxProfitIfBoughtToday(prices);
+
 		// Maximum profit if two transactions allowed
 		int maxProfit = dpIfSoldToday[0] + dpIfBoughtToday[0];
 
@@ -310,8 +339,17 @@ class StockBuySell {
 		int n = price.length;
 
 		// function call
+		System.out.println(Arrays.toString(price));
 		stock.stockBuySell(price, n);
 
+		System.out.println(" ===================================== ");
+		
+		System.out.println(Arrays.toString(price));
+		System.out.println("Single Transaction: " + stock.maxProfitSingleTrans(price) +
+				", Multiple Transaction: " + stock.maxProfitInfiniteTrans(price));
+		
+		System.out.println(" ===================================== ");
+		
 		int price1[] = { 7, 1, 5, 3, 6, 4 };
 		n = price1.length;
 

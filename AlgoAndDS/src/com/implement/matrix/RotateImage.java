@@ -8,7 +8,7 @@ class RotateImage {
 
 	// After transpose we swap elements of column one by one for finding left
 	// rotation of matrix by 90 degree
-	static void reverseColumns(int matrix[][]) {
+	static void reverseRows(int matrix[][]) {
 		for (int c = 0; c < matrix[0].length; c++)
 			for (int r = 0, k = matrix.length - 1; r < k; r++, k--) {
 				int temp = matrix[r][c];
@@ -19,7 +19,7 @@ class RotateImage {
 
 	// After transpose we swap elements of row one by one for finding right
 	// rotation of matrix by 90 degree
-	static void reverseRows(int matrix[][]) {
+	static void reverseColumns(int matrix[][]) {
 		for (int r = 0; r < matrix.length; r++)
 			for (int c = 0, k = matrix[0].length - 1; c < k; c++, k--) {
 				int temp = matrix[r][c];
@@ -52,13 +52,18 @@ class RotateImage {
 	// Function to anticlockwise rotate matrix by 90 degree
 	static void rotate90AntiClockwiseOrLeftRotate(int matrix[][]) {
 		transpose(matrix);
-		reverseColumns(matrix);
+		
+		/*System.out.println("After Transpose: ");
+		printMatrix(matrix);
+		System.out.println("");*/
+		
+		reverseRows(matrix);
 	}
 
 	// Function to clockwise rotate matrix by 90 degree
 	static void rotate90ClockwiseorRightRotate(int matrix[][]) {
 		transpose(matrix);
-		reverseRows(matrix);
+		reverseColumns(matrix);
 	}
 
 	/* Driver program to test above function */

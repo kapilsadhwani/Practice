@@ -52,8 +52,8 @@ public class TowerOfHanoi {
 		// TODO Auto-generated method stub
 
 		int n = 3;
-		TowerOfHanoi[] towers = new TowerOfHanoi[n];
-		for (int i= 0; i < 3; i++) {
+		TowerOfHanoi[] towers = new TowerOfHanoi[3];
+		for (int i= 0; i < towers.length; i++) {
 			towers[i] = new TowerOfHanoi(i);
 		}
 

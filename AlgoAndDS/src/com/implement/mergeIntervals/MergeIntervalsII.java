@@ -1,8 +1,7 @@
 package com.implement.mergeIntervals;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedList;
 
 /*
  * Time Complexity: O(M + N), where M, NM,N are the lengths of A and B respectively.
@@ -10,7 +9,7 @@ import java.util.List;
  */
 class MergeIntervalsII {
 	public static int[][] intervalIntersection(int[][] A, int[][] B) {
-		List<int[]> ans = new ArrayList();
+		LinkedList<int[]> ans = new LinkedList<>();
 		int i = 0, j = 0;
 
 		while (i < A.length && j < B.length) {

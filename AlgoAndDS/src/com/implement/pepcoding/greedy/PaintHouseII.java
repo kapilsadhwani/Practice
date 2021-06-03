@@ -18,11 +18,11 @@ public class PaintHouseII {
 		for (int j = 0; j < dp[0].length; j++) {
 			dp[0][j] = nums[0][j];
 			
-			if(nums[0][j] <= least){
+			if(dp[0][j] <= least){
 				secLeast = least;
-				least = nums[0][j];
-			}else if(nums[0][j] < secLeast){
-				secLeast = nums[0][j];
+				least = dp[0][j];
+			}else if(dp[0][j] < secLeast){
+				secLeast = dp[0][j];
 			}
 		}
 

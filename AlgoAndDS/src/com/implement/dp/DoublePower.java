@@ -2,28 +2,32 @@ package com.implement.dp;
 
 public class DoublePower {
 	public static double myPowR(double x, int n) {
-		if(n == 0) return 1;	
-		if(n == 1) return x;
+		if (n == 0)
+			return 1;
+		if (n == 1)
+			return x;
 
-		double result = myPowR(x, n/2);
-		 
-	    if(n%2 == 0){
-	    	result = result * result;
-	    }else{
-	    	result = result * result * x;
-	    }
-	    
-	    return result;
+		double result = myPowR(x, n / 2);
+
+		if (n % 2 == 0) {
+			result = result * result;
+		} else {
+			result = result * result * x;
+		}
+
+		return result;
 	}
-	
-	public static double myPow(double x, int n) {
-		if(n == 0) return 1;	
-		if(n == 1) return x;
 
-		if(n<0){
-	        return 1/myPowR(x, -n);
-	    }
-		
+	public static double myPow(double x, int n) {
+		if (n == 0)
+			return 1;
+		if (n == 1)
+			return x;
+
+		if (n < 0) {
+			return 1 / myPowR(x, -n);
+		}
+
 		return myPowR(x, n);
 	}
 

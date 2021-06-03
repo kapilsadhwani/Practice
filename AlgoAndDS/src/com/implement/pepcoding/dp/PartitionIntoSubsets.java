@@ -28,37 +28,8 @@ public class PartitionIntoSubsets {
 			System.out.println(0);
 			return -1;
 		}
-
-		/*long[][] dp = new long[k + 1][n + 1];
-
-		
-		 * We need combinations, hence
-		 * Outer loop - teams
-		 * Inner loop - person
-		 
-		
-		for (int t = 1; t <= k; t++) {
-			for (int p = 1; p <= n; p++) {
-				if (p < t) {
-					dp[t][p] = 0;
-				} else if (p == t) {
-					dp[t][p] = 1;
-				} else {
-					dp[t][p] = dp[t - 1][p - 1] + t * dp[t][p - 1];
-				}
-			}
-		}
-
-		return dp[k][n];*/
 		
 		long[][] dp = new long[n + 1][k + 1];
-
-		
-		/*
-		 * We need combinations, hence
-		 * Outer loop - teams
-		 * Inner loop - person
-		 */
 		
 		for (int p = 1; p <= n; p++) {
 			for (int t = 1; t <= k; t++) {

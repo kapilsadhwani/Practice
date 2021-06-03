@@ -39,7 +39,10 @@ public class SurpasserCountInArray {
 			temp[k++] = arr[right++];
 		}
 		
-		SortUtils.copyArray(temp,arr,l,r);
+		//SortUtils.copyArray(temp,arr,l,r);
+		for (int i = l, j = 0; i <= r; i++) {
+			arr[i] = temp[j++];
+		}
 	}
 
 	// Merge sort function
@@ -75,7 +78,8 @@ public class SurpasserCountInArray {
 		int n = arr.length;
 		
 		for(int i=0; i<arr.length; i++){
-			if(hm.get(arr[i]) != null){
+			//if(hm.get(arr[i]) != null){
+			if(hm.containsKey(arr[i])){
 				//Surpasser count = n - 1 – i – inversion-count
 				temp[i] = n - 1 - i - hm.get(arr[i]);
 			}
@@ -90,6 +94,10 @@ public class SurpasserCountInArray {
 		int[] arr = { 2, 7, 5, 3, 0, 8, 1 };
 		
 		printSurpasser(arr);
+		
+		int[] arr1 = { 5, 2, 6, 1 };
+		
+		printSurpasser(arr1);
 
 		/*System.out.println(Arrays.toString(arr) + " - " + mergeSortAndCount(arr, 0, arr.length - 1, temp, hm));
 		

@@ -48,7 +48,7 @@ class Array2DBinarySearch {
 		int r_low = 0;
 		int r_high = row-1;
 		int c_mid = col / 2;
-		while (r_low < r_high-1) {
+		while (r_low + 1 < r_high) {
 			int r_mid = (r_low + r_high) / 2;
 
 			// element found
@@ -108,7 +108,7 @@ class Array2DBinarySearch {
 			return false;
 		
 		if (matrix[low][cols - 1] == target) {
-			//System.out.println("Found at (" + low + "," + (cols - 1) + ")");
+			System.out.println("Found at (" + low + "," + (cols - 1) + ")");
 			return true;
 		}
 
@@ -129,11 +129,10 @@ class Array2DBinarySearch {
 			return false;
 
 		if (matrix[r][low] == target) {
-			//System.out.println("Found at (" + r + "," + low + ")");
+			System.out.println("Found at (" + r + "," + low + ")");
 			return true;
 		}
 
-		//System.out.println("Element not found");
 		return false;
 	}
 	
@@ -178,6 +177,7 @@ class Array2DBinarySearch {
 				  {18, 21, 23, 26, 30}
 				};
 		target = 5;
+		sortedMatrixSearch(matrix1, row, col, target);
 		System.out.println(searchMatrixII(matrix1, target));
 		
 		target = 20;

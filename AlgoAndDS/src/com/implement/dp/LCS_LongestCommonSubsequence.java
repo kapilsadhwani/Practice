@@ -56,8 +56,8 @@ public class LCS_LongestCommonSubsequence {
 
 		for (int i = 1; i < n + 1; i++) {
 			for (int j = 1; j < m + 1; j++) {
-				if (X[i - 1] == Y[j - 1]) // Check if chars in X and Y at those
-											// indexes are same
+				// Check if chars in X and Y at those indexes are same
+				if (X[i - 1] == Y[j - 1]) 
 					L[i][j] = L[i - 1][j - 1] + 1;
 				else
 					L[i][j] = Math.max(L[i - 1][j], L[i][j - 1]);

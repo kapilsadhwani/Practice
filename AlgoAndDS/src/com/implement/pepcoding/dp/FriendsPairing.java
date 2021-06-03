@@ -14,11 +14,14 @@ package com.implement.pepcoding.dp;
 public class FriendsPairing {
 	private static int countWays(int n) {
 		int[] dp = new int[n + 1];
-
+		
+		if (n == 1 || n == 2) {
+			return n;
+		}
+		
 		/*
 		 * Single person can stay single
 		 */
-
 		dp[1] = 1;
 
 		/*
@@ -36,9 +39,10 @@ public class FriendsPairing {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int n = 5;
-		
-		System.out.println(countWays(n));
+
+		for (int i = 1; i <= 10; i++) {
+			System.out.println("Number of friends: " + i + " ==> " + countWays(i) + " ways.");
+		}
 	}
 
 }

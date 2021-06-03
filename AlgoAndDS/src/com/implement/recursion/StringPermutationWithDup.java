@@ -42,10 +42,13 @@ public class StringPermutationWithDup {
 		for (char c : map.keySet()) {
 			int count = map.get(c);
 			if (count > 0) {
-				map.put(c, count - 1);	// Include
+				// Reduce count and include this char in output array
+				map.put(c, count - 1);
 				resultChar[pos] = c;
+				
 				printPerms(map, resultChar, pos+1, result);
-				map.put(c, count);		// Don't include i.e revert count, similar to unswap
+				
+				map.put(c, count);		// Backtrack
 			}
 		}
 	}

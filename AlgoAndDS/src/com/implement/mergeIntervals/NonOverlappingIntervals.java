@@ -18,6 +18,9 @@ public class NonOverlappingIntervals {
 		// Sort the intervals by end time
 		Arrays.sort(intervals, new myComparator());
 		
+		/*for(int[] a : intervals)
+			System.out.println(Arrays.toString(a));*/
+		
 		int end = intervals[0][1];
 		
 		// Count of number of intervals to keep

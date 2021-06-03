@@ -23,21 +23,17 @@ class MSIS_MaxSumIncreasingSubsequence {
 		 * Compare till previous elements
 		 */
 		for (int i = 0; i < n; i++) {
-			Integer max = null;
+			int max = 0;
 			
 			for (int j = 0; j < i; j++) {
-				if (nums[j] < nums[i]) {
-					if(max == null || dp[j] > max){
+				if (nums[j] <= nums[i]) {					
+					if(dp[j] > max){
 						max = dp[j];
 					}
 				}
 			}
 			
-			if(max == null){
-				dp[i] = nums[i];
-			}else{
-				dp[i] = max + nums[i];
-			}
+			dp[i] = max + nums[i];
 
 			if (dp[i] > ans) {
 				ans = dp[i];
@@ -90,5 +86,17 @@ class MSIS_MaxSumIncreasingSubsequence {
         System.out.println("Sum of maximum sum "+ 
                 "increasing subsequence is "+ 
                 findMSIS(arr)); 
+        
+        System.out.println("==============================");
+        
+        int arr1[] = new int[]{5, -1, -2, -3, -4, -5, -6, -7}; 
+        n = arr1.length; 
+        System.out.println("Sum of maximum sum "+ 
+                            "increasing subsequence is "+ 
+                              maxSumIS(arr1, n)); 
+        
+        System.out.println("Sum of maximum sum "+ 
+                "increasing subsequence is "+ 
+                findMSIS(arr1)); 
     } 
 } 

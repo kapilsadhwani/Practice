@@ -1,14 +1,16 @@
 package com.implement.graph;
 
 // Java program to count islands in boolean 2D matrix 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 class WordBoggle {
 	// Let the given dictionary be following
-	static final String dictionary[] = { "GEEKS", "FOR", "QUIZ", "GUQ", "EE", "SEEK" };
+	static final List<String> dictionary = Arrays.asList( "GEEKS", "FOR", "QUIZ", "GUQ", "EE", "SEEK" );
 	//static final String dictionary[] = { "GEEKS", "FOR", "QUIZ", "GO"};
-	static final int n = dictionary.length;
+	static final int n = dictionary.size();
 	static final int M = 3, N = 3;
 	
 	static int[] rowOffsets    = {0, 0, -1, -1, -1, 1, 1, 1};
@@ -21,10 +23,7 @@ class WordBoggle {
 	// per the question dictionary is given to us.
 	static boolean isWord(String str) {
 		// Linearly search all words
-		for (int i = 0; i < n; i++)
-			if (str.equals(dictionary[i]))
-				return true;
-		return false;
+		return dictionary.contains(str);
 	}
 
 	// A recursive function to print all words present on boggle

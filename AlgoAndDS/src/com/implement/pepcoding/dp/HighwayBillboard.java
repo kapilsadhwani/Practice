@@ -77,7 +77,7 @@ class HighwayBillboard {
 		int m = 20;
 		int t = 5;
 				
-		System.out.println("Maximum revenue: " + maxRevenueBasedOnBoards(m, nums, rev, t));
-		System.out.println("Maximum revenue: " + maxRevenueBasedOnMiles(m, nums, rev, t));
+		System.out.println("Maximum revenue using boards: " + maxRevenueBasedOnBoards(m, nums, rev, t));
+		System.out.println("Maximum revenue using miles: " + maxRevenueBasedOnMiles(m, nums, rev, t));
 	}
 }

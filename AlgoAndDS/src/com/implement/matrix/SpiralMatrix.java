@@ -5,7 +5,7 @@ import java.util.List;
 
 public class SpiralMatrix {
 
-	public List<Integer> spiralOrderSimple(int[][] matrix) {
+	public static List<Integer> spiralOrderSimple(int[][] matrix) {
 		List<Integer> res = new ArrayList<Integer>();
 
 		if (matrix.length == 0) {
@@ -55,7 +55,7 @@ public class SpiralMatrix {
 	 * input matrix. We add every element in the matrix to our final answer.
 	 * Space Complexity: O(N), the information stored in ans.
 	 */
-	public List<Integer> spiralOrder(int[][] matrix) {
+	public static List<Integer> spiralOrder(int[][] matrix) {
 		List ans = new ArrayList();
 		if (matrix.length == 0)
 			return ans;
@@ -113,7 +113,11 @@ public class SpiralMatrix {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		int[][] matrix = {{1,2,3},{4,5,6},{7,8,9}};
+		
+		System.out.println(spiralOrderSimple(matrix));
+		
+		System.out.println(spiralOrder(matrix));
 	}
 
 }

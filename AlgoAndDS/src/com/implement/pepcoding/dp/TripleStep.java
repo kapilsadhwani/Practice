@@ -1,5 +1,6 @@
 package com.implement.pepcoding.dp;
 
+
 public class TripleStep {
 	private static int countWaysR(int s, int[] comb) {
     	if (s == 0){
@@ -91,6 +92,8 @@ public class TripleStep {
 			dp[i] = total;
 		}
 
+		/*System.out.println(Arrays.toString(arr));
+		System.out.println(Arrays.toString(dp));*/
 		return dp[0];
     }
 
@@ -136,7 +139,7 @@ public class TripleStep {
     	
     	System.out.println("=============================================");
     	
-		int[] nums = { 5, 5, 2, 4, 1, 5, 9, 8, 6, 3, 8, 9, 1 };
+		int[] nums = { 5, 0, 2, 4, 1, 5, 9, 8, 6, 3, 8, 9, 1 };
     	
     	System.out.println(climbStairsVariableJump(nums));
     	

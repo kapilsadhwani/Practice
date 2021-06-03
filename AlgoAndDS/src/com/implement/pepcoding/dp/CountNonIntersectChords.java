@@ -3,6 +3,8 @@ package com.implement.pepcoding.dp;
 
 public class CountNonIntersectChords {
 	static int numberOfChords(int n) {
+		if(n % 2 == 1) return 0;
+		
 		int c = n /2;
 		
 		if(c == 0 || c == 1) return 1;

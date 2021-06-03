@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 
 class LastStoneWeight {	
 	public static int lastStoneWeight(int[] stones) {
-		PriorityQueue<Integer> pq = new PriorityQueue<Integer>(stones.length, 
+		/*PriorityQueue<Integer> pq = new PriorityQueue<Integer>(stones.length, 
 				new Comparator<Integer>() {
 					// Place in descending order
 					@Override
@@ -13,7 +13,10 @@ class LastStoneWeight {
 						// TODO Auto-generated method stub
 						return o2.compareTo(o1);
 					}
-				});
+				});*/
+		
+		PriorityQueue<Integer> pq = new PriorityQueue<Integer>(stones.length, 
+				(a, b) -> b - a);
 
 		for (int stone : stones) {
             pq.offer(stone);

@@ -50,7 +50,7 @@ public class RecursiveMultiply {
 			return bigger;
 		}
 
-		int s = smaller >> 1; // Divide by 2
+		int s = smaller >> 1; // Divide by 2	(or s = smaller /2)
 		int halfProd = fastProductHelper(s, bigger);
 		
 		if (smaller% 2 == 0){

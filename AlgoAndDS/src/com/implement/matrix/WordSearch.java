@@ -6,8 +6,7 @@ import java.util.List;
 public class WordSearch {
 	/*
 	 * Time Complexity: O(Nx4^L ) where N is the
-	 * number of cells in the board and LL is the length of the word to be
-	 * matched.
+	 * number of cells in the board and L is the length of the word to be matched.
 	 * 
 	 * For the backtracking function, its execution trace would be visualized as
 	 * a 4-ary tree, each of the branches represent a potential exploration in
@@ -15,7 +14,7 @@ public class WordSearch {
 	 * number of invocation would be the number of nodes in a full 4-nary tree,
 	 * which is about 4^L.
 	 * 
-	 * We iterate through the board for backtracking, i.e. there could be NN
+	 * We iterate through the board for backtracking, i.e. there could be N
 	 * times invocation for the backtracking function in the worst case.
 	 * 
 	 * As a result, overall the time complexity of the algorithm would be O(Nx4 ^ L ).
@@ -29,20 +28,19 @@ public class WordSearch {
 	
 	private char[][] board;
 	private int ROWS;
-	private int COLS;
-	private int[] rowOffsets = { 0, 1, 0, -1 };
-	private int[] colOffsets = { 1, 0, -1, 0 };
-	
+	private int COLS;	
 
 	public boolean exist(char[][] board, String word) {
 		this.board = board;
 		this.ROWS = board.length;
 		this.COLS = board[0].length;
 
+		// Check for each cell (i.e. each vertex)
 		for (int row = 0; row < this.ROWS; ++row)
 			for (int col = 0; col < this.COLS; ++col)
 				if (this.backtrack(row, col, word, 0))
 					return true;
+		
 		return false;
 	}
 
@@ -53,22 +51,26 @@ public class WordSearch {
 		
 		if(this.board[row][col] != word.charAt(pos)) return false;
 
-		/* Step 2). explore the neighbors in DFS */
+		/* Step 2: Mark visited, and explore the neighbors in DFS */
 		boolean ret = false;
+		int[] rowOffsets = { 0, 1, 0, -1 };
+		int[] colOffsets = { 1, 0, -1, 0 };
 		
-		// mark the path before the next exploration
+		// Mark as visited
 		this.board[row][col] = '#';
 
 		for (int d = 0; d < 4; ++d) {
             int newX = row + rowOffsets[d];
 			int newY = col + colOffsets[d];
 			
-			if(newX < 0 || newX >= this.ROWS || newY < 0 || newY >= this.COLS)
+			if(newX < 0 || newX >= this.ROWS || newY < 0 || newY >= this.COLS 
+					|| board[newX][newY] == '#')
 				continue;
             
 			ret = this.backtrack(newX, newY, word, pos + 1);
             
-			if (ret) break;
+			// Do not return directly if we want to find all words
+			if (ret == true) break;
 		}
 
 		/* Step 4). clean up and return the result. */

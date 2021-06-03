@@ -17,7 +17,7 @@ class InsertInterval {
 		}
 
 		// merge newInterval
-		while (i < n && intervals[i][0] <= newEnd) {	// Current start <= New Interval End
+		while (i < n && newEnd >= intervals[i][0]) {	// Current start <= New Interval End
 			newStart = Math.min(newStart, intervals[i][0]);
 			newEnd = Math.max(newEnd, intervals[i][1]);
 			i++;

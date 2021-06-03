@@ -6,16 +6,15 @@ import java.util.Comparator;
 public class MeetingRoomsI {
 	public static boolean canAttendMeetings(int[][] intervals) {
 		// Sort the intervals by start time
-		Arrays.sort(intervals, 
-				new Comparator<int[]>() {
-					public int compare(final int[] a, final int[] b) {
-			            return a[0] - b[0];
-			          }
-				});
-		
-		for(int i=1; i<intervals.length; i++){
+		Arrays.sort(intervals, new Comparator<int[]>() {
+			public int compare(final int[] a, final int[] b) {
+				return a[0] - b[0];
+			}
+		});
+
+		for (int i = 1; i < intervals.length; i++) {
 			// If next meeting start < previous meeting end, return false
-			if(intervals[i][0] < intervals[i-1][1])
+			if (intervals[i][0] < intervals[i - 1][1])
 				return false;
 		}
 		return true;

@@ -61,6 +61,14 @@ public class BinaryTree {
 			this.depth = depth;
 		} 
 	}
+	
+	private static class BSTPair {
+	    boolean isBST;
+	    int min;
+        int max;
+        TreeNode lbstroot;
+        int lbstsize;
+	}
 
 	// Q1
 	private void preOrder(TreeNode root) {
@@ -195,7 +203,7 @@ public class BinaryTree {
 		}
 	}
 	
-	private void inOrderIterative(TreeNode root) {
+	private static void treeTraversalIterative(TreeNode root) {
 		if (root == null)
 			return;
 		
@@ -203,6 +211,10 @@ public class BinaryTree {
 		stack.push(new ITPair(root,0));
 		
 		ITPair top = null;
+		
+		String pre = "";
+		String in = "";
+		String post = "";
 
 		// traverse the tree
 		while (!stack.isEmpty()) {
@@ -210,25 +222,36 @@ public class BinaryTree {
 			
 			// If state is 0, push left
 			if(top.state == 0){
+				pre = pre + top.node.data + " ";
+				
 				if(top.node.left != null){
 					stack.push(new ITPair(top.node.left,0));
 				}
+				
 				top.state++;
 			}else if(top.state == 1){
+				// If state is 1, push right
+				in = in + top.node.data + " ";
+				
 				if(top.node.right != null){
 					stack.push(new ITPair(top.node.right,0));
 				}
-				System.out.print(top.node.data + " ");
+				
 				top.state++;
 			}else{
+				post = post + top.node.data + " ";
 				stack.pop();
 			}
 		}
+		
+		System.out.println(" Pre Order : " + pre);
+		System.out.println(" In Order : " + in);
+		System.out.println(" Post Order : " + post);
 	}
 
 	// Q4 :- Maximum Depth or Height of a Binary Tree
 	/*
-	 * Below code is diameter if counting nodes
+	 * Below code is for height if counting nodes
 	 * For edges, do following code changes for base cases
 	 * if (root == null) 								return -1
 	 * if (root.left == null && root.right == null) 	return 0;
@@ -305,8 +328,8 @@ public class BinaryTree {
 		Stack<Pair<TreeNode, Integer>> stack = new Stack<Pair<TreeNode, Integer>>();
 		
 		
-		 *  If using nodes as depth, root start with 1
-		 *  If using edges as depth, root start with 0
+		 //  If using nodes as depth, root start with 1
+		 //  If using edges as depth, root start with 0
 		 
 		stack.push(new Pair<TreeNode, Integer>(root, 1));
 
@@ -339,10 +362,10 @@ public class BinaryTree {
 		Queue<Pair<TreeNode, Integer>> queue = new LinkedList<Pair<TreeNode, Integer>>();
 		if (root == null) {
 			return 0;
-		} else {
-			// If counting nodes as depth, root start with 1
-			queue.add(new Pair<TreeNode, Integer>(root, 1));
-		}
+		} 
+		
+		// If counting nodes as depth, root start with 1
+		queue.add(new Pair<>(root, 1));
 
 		int current_depth = 0;
 		Pair<TreeNode, Integer> current;
@@ -355,15 +378,17 @@ public class BinaryTree {
 			
 			// Once we get the first leaf node, break and return current depth
 			if ((node.left == null) && (node.right == null)) {
-				break;
+				return current_depth;
 			}
+			
 			if (node.left != null) {
-				queue.add(new Pair<TreeNode, Integer>(node.left, current_depth + 1));
+				queue.add(new Pair<>(node.left, current_depth + 1));
 			}
 			if (node.right != null) {
-				queue.add(new Pair<TreeNode, Integer>(node.right, current_depth + 1));
+				queue.add(new Pair<>(node.right, current_depth + 1));
 			}
 		}
+		
 		return current_depth;
 	}
 	
@@ -405,10 +430,9 @@ public class BinaryTree {
 		 * If using nodes as depth, root start with 1 If using edges as depth,
 		 * root start with 0
 		 */
+		// For root
 		queue.offer(new NodePositionDepth(root, 1, 0));
 		queue.offer(null);
-		
-		// For root
 		
 		NodePositionDepth current;
 		TreeNode node;
@@ -440,9 +464,6 @@ public class BinaryTree {
 				}
 			}
 		}
-		
-		// For last level
-		//width = Math.max(width, max - min + 1);
 		
 		return width;
 	}
@@ -521,7 +542,7 @@ public class BinaryTree {
 
 		// Create a queue and add root to it
 		Queue<Pair<TreeNode, Integer>> queue = new LinkedList<Pair<TreeNode, Integer>>();
-		queue.offer(new Pair<TreeNode, Integer>(root, 0));
+		queue.offer(new Pair<>(root, 0));
 
 		Pair<TreeNode, Integer> current;
 		TreeNode node;
@@ -533,18 +554,18 @@ public class BinaryTree {
 			int current_hd = current.getValue();
 			node = current.getKey();
 			
+			// For top view, use level by level and set
 			if (!set.contains(current_hd)) {
 				set.add(current_hd);
 				topView.add(node.data);
 			}
 			
-			// For top view, use level by level and set
 			if (node.left != null) {
-				queue.offer(new Pair<TreeNode, Integer>(node.left, current_hd - 1));
+				queue.offer(new Pair<>(node.left, current_hd - 1));
 			}
 
 			if (node.right != null) {
-				queue.offer(new Pair<TreeNode, Integer>(node.right, current_hd + 1));
+				queue.offer(new Pair<>(node.right, current_hd + 1));
 			}
 		}
 
@@ -596,7 +617,7 @@ public class BinaryTree {
 
 		// Create a queue and add root to it
 		Queue<Pair<TreeNode, Integer>> queue = new LinkedList<Pair<TreeNode, Integer>>();
-		queue.offer(new Pair<TreeNode, Integer>(root, 0));
+		queue.offer(new Pair<>(root, 0));
 
 		Pair<TreeNode, Integer> current;
 		TreeNode node;
@@ -613,11 +634,11 @@ public class BinaryTree {
 			
 			// For bottom view, use level by level and map
 			if (node.left != null) {
-				queue.offer(new Pair<TreeNode, Integer>(node.left, current_hd - 1));
+				queue.offer(new Pair<>(node.left, current_hd - 1));
 			}
 
 			if (node.right != null) {
-				queue.offer(new Pair<TreeNode, Integer>(node.right, current_hd + 1));
+				queue.offer(new Pair<>(node.right, current_hd + 1));
 			}
 		}
 		
@@ -692,7 +713,7 @@ public class BinaryTree {
 
 		// Create a queue and add root to it
 		Queue<Pair<TreeNode, Integer>> queue = new LinkedList<Pair<TreeNode, Integer>>();
-		queue.offer(new Pair<TreeNode, Integer>(root, 0));
+		queue.offer(new Pair<>(root, 0));
 
 		Pair<TreeNode, Integer> current;
 		TreeNode node;
@@ -711,11 +732,11 @@ public class BinaryTree {
 			
 			// For left view, enqueue left and then right children of current node
 			if (node.left != null) {
-				queue.offer(new Pair<TreeNode, Integer>(node.left, current_depth + 1));
+				queue.offer(new Pair<>(node.left, current_depth + 1));
 			}
 
 			if (node.right != null) {
-				queue.offer(new Pair<TreeNode, Integer>(node.right, current_depth + 1));
+				queue.offer(new Pair<>(node.right, current_depth + 1));
 			}
 		}
 
@@ -773,7 +794,7 @@ public class BinaryTree {
 
 		// Create a queue and add root to it
 		Queue<Pair<TreeNode, Integer>> queue = new LinkedList<Pair<TreeNode, Integer>>();
-		queue.offer(new Pair<TreeNode, Integer>(root, 0));
+		queue.offer(new Pair<>(root, 0));
 
 		Pair<TreeNode, Integer> current;
 		TreeNode node;
@@ -794,11 +815,11 @@ public class BinaryTree {
 			 * For right view, enqueue right and then left children of current node
 			 */
 			if (node.right != null) {
-				queue.offer(new Pair<TreeNode, Integer>(node.right, current_depth + 1));
+				queue.offer(new Pair<>(node.right, current_depth + 1));
 			}
 			
 			if (node.left != null) {
-				queue.offer(new Pair<TreeNode, Integer>(node.left, current_depth + 1));
+				queue.offer(new Pair<>(node.left, current_depth + 1));
 			}
 		}
 
@@ -849,8 +870,8 @@ public class BinaryTree {
 
 			if (current == null) {
 				// System.out.println("");
-				levels.add(level);
-				level = new LinkedList<Integer>();
+				levels.add(new LinkedList<Integer>(level));
+				level.clear();
 
 				if (!queue.isEmpty())
 					queue.offer(null);
@@ -873,13 +894,14 @@ public class BinaryTree {
 	
 	// Q6.10
 	private List<List<Integer>> levelOrderBottomUp(TreeNode root) {
-		Queue<TreeNode> queue = new LinkedList<TreeNode>();
 		List<List<Integer>> wrapList = new LinkedList<List<Integer>>();
-
-		List<Integer> level = new LinkedList<Integer>();
-
+		
 		if (root == null)
 			return wrapList;
+		
+		List<Integer> level = new LinkedList<Integer>();
+
+		Queue<TreeNode> queue = new LinkedList<TreeNode>();
 
 		queue.offer(root);
 		queue.offer(null);
@@ -890,8 +912,8 @@ public class BinaryTree {
 			current = queue.poll();
 
 			if (current == null) {
-				wrapList.add(0, level);
-				level = new LinkedList<Integer>();
+				wrapList.add(0, new LinkedList<Integer>(level));
+				level.clear();
 
 				if (!queue.isEmpty())
 					queue.offer(null);
@@ -1151,8 +1173,8 @@ public class BinaryTree {
 			
 			//Add current level to the zigzag list
 			if(level.size() > 0){
-				zigzagLevels.add(level);
-				level = new LinkedList<Integer>(); // or level.clear();
+				zigzagLevels.add(new LinkedList<>(level));
+				level.clear();
 			}
 			
 			// Print nodes of current level from s2 and push nodes of next level to s1
@@ -1172,8 +1194,8 @@ public class BinaryTree {
 			
 			//Add current level to the zigzag list
 			if(level.size() > 0){
-				zigzagLevels.add(level);
-				level = new LinkedList<Integer>(); // or level.clear();
+				zigzagLevels.add(new LinkedList<>(level));
+				level.clear();
 			}
 		}
 		
@@ -1278,14 +1300,14 @@ public class BinaryTree {
 		 * constraints
 		 */
 		// Allow only distinct values
-		return (isBST(root.left, min, root.data) && isBST(root.right,
-				root.data, max));
+		return (isBST(root.left, min, root.data) && 
+				isBST(root.right, root.data, max));
 	}
 
 	public boolean isValidBST(TreeNode root) {
 		//return isBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
-		if (root == null) return true;
 		
+		if (root == null) return true;
 		return isBSTIter(root);
 	}
 	
@@ -1328,6 +1350,41 @@ public class BinaryTree {
 	    // if none of the nodes were invalid, return true
 	    // (at this point we have checked all nodes)
 	    return true;
+	}
+	
+	public static BSTPair isBST(TreeNode root){
+		if (root == null){
+			BSTPair bp = new BSTPair();
+			bp.isBST = true;
+			bp.min = Integer.MAX_VALUE;
+			bp.max = Integer.MIN_VALUE;
+			bp.lbstroot = null;
+			bp.lbstsize = 0;
+			return bp;
+		}
+		
+		BSTPair lp = isBST(root.left);
+		BSTPair rp = isBST(root.right);
+		
+		BSTPair mp = new BSTPair();
+		
+		mp.isBST = lp.isBST && rp.isBST &&
+					root.data >= lp.max && root.data <= rp.min;
+		mp.min = Math.min(root.data, Math.min(lp.min, rp.min));
+		mp.max = Math.max(root.data, Math.max(lp.max, rp.max));
+		
+		if(mp.isBST){
+			mp.lbstroot = root;
+			mp.lbstsize = lp.lbstsize + rp.lbstsize + 1;
+		}else if(lp.lbstsize > rp.lbstsize) {
+			mp.lbstroot = lp.lbstroot;
+			mp.lbstsize = lp.lbstsize;
+		}else{
+			mp.lbstroot = rp.lbstroot;
+			mp.lbstsize = rp.lbstsize;
+		}
+		
+		return mp;
 	}
 	
 	// depth-first traversal : Pre-order
@@ -1441,7 +1498,7 @@ public class BinaryTree {
 	 */
 	private boolean hasPathSum(TreeNode root, int sum) {
 		if (root == null)
-			return false;
+			return sum == 0;
 
 		if (root.left == null && root.right == null)
 			return sum == root.data;
@@ -1476,15 +1533,18 @@ public class BinaryTree {
 		path.add(root.data);
 		
 		int subsum = sum - root.data;
-
+		
+		// Recurse left
 		if (root.left != null) {
 			pathSum(root.left, subsum, path, result);
 		}
 
+		// Recurse right
 		if (root.right != null) {
 			pathSum(root.right, subsum, path, result);
 		}
 		
+		// Backtrack
 		path.remove(path.size() - 1);
 	}
 	
@@ -1495,22 +1555,24 @@ public class BinaryTree {
 		return result;
 	}
 
-	public int maxPathSumNodeToNode(TreeNode root, Counter result) {
+	int max;
+	public int helperPathSumNodeToNode(TreeNode root) {
 		if (root == null)
 			return 0;
 
-		int maxLeft = maxPathSumNodeToNode(root.left, result);
-		int maxRight = maxPathSumNodeToNode(root.right, result);
+		int maxLeft = helperPathSumNodeToNode(root.left);
+		int maxRight = helperPathSumNodeToNode(root.right);
 
 		// When the longest path doesn't pass through this node
 		int temp = Math.max(Math.max(maxLeft, maxRight) + root.data,	
 								root.data);		// If left and right yields -ve value
 
 		// When the longest path passes through this node
+		//int ans = Math.max(temp, maxLeft + maxRight + root.data);
 		int ans = Math.max(temp, maxLeft + maxRight + root.data);
 
 		// Update result
-		result.val = Math.max(result.val, ans);
+		max = Math.max(max, ans);
 
 		return temp;
 
@@ -1519,15 +1581,14 @@ public class BinaryTree {
 	public int maxPathSumNodeToNode(TreeNode root) {
 		if (root == null)
 			return 0;
-
-		Counter result = new Counter();
 		
-		maxPathSumNodeToNode(root, result);
+		max = Integer.MIN_VALUE;
+		helperPathSumNodeToNode(root);
 		
-		return result.val;
+		return max;
 	}
 	
-	public int maxPathSumLeafToLeaf(TreeNode root, Counter result) {
+	public int helperPathSumLeafToLeaf(TreeNode root) {
 		if (root == null)
 			return 0;
 		
@@ -1535,8 +1596,8 @@ public class BinaryTree {
 		if (root.left == null && root.right == null)
 			return root.data;
 
-		int maxLeft = maxPathSumLeafToLeaf(root.left, result);
-		int maxRight = maxPathSumLeafToLeaf(root.right, result);
+		int maxLeft = helperPathSumLeafToLeaf(root.left);
+		int maxRight = helperPathSumLeafToLeaf(root.right);
 
 		/*
 		 *  When the longest path doesn't pass through this node, 
@@ -1551,7 +1612,7 @@ public class BinaryTree {
 		int ans = maxLeft + maxRight + root.data;
 
 		// Update result
-		result.val = Math.max(result.val, ans);
+		max = Math.max(max, ans);
 
 		return temp;
 
@@ -1570,12 +1631,11 @@ public class BinaryTree {
 		if (root == null)
 			return 0;
 
-		Counter result = new Counter();
-		result.val = Integer.MIN_VALUE;
+		max = Integer.MIN_VALUE;
 		
-		maxPathSumLeafToLeaf(root, result);
+		helperPathSumLeafToLeaf(root);
 		
-		return result.val;
+		return max;
 	}
 
 	// Print all nodes having k leaves in subtree rooted with them
@@ -1643,16 +1703,20 @@ public class BinaryTree {
 	}
 	
 	// Double Tree
-	private void doubleTree(TreeNode root) {
+	private TreeNode doubleTree(TreeNode root) {
 		if (root == null)
-			return;
+			return null;
 
-		doubleTree(root.left);
-		doubleTree(root.right);
+		TreeNode left = doubleTree(root.left);
+		TreeNode right = doubleTree(root.right);
 
 		TreeNode newNode = new TreeNode(root.data);
-		newNode.left = root.left;
+		newNode.left = left;
+		newNode.right = right;
+		
 		root.left = newNode;
+		
+		return root;
 	}
 
 	// Mirror Image of a Tree
@@ -1874,64 +1938,6 @@ public class BinaryTree {
 					isSubtree(s.right, t));
 	}
 
-	private TreeNode bstFromSortedArray(int[] nums, int left, int right) {
-		// TODO Auto-generated method stub
-		if (left > right)
-			return null;
-
-		int mid = left + (right - left) / 2;
-
-		TreeNode root = new TreeNode(nums[mid]);
-		root.left = bstFromSortedArray(nums, left, mid - 1);
-		root.right = bstFromSortedArray(nums, mid + 1, right);
-
-		return root;
-	}
-
-	public TreeNode bstFromSortedArray(int[] nums) {
-		return bstFromSortedArray(nums, 0, nums.length - 1);
-	}
-
-	// Recursive function to build a BST from a preorder sequence
-	public static TreeNode bstFromPreorder(int[] preorder,
-			Counter arrIdx, int min, int max) {
-		if (arrIdx.val == preorder.length) {
-			return null;
-		}
-
-		// Return if next element of preorder traversal is not in the valid range
-		int val = preorder[arrIdx.val];
-		if (val < min || val > max) {
-			return null;
-		}
-
-		// Construct the root node and increment pIndex
-		TreeNode root = new TreeNode(val);
-		arrIdx.val++;
-
-		// Since all elements in the left sub-tree of a BST must be less
-		// than the value of root node, set range as [min, val-1] and recur
-		root.left = bstFromPreorder(preorder, arrIdx, min, val - 1);
-
-		// Since all elements in the right sub-tree of a BST must be greater
-		// than the value of root node, set range as [val+1..max] and recur
-		root.right = bstFromPreorder(preorder, arrIdx, val + 1, max);
-
-		return root;
-	}
-
-	// Build a BST from a preorder sequence
-	public static TreeNode bstFromPreorder(int[] preorder) {
-		// start from the root node (first element in preorder sequence)
-		// use AtomicInteger as Integer is passed by value in Java
-		Counter arrIdx = new Counter();
-		arrIdx.val = 0;
-
-		// set range of the root node as [Integer.MIN_VALUE, Integer.MAX_VALUE] and recurse
-		return bstFromPreorder(preorder, arrIdx, Integer.MIN_VALUE,
-				Integer.MAX_VALUE);
-	}
-
 	// Return k smallest nodes
 	private ArrayList<Integer> kSmallestNodes(TreeNode root, int k) {
 		ArrayList<Integer> result = new ArrayList<Integer>(k);
@@ -2081,6 +2087,7 @@ public class BinaryTree {
 	/**
 	 * @param root: a TreeNode, the root of the binary tree
 	 * @return: nothing
+	 * The "linked list" should be in the same order as a pre-order traversal of the binary tree
 	 */
 	public void flattenRecursively(TreeNode root) {
 		if (root == null)
@@ -2109,31 +2116,34 @@ public class BinaryTree {
 	}
 	
 	// Function to perform in-order traversal recursively 
-	void flattenSortedOrder(TreeNode root, LinkedListNode prev){ 
+	void flattenSortedOrder(TreeNode root, LinkedListNode ptr){ 
 	    // Base case 
 	    if (root == null) 
 	        return; 
 	    
-	    flattenSortedOrder(root.left, prev); 
+	    flattenSortedOrder(root.left, ptr); 
 	    
-	    LinkedListNode lNode = new LinkedListNode(root.left.data);
+	    LinkedListNode lNode = new LinkedListNode(root.data);
 	    
-	    prev.next = lNode; 
-	    prev = lNode;
+	    ptr.next = lNode; 
+	    ptr = lNode;
 	    
-	    flattenSortedOrder(root.right, prev); 
+	    flattenSortedOrder(root.right, ptr); 
 	}
 	
-	// Function to flatten binary tree using in-order traversal 
+	/*
+	 * Flatten BST to sorted list | Increasing order
+	 * Function to flatten binary tree using in-order traversal 
+	 */
 	LinkedListNode flattenSortedOrder(TreeNode root) {
 		// Dummy node
 		LinkedListNode dummy = new LinkedListNode(-1);
 
 		// Pointer to previous element
-		LinkedListNode prev = dummy;
+		LinkedListNode ptr = dummy;
 
 		// Calling in-order traversal
-		flattenSortedOrder(root, prev);
+		flattenSortedOrder(root, ptr);
 
 		return dummy.next;
 	}
@@ -2426,10 +2436,10 @@ public class BinaryTree {
 				.println("Inorder traversal of tree where node is sum of its children is : ");
 		bt.inOrder(root1);
 
-		bt.doubleTree(root1);
+		TreeNode rootDT = bt.doubleTree(root1);
 		System.out.println("");
 		System.out.println("Inorder traversal of double tree is : ");
-		bt.inOrder(root1);
+		bt.inOrder(rootDT);
 
 		/*
 		 * Create following Binary Tree 

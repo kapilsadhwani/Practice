@@ -77,8 +77,8 @@ public class CloneLinkedList {
 		}
 
 		// return the head reference of the clone list.
-		CloneLinkedList cloneListHead = new CloneLinkedList(map.get(this.head));
-		return cloneListHead;
+		CloneLinkedList cloneList = new CloneLinkedList(map.get(this.head));
+		return cloneList;
 	}
 
 	// Main method.

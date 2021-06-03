@@ -24,7 +24,7 @@ class QueueNode {
 
 public class MergeKSortedArrays {
 	public static int[] merge(Integer[][] arrays) {
-		PriorityQueue<QueueNode> queue = new PriorityQueue<QueueNode>(
+		PriorityQueue<QueueNode> queue = new PriorityQueue<>(
 				arrays.length, (a, b) -> a.value - b.value);
 
 		// Calculate result array size and insert first element from each array into Queue

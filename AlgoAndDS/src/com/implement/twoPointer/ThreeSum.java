@@ -45,7 +45,7 @@ public class ThreeSum {
     // Main to test the above function
     public static void main (String[] args){
     	ThreeSum ts = new ThreeSum();
-        int numbers[] = {1, 4, -5, 0, 8, -1, 2, 6, -10, 2, -4};
+        int numbers[] = {1, 4, 4, -5, 0, 8, -1, 2, 6, -1, -10};
         List<List<Integer>> threeeSumZero = ts.threeSum(numbers);
         
         System.out.println(threeeSumZero);

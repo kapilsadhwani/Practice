@@ -130,7 +130,7 @@ public class RotatedSortedArray {
 				} else {
 					low = mid + 1;
 				}
-			} else if (nums[low] > nums[mid]) { // Right is normally ordered
+			} else if (nums[mid] < nums[high]) { // Right is normally ordered
 				if (nums[mid] < target && target <= nums[high]) {
 					low = mid + 1; // Search Right
 				} else {

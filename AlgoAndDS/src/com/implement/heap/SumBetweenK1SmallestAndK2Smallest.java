@@ -1,10 +1,6 @@
 package com.implement.heap;
 
-import java.util.Arrays;
 import java.util.PriorityQueue;
-import java.util.Scanner;
-
-import com.implement.sort.SortUtils;
 
 public class SumBetweenK1SmallestAndK2Smallest {
 	public static int findkthSmallest(int[] nums, int k) {

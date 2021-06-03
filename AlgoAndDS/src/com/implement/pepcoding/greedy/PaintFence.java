@@ -13,6 +13,7 @@ public class PaintFence {
 		long diff = k * (k - 1);
 		long total = same + diff;
 
+		// Iteration starts with n = 3;
 		for (int i = 3; i <= n; i++) {
 			same = diff * 1;
 			diff = total * (k - 1);

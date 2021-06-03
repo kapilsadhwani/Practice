@@ -3,37 +3,39 @@ package com.implement.twoPointer;
 public class BackspaceCompare {
 	public static int process(char[] chars) {
 		int pos = -1;
-		
-		for(int i=0;i<chars.length;i++){
-			if(chars[i] != '#'){
+
+		for (int i = 0; i < chars.length; i++) {
+			if (chars[i] != '#') {
 				chars[++pos] = chars[i];
-			}else{
-				if(pos > -1){
+			} else {
+				if (pos > -1) {
 					pos--;
 				}
 			}
 		}
-		
+
 		return pos;
 	}
-	
+
 	public static boolean backspaceCompare(String S, String T) {
 		char[] sChars = S.toCharArray();
 		char[] tChars = T.toCharArray();
-		
+
 		int sPos = process(sChars);
 		int tPos = process(tChars);
-		
-		if(sPos == -1 && tPos == -1) return true;
-		
-		if(sPos != tPos) return false;
-		
-		for(int i=0; i<=sPos; i++){
-			if(sChars[i] != tChars[i]){
+
+		if (sPos == -1 && tPos == -1)
+			return true;
+
+		if (sPos != tPos)
+			return false;
+
+		for (int i = 0; i <= sPos; i++) {
+			if (sChars[i] != tChars[i]) {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 

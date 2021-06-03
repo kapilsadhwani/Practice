@@ -73,17 +73,45 @@ class Predecessor {
   
         // step 2 of the above algorithm 
         PNode p = node.parent; 
-        while (p != null && node == p.left) { 
+        while (p != null && p.left == node) { 
             node = p; 
             p = p.parent; 
         } 
         return p; 
-    } 
+    }
+    
+    static PNode predecessor;
+    static PNode successor;
+    static int state;
+    
+    // Populate in inorder way
+	static void InOrderPredecessorAndSuccessor(PNode root, PNode node) {
+		if (root.left != null) {
+			InOrderPredecessorAndSuccessor(root.left, node);
+		}
+
+		if (state == 0) {
+			if (root.data == node.data) {
+				state = 1;
+			} else {
+				predecessor = root;
+			}
+		} else if (state == 1) {
+			successor = root;
+			state = 2;
+		}
+
+		if (root.right != null) {
+			InOrderPredecessorAndSuccessor(root.right, node);
+		}
+	}
   
     /* Given a non-empty binary search tree, return the minimum data   
      value found in that tree. Note that the entire tree does not need 
      to be searched. */
-    PNode maxValue(PNode node) { 
+    PNode maxValue(PNode node) {
+    	if (node == null) return null;
+    	
         PNode current = node; 
   
         /* loop down to find the leftmost leaf */
@@ -92,6 +120,18 @@ class Predecessor {
         } 
         return current; 
     } 
+    
+    /*							20
+     * 						18		30
+     * 						 	    /  \
+     * 						      26   40   
+     * 							  / \
+     * 							22   28
+     * 							~
+     * 							|
+     * 						  temp
+     * 
+     */
   
     // Driver program to test above functions 
     public static void main(String[] args) { 
@@ -112,5 +152,25 @@ class Predecessor {
         } else { 
             System.out.println("Inorder predecessor does not exist"); 
         } 
+        
+        predecessor = null;
+        successor = null;
+        state = 0;
+        
+        InOrderPredecessorAndSuccessor(root, temp);
+        
+        if (predecessor != null) { 
+            System.out.println("Populated predecessor of " + temp.data +  
+                                                      " is " + predecessor.data); 
+        } else { 
+            System.out.println("Populated predecessor does not exist"); 
+        }
+        
+        if (predecessor != null) { 
+            System.out.println("Populated successor of " + temp.data +  
+                                                      " is " + successor.data); 
+        } else { 
+            System.out.println("Populated successor does not exist"); 
+        }
     } 
 }

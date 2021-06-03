@@ -107,6 +107,62 @@ public class CountPathFromTLtoBR {
 
 		return dp[0][0];
 	}
+	
+	public static int countValidDP(boolean[][] grid) {
+		int R = grid.length;
+		int C = grid[0].length;
+
+		int dp[][] = new int[R][C];
+
+		for (int row = R - 1; row >= 0; row--) {
+			for (int col = C - 1; col >= 0; col--) {
+				if(grid[row][col] == false){
+					continue;
+				}
+				
+				if (row == R - 1 && col == C - 1) {
+					dp[row][col] = 1;
+				} else if (row == R - 1) {
+					dp[row][col] = dp[row][col + 1];
+				} else if (col == C - 1) {
+					dp[row][col] = dp[row + 1][col];
+				} else {
+					int minRight = dp[row][col + 1];
+					int minDown = dp[row + 1][col];
+
+					dp[row][col] = minDown + minRight;
+				}
+			}
+		}
+
+		return dp[0][0];
+	}
+	
+	public static int countPathsDP(int[][] grid) {
+		int R = grid.length;
+		int C = grid[0].length;
+
+		int dp[][] = new int[R][C];
+
+		for (int row = R - 1; row >= 0; row--) {
+			for (int col = C - 1; col >= 0; col--) {
+				if (row == R - 1 && col == C - 1) {
+					dp[row][col] = 1;
+				} else if (row == R - 1) {
+					dp[row][col] = dp[row][col + 1];
+				} else if (col == C - 1) {
+					dp[row][col] = dp[row + 1][col];
+				} else {
+					int minRight = dp[row][col + 1];
+					int minDown = dp[row + 1][col];
+
+					dp[row][col] = minDown + minRight;
+				}
+			}
+		}
+
+		return dp[0][0];
+	}
 
 	public void print(int[][] grid,int row, int col,int[] result,int pos){
     	int n = grid.length;
@@ -181,6 +237,10 @@ public class CountPathFromTLtoBR {
         
         System.out.println("<====================================================>");
         System.out.println("Valid paths   : " + countValidPathsDP(grid));
+        
+        System.out.println("<====================================================>");
+        System.out.println(countPathsDP(arr));
+        System.out.println(countValidDP(grid));
         
     }
 }

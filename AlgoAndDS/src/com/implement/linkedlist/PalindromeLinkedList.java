@@ -119,11 +119,17 @@ public class PalindromeLinkedList {
 			fast = fast.next.next;
 		}
 
-		if(fast.next != null)
+		if(fast.next != null){
+			// Even number of elements
+			stack.push(slow.data);
 			slow = slow.next;
+		}else{
+			// Odd number of elements
+			slow = slow.next;
+		}
 
 		while (slow != null) {
-			int top = stack.pop().intValue();
+			int top = stack.pop();
 
 			if (top != slow.data) {
 				return false;

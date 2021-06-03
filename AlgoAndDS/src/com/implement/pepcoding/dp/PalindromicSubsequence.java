@@ -121,9 +121,9 @@ public class PalindromicSubsequence {
 			char ch = s.charAt(i);
 
 			if (map.containsKey(ch)) {
-				prev[i] = map.get(ch);
+				next[i] = map.get(ch);
 			} else {
-				prev[i] = -1;
+				next[i] = -1;
 			}
 
 			map.put(ch, i);

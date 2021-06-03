@@ -21,12 +21,12 @@ class LeftMostColumnWith1 {
 		int cols = dims.get(1);
 
 		int r = 0, c = cols - 1;
-		int p = -1;
+		int val = -1;
 
 		while (r < rows && c >= 0) {
-			p = get(nums, r, c);
+			val = get(nums, r, c);
 
-			if (p == 0)
+			if (val == 0)
 				r++;
 			else {
 				c--;

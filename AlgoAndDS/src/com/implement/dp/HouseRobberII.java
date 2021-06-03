@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class HouseRobberII {
 	public static int robMemo(int[] nums, int pos, int start, int[][] cache) {
-		if(pos <= 0 || (start == 1 && pos == 1)) return 0; // We can go till pos=2 (nums[pos-1])
+		if(pos <= start) return 0; // We can go till pos=2 (nums[pos-1])
 		
 		if(cache[start][pos] != -1) return cache[start][pos];
 		

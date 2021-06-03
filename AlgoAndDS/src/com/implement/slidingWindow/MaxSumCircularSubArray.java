@@ -1,25 +1,28 @@
 package com.implement.slidingWindow;
 
 class MaxSumCircularSubArray {	
-	private static int maxSubArraySum(int[] nums) {
-		int maxSum = Integer.MIN_VALUE, currentSum = 0;
+	private static int kadane(int nums[]) {
+		int maxSum = nums[0];
+		int currSum = nums[0];
 
-		for (int num : nums) {
-			currentSum = currentSum + num;
-			if (maxSum < currentSum) { // We found new max, adjust start and end accordingly
-				maxSum = currentSum;
+		for (int i = 1; i < nums.length; i++) {
+			if (currSum + nums[i] < nums[i]) {
+				currSum = nums[i];
+			} else {
+				currSum = currSum + nums[i];
 			}
-			if (currentSum < 0) {
-				currentSum = 0;
+
+			if (maxSum < currSum) {
+				maxSum = currSum;
 			}
 		}
-
 		return maxSum;
 	}
 
 	public static int maxSubarraySumCircular(int[] nums) {
 		// Step1: Find MaxSum using Kadane's Algorithm
-		int maxSum = maxSubArraySum(nums);
+		int maxSum = kadane(nums);
+		
 		
 		// Step2: Find Total Sum
 		int totalSum = 0;
@@ -29,19 +32,23 @@ class MaxSumCircularSubArray {
 		}
 		
 		// Step3: Find MinSum using Kadane's Algorithm
-		int minSum = -maxSubArraySum(nums);
+		int minSum = -kadane(nums);
 		
 		// If all elements in nums are negative, return MaxSum
 		if (minSum == totalSum) {
 			return maxSum;
 		}
 		
-		// Otherwise, return Max of Step1 and Total - Step3 
+		/*
+		 *  Otherwise, return Max of Step1 and Total - Step3
+		 *  MaxSum = TotalSum - MinSum 
+		 */
+		
 		return Math.max(maxSum, totalSum - minSum);
 	}
 
 	public static void main(String[] args) {
-		int[] nums = { 1, -2, 3, -2 };
+		int[] nums = { 1, -2, 3};
 		System.out.println(maxSubarraySumCircular(nums));
 
 		nums = new int[] { 5, -3, 5 };

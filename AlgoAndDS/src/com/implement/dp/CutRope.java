@@ -81,8 +81,8 @@ public class CutRope {
 	}
 	
 	static void getMaxScoreDPWithPath(int len, int[] score, int[] path){
-		score[1] = 1;
-		path[1] = 1;
+		score[1] = 1 == len ? 0 : 1;
+		path[1] = 1 == len ? 0 : 1;
 		
 		for(int l=2; l<=len; l++){
 			int bestScore = l == len ? 0 : l;	// Force a cut

@@ -60,7 +60,7 @@ public class IntegerArrayPermutation {
 		// TODO Auto-generated method stub
 
 		if (pos == n) {
-			result.add(new ArrayList<Integer>(perm));
+			result.add(new ArrayList<>(perm));
 			return;
 		}
 

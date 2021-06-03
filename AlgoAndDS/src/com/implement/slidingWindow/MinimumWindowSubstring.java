@@ -24,13 +24,10 @@ public class MinimumWindowSubstring {
 		int minLen = Integer.MAX_VALUE;
 
 		// sliding window left and right pointers
-		int i = 0, j = 0;
+		int i = 0;
 		
-		char ch;
-		int val;
-
-		while (j < s.length()) {
-			ch = s.charAt(j);
+		for (int j = 0; j < s.length(); j++) {
+			char ch = s.charAt(j);
 
 			if(targetMap.containsKey(ch)){
 				targetMap.put(ch, targetMap.get(ch) - 1);
@@ -43,7 +40,7 @@ public class MinimumWindowSubstring {
 						ch = s.charAt(i);
 						
 						if(targetMap.containsKey(ch)){
-							val = targetMap.get(ch);
+							int val = targetMap.get(ch);
 							
 							if(val == 0){
 								if(j - i + 1 < minLen){
@@ -53,17 +50,16 @@ public class MinimumWindowSubstring {
 								
 								// Since we are going to advance i (i.e left of window) by 1
 								countOfDistinctLetters++;
+								targetMap.put(ch, 1);
+							}else{
+								targetMap.put(ch, val + 1);
 							}
-							
-							targetMap.put(ch, val + 1);
 						}
 						
 						i++;
 					}	
 				}
 			}
-
-			j++;
 		}
 
 		return result;

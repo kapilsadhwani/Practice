@@ -1,9 +1,9 @@
 package com.implement.string;
 
-// A Java program to remove "b" and 
-// 'ac' from input String 
 import java.util.Arrays;
 
+//A Java program to remove "b" and 
+//'ac' from input String 
 class StringFilter {
 	static final int ONE = 1;
 	static final int TWO = 2;

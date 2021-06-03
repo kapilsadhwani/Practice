@@ -29,13 +29,45 @@ public class HouseRobber {
 		return robMemo(nums, n, cache);
 	}
 	
+	private static int robGapStrategy(int[] nums) {
+		int n = nums.length;
+		int[][] dp = new int[n][n];
+
+		for (int g = 0; g < dp.length; g++) {
+			// Traverse diagonally with loop ending in last column
+			for (int i = 0, j = g; j < dp.length; i++, j++) {
+				// Trivial case: Single element
+				if (g == 0) {
+					dp[i][j] = nums[i];
+				}
+				// Trivial case: 2 elements
+				else if (g == 1) {
+					dp[i][j] = Math.max(nums[i], nums[j]);
+				} else {
+					int val1 = nums[i]
+							+ Math.min(dp[i + 2][j], dp[i + 1][j - 1]);
+					int val2 = nums[j]
+							+ Math.min(dp[i + 1][j - 1], dp[i][j - 2]);
+
+					dp[i][j] = Math.max(val1, val2);
+				}
+			}
+		}
+
+		return dp[0][n - 1];
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int[] nums = {1,2,3,1};
-		System.out.println(robR(nums));
+		int[] nums = { 1, 2, 3, 1 };
 		
-		nums = new int[]{2,7,9,3,1};
 		System.out.println(robR(nums));
+		System.out.println(robGapStrategy(nums));
+
+		nums = new int[] { 2, 7, 9, 3, 1 };
+		
+		System.out.println(robR(nums));
+		System.out.println(robGapStrategy(nums));
 	}
 
 }

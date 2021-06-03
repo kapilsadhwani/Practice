@@ -42,7 +42,8 @@ public class SubstringByRecursion {
 	private static void permuteLetterCase(char[] input, int pos, char[] result,
 			int r_size, List<String> list) {
 		if (pos == input.length) {
-			list.add(getString(result, r_size));
+			list.add(String.valueOf(result, 0 ,r_size));
+			//list.add(getString(result, r_size));
 			return;
 		}
 

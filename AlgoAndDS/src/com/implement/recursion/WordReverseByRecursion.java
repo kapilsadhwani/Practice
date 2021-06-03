@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.TreeSet;
 
 // abcdef"123.;3.2.1"fed;cba
-// Never a foot too far, evenm.
+//    Never a    foot  too     far, evenm.
 
 public class WordReverseByRecursion {
 	private static void swap(char[] strArray,int left, int right) {
@@ -53,15 +53,15 @@ public class WordReverseByRecursion {
 	        
 	        if(start < 0) break;
 	        
-	        end = start;
+	        end = start + 1;
 	        
 	        while(start >= 0 && word.charAt(start) != ' ') start--;
 	        
 	        if(result.length() == 0){
-	        	result.append(word.substring(start+1, end+1));	// end points to a non-space character
+	        	result.append(word.substring(start+1, end));	// end points to a non-space character
 	        }else{
 	        	result.append(" ");
-	        	result.append(word.substring(start+1, end+1));
+	        	result.append(word.substring(start+1, end));
 	        }
         }
         

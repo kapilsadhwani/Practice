@@ -11,21 +11,21 @@ public class GenerateAbbreviations {
 				abbr = abbr + count;
 
 			result.add(abbr);
-		} else {
-			// Don't include letter, abbreviate i.e count++
-			solve(result, word, pos + 1, abbr, count + 1);
+			return;
+		} 
+		// Don't include letter, abbreviate i.e count++
+		solve(result, word, pos + 1, abbr, count + 1);
 
-			/*
-			 * Include letter If count > 0, add it before considering next
-			 * character
-			 */
-			if (count > 0)
-				abbr = abbr + count;
+		/*
+		 * Include letter If count > 0, add it before considering next character
+		 */
+		if (count > 0)
+			abbr = abbr + count;
 
-			abbr = abbr + word.charAt(pos);
+		abbr = abbr + word.charAt(pos);
 
-			solve(result, word, pos + 1, abbr, 0);
-		}
+		solve(result, word, pos + 1, abbr, 0);
+	
 	}
 
 	public List<String> generateAbbreviations(String word) {

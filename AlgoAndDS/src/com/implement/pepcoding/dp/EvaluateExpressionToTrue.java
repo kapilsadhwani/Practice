@@ -133,19 +133,19 @@ class EvaluateExpressionToTrue {
 						 * Right half = k + 1, j
 						 * Operator   = str2[k] 
 						 */
-						char op = str2.charAt(k);
+						char oprtr = str2.charAt(k);
 						int ltc = dpt[i][k];
 						int rtc = dpt[k + 1][j];
 						int lfc = dpf[i][k];
 						int rfc = dpf[k + 1][j];
 						
-						if(op == '&'){
+						if(oprtr == '&'){
 							dpt[i][j] = dpt[i][j] + 
 										ltc * rtc;
 							
 							dpf[i][j] = dpf[i][j] +
 										ltc * rfc + lfc * rtc + lfc * rfc;
-						}else if(op == '|'){
+						}else if(oprtr == '|'){
 							dpt[i][j] = dpt[i][j] +
 										ltc * rtc + ltc * rfc + lfc * rtc;
 							

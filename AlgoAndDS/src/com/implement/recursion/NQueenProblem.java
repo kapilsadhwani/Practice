@@ -80,13 +80,7 @@ public class NQueenProblem {
        feasible solutions.*/
     void solveNQ() { 
         int board[][] = new int[N][N]; 
-        
-        /*for (int i = 0; i < N; i++) { 
-            for (int j = 0; j < N; j++) {
-            	board[i][j] = 0;
-            }
-        }*/
-  
+
         if (!solveNQUtil(board, 0)){ 
             System.out.print("Solution does not exist"); 
         }else{

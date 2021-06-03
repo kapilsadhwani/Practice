@@ -10,7 +10,7 @@ public class PopularElement {
 		if (left == right)
 			return left;
 		int mid = (left + right) / 2;
-		return element <= nums[mid] ? findLeftMostIdx(nums, element, left, mid)
+		return element <= nums[mid] ? findLeftMostIdx(nums, element, left, mid - 1)
 				: findLeftMostIdx(nums, element, mid + 1, right);
 	}
 	
@@ -29,7 +29,7 @@ public class PopularElement {
                 new Comparator<Entry<Integer,Integer>>(){
                     @Override
                     public int compare(Entry<Integer, Integer> o1, Entry<Integer, Integer> o2) {
-                        return o1.getValue().compareTo(o2.getValue());
+                        return o1.getValue() - o2.getValue();
                     }
                 }).getKey();
 		

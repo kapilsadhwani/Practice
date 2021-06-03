@@ -38,7 +38,9 @@ public class OptimalBinarySearchTree {
 					*/
 					
 					// Approach 2: Using prefix sum
-					fs = psa[j] - (i == 0 ? 0 : psa[i - 1]);
+					//fs = psa[j] - (i == 0 ? 0 : psa[i - 1]);
+								// OR
+					fs = psa[j] - psa[i] + frequency[i];
 					
 					for(int k = i; k <=j ; k++){
 						/*

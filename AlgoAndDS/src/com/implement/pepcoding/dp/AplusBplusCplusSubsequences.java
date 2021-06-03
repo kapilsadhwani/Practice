@@ -10,17 +10,21 @@ package com.implement.pepcoding.dp;
 
 public class AplusBplusCplusSubsequences {
 	public static int countStrings(String str) {
-		int aCount = 0;
+		if(str == null || str.length() == 0 || str.charAt(0) != 'a'){
+			return 0;
+		}
+		
+		int aCount = 1;
 		int abCount = 0;
 		int abcCount = 0;
 
-		for (int i = 0; i < str.length(); i++) {
+		for (int i = 1; i < str.length(); i++) {
 			char ch = str.charAt(i);
 
 			if (ch == 'a') {
 				// Exclude this occurrence of 'a' + 
 				// Include this occurrence of 'a' with previous instances of 'a' strings + 
-				// Exclude previous instances of 'a' strings and use only this instance of 'a'
+				// Exclude previous instances of 'a' strings and use only this instance of 'a' to start a new sequence
 				aCount = aCount + aCount + 1;
 			} else if (ch == 'b') {
 				// Exclude this occurrence of 'b' + 
@@ -42,7 +46,7 @@ public class AplusBplusCplusSubsequences {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String str = "abcabc";
+		String str = "abcabcbbc";
 		
 		System.out.println(countStrings(str));
 	}

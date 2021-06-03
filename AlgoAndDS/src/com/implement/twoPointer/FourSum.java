@@ -11,45 +11,54 @@ public class FourSum {
      * @return : Find all unique quadruplets in the array which gives the sum of
      * zero.
      */
-    public List<ArrayList<Integer>> fourSum(int[] numbers, int target) {
-        List<ArrayList<Integer>> result = new ArrayList<>();
+	public List<ArrayList<Integer>> fourSum(int[] numbers, int target) {
+		List<ArrayList<Integer>> result = new ArrayList<>();
 
-        Arrays.sort(numbers);
+		Arrays.sort(numbers);
 
-        for (int i = 0; i < numbers.length - 3; i++) {
-            for (int j = i + 1; j < numbers.length - 2; j++) {
-                int left = j + 1;
-                int right = numbers.length - 1;
+		for (int i = 0; i < numbers.length - 3; i++) {
+			if (i > 0 && numbers[i] == numbers[i - 1]) continue;
+			
+			for (int j = i + 1; j < numbers.length - 2; j++) {
+				
+				int left = j + 1;
+				int right = numbers.length - 1;
 
-                while (left < right) {
-                    int sum = numbers[i] + numbers[j] + numbers[left] + numbers[right];
-                    if (sum == target) {
-                        ArrayList<Integer> tuple = new ArrayList<>();
-                        tuple.add(numbers[i]);
-                        tuple.add(numbers[j]);
-                        tuple.add(numbers[left]);
-                        tuple.add(numbers[right]);
-                        if (!result.contains(tuple)) {
-                            result.add(tuple);
-                        }
-                        left++;
-                        right--;
-                    } else if (sum < target) {
-                        left++;
-                    } else {
-                        right--;
-                    }
-                }
-            }
-        }
-        return result;
-    }
+				while (left < right) {
+					int sum = numbers[i] + numbers[j] + numbers[left] + numbers[right];
+					if (sum == target) {
+						ArrayList<Integer> tuple = new ArrayList<>();
+						tuple.add(numbers[i]);
+						tuple.add(numbers[j]);
+						tuple.add(numbers[left]);
+						tuple.add(numbers[right]);
+						if (!result.contains(tuple)) {
+							result.add(tuple);
+						}
+						
+						while (left < right && numbers[left] == numbers[left + 1])
+							left++;
+						while (left < right && numbers[right] == numbers[right - 1])
+							right--;
+						
+						left++;
+						right--;
+					} else if (sum < target) {
+						left++;
+					} else {
+						right--;
+					}
+				}
+			}
+		}
+		return result;
+	}
  
     // Main to test the above function
     public static void main (String[] args)
     {
     	FourSum ts = new FourSum();
-        int A[] = {1, 4, -5, 0, 8, -1, 2, 6, -10};
+        int A[] = {1, 4, 4, -5, 0, 8, -1, 2, 6, -1, -10};
         List<ArrayList<Integer>> threeeSumZero = ts.fourSum(A, 0);
         
         for(ArrayList<Integer> al : threeeSumZero)

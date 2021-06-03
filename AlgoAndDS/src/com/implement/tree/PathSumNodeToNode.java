@@ -11,11 +11,11 @@ class PathSumNodeToNode {
 		helper(root, sum);
 
 		if (root.left != null) {
-			pathSum(root.left, sum);
+			helper(root.left, sum);
 		}
 
 		if (root.right != null) {
-			pathSum(root.right, sum);
+			helper(root.right, sum);
 		}
 
 		return count;

@@ -111,7 +111,13 @@ class LIS_LongestIncreasingSubsequence {
 			if(rem.d == 1){
 				System.out.println(rem.psf);
 			}else{
-				for(int j = rem.i - 1; j >= 0; j--){
+				/*for(int j = rem.i - 1; j >= 0; j--){
+					if(dp[j] == rem.d - 1 && nums[j] <= rem.s){
+						queue.add(new Pair(j, nums[j], dp[j], nums[j] + " -> " + rem.psf));
+					}
+				}*/
+				
+				for(int j = 0; j < rem.i; j++){
 					if(dp[j] == rem.d - 1 && nums[j] <= rem.s){
 						queue.add(new Pair(j, nums[j], dp[j], nums[j] + " -> " + rem.psf));
 					}

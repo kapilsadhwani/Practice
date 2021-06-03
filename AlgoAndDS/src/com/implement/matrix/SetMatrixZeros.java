@@ -18,8 +18,7 @@ public class SetMatrixZeros {
 
 			// Since first cell for both first row and first column is the same
 			// i.e. matrix[0][0]
-			// We can use an additional variable for either the first
-			// row/column.
+			// We can use an additional variable for either the first row/column.
 			// For this solution we are using an additional variable for the
 			// first column and using matrix[0][0] for the first row.
 			if (matrix[i][0] == 0) {

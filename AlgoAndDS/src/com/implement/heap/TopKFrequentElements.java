@@ -17,7 +17,7 @@ public class TopKFrequentElements {
 
 		// init heap 'the less frequent element first'
 		/*
-		 * PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>(k+1, (n1,
+		 * PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>(k, (n1,
 		 * n2) -> map.get(n1) - map.get(n2));
 		 */
 

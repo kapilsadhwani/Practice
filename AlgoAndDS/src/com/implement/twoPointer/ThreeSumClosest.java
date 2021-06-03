@@ -26,10 +26,15 @@ public class ThreeSumClosest {
                 int sum = numbers[i] + numbers[left] + numbers[right];
                 if (Math.abs(sum - target) < min) {
                     min = Math.abs(sum - target);
-                    pair = new Pair<Integer, List<Integer>>(sum, 
+                    pair = new Pair<>(sum, 
                     		Arrays.asList(numbers[i], numbers[left], numbers[right]));
                 }
-
+                
+                while (left < right && numbers[left] == numbers[left + 1])
+					left++;
+				while (left < right && numbers[right] == numbers[right - 1])
+					right--;
+                
                 if (sum < target) {
                     left++;
                 } else {
@@ -42,31 +47,37 @@ public class ThreeSumClosest {
     
 	public int threeSumClosestSum(int[] nums, int target) {
 		int min = Integer.MAX_VALUE;
-        Pair<Integer, List<Integer>> pair = null;
+		Pair<Integer, List<Integer>> pair = null;
 
-        Arrays.sort(nums);
+		Arrays.sort(nums);
 
-        for (int i = 0; i < nums.length - 2; i++) {
-        	if (i > 0 && nums[i] == nums[i - 1]) continue;
-            int left = i + 1;
-            int right = nums.length - 1;
+		for (int i = 0; i < nums.length - 2; i++) {
+			if (i > 0 && nums[i] == nums[i - 1])
+				continue;
+			int left = i + 1;
+			int right = nums.length - 1;
 
-            while (left < right) {
-                int sum = nums[i] + nums[left] + nums[right];
-                if (Math.abs(sum - target) < min) {
-                    min = Math.abs(sum - target);
-                    pair = new Pair<Integer, List<Integer>>(sum, 
-                    		Arrays.asList(nums[i], nums[left], nums[right]));
-                }
+			while (left < right) {
+				int sum = nums[i] + nums[left] + nums[right];
+				if (Math.abs(sum - target) < min) {
+					min = Math.abs(sum - target);
+					pair = new Pair<Integer, List<Integer>>(sum, Arrays.asList(
+							nums[i], nums[left], nums[right]));
+				}
 
-                if (sum < target) {
-                    left++;
-                } else {
-                    right--;
-                }
-            }
-        }
-        return pair.getKey();
+				while (left < right && nums[left] == nums[left + 1])
+					left++;
+				while (left < right && nums[right] == nums[right - 1])
+					right--;
+
+				if (sum < target) {
+					left++;
+				} else {
+					right--;
+				}
+			}
+		}
+		return pair.getKey();
 	}
  
     // Main to test the above function

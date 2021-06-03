@@ -28,10 +28,7 @@ public class StringReverseIterative {
 		Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
         scan.close();
-        
-        //char result[] = new char[input.length()];
-        // reverse(input.toCharArray(),0, result, result.length-1);
-        
+
         char[] inputArr = input.toCharArray();
         
         reverseString(inputArr);

@@ -122,11 +122,9 @@ public class UnboundedKnapSack {
 				if (rem.j >= wt[rem.i - 1]) {
 					int inc = dp[rem.i][rem.j - wt[rem.i - 1]] + val[rem.i - 1];
 
-					if (rem.j >= wt[rem.i - 1]) {
-						if (dp[rem.i][rem.j] == inc) {
-							queue.add(new Pair(rem.i, rem.j - wt[rem.i - 1],
+					if (dp[rem.i][rem.j] == inc) {
+						queue.add(new Pair(rem.i, rem.j - wt[rem.i - 1],
 									(rem.i - 1) + " " + rem.psf));
-						}
 					}
 				}
 

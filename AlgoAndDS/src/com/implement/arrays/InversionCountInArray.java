@@ -30,7 +30,10 @@ public class InversionCountInArray {
 			temp[k++] = arr[right++];
 		}
 
-		SortUtils.copyArray(temp, arr, l, r);
+		//SortUtils.copyArray(temp, arr, l, r);
+		for (int i = l, j = 0; i <= r; i++) {
+			arr[i] = temp[j++];
+		}
 
 		return swaps;
 	}
@@ -76,5 +79,9 @@ public class InversionCountInArray {
 		int[] arr2 = { 5, 4, 3, 2, 1 };
 		System.out.println(Arrays.toString(arr2) + " - "
 				+ mergeSortAndCount(arr2, 0, arr2.length - 1, temp));
+		
+		int[] arr3 = { 5, 2, 6, 1 };
+		System.out.println(Arrays.toString(arr3) + " - "
+				+ mergeSortAndCount(arr3, 0, arr3.length - 1, temp));
 	}
 }

@@ -22,7 +22,7 @@ class MeetingRoomsII {
 
 		// Sort the intervals by start time
 		Arrays.sort(intervals, new Comparator<int[]>() {
-			public int compare(final int[] a, final int[] b) {
+			public int compare(int[] a, int[] b) {
 				return a[0] - b[0];
 			}
 		});
@@ -45,8 +45,7 @@ class MeetingRoomsII {
 			allocator.add(intervals[i][1]);
 		}
 
-		// The size of the heap tells us the minimum rooms required for all the
-		// meetings.
+		// The size of the heap tells us the minimum rooms required for all the meetings.
 		return allocator.size();
 	}
 

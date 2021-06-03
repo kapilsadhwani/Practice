@@ -54,7 +54,7 @@ public class MagicIndex {
 			return magicFastNoDup(array, mid + 1, end);
 		}
 	}
-
+	
 	static int magicIndexItr(int[] num) {
 		int low = 0, high = num.length - 1, mid;
 
@@ -69,6 +69,25 @@ public class MagicIndex {
 				high = mid - 1;
 			} else {
 				low = mid + 1;
+			}
+		}
+		return -1;
+	}
+
+	static int magicIndexItrWithDup(int[] num) {
+		int low = 0, high = num.length - 1, mid;
+
+		while (low <= high) {
+			mid = (low + high) / 2;
+			
+			if(num[mid] == mid) return mid;
+
+			// Check if element (mid+1) is minimum element. Consider
+			// the cases like {3, 4, 5, 1, 2}
+			if (num[mid] > mid){
+				high = Math.min(mid - 1, num[mid]);
+			} else {
+				low = Math.max(mid + 1,num[mid]);
 			}
 		}
 		return -1;

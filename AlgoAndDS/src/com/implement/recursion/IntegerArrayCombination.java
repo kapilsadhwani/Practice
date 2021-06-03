@@ -19,9 +19,10 @@ public class IntegerArrayCombination {
 		// select the element and recurse for others
 		selected.add(elem);
 		comboOfSizeK(n, k, elem + 1, selected, result);
-
-		// do not select the element
+		// Backtrack
 		selected.remove(selected.size() - 1);
+		
+		
 		comboOfSizeK(n, k, elem + 1, selected, result);
 	}
 

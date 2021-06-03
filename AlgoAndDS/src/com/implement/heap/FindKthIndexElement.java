@@ -26,7 +26,7 @@ public class FindKthIndexElement {
 		if(k > nums.length) return -1; 
 			
         PriorityQueue<Integer> maxheap = new PriorityQueue<Integer>(k,
-        										(n1, n2) -> (n2 - n1));
+        										(n1, n2) -> n2 - n1);
         
         for (int i = 0; i < k; i++) {
         	maxheap.offer(nums[i]);

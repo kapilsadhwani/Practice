@@ -1,78 +1,74 @@
 package com.implement.tree;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 class DistanceKFromTarget {
-    List<Integer> ans;
-    TreeNode target;
-    int K;
-    public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
-        ans = new LinkedList();
-        this.target = target;
-        this.K = K;
-        dfs(root);
-        return ans;
-    }
+    static List<Integer> ans;
+    static List<TreeNode> path;
 
-	public int dfs(TreeNode node) {
-		if (node == null)
-			return -1;
-
-		if (node == target) {
-			subtree_add(node, 0);
-			return 1;
+	// Path will contain ancestors of data including itself
+	static boolean find(TreeNode root, TreeNode node) {
+		if (root == null) {
+			return false;
 		}
 
-		int L = dfs(node.left);
-		int R = dfs(node.right);
-
-		// If target node is in left subtree of the root
-		if (L != -1) {
-			if (L == K) { // If target node is at Distance K from root node, add root
-				ans.add(node.data);
-			} else if (L < K) {
-				// parent of left is at a distance of L+1 from left, then find
-				// sibling on right at a distance (K - (L + 1)) from the parent
-				subtree_add(node.right, L + 1);
-			}
-			return L + 1;
+		if (root.data == node.data) {
+			path.add(root);
+			return true;
 		}
 
-		// If target node is in right subtree of the root
-		else if (R != -1) {
-			if (R == K) { // If target node is at Distance K from root node, add root
-				ans.add(node.data);
-			} else if (R < K) {
-				// left sibling is at distance R+1 from right
-				subtree_add(node.left, R + 1);
-			}
-			return R + 1;
-		} else {
-			return -1;
+		boolean found = find(root.left, node);
+
+		if (found == true) {
+			path.add(root);
+			return true;
 		}
 
+		found = find(root.right, node);
+
+		if (found == true) {
+			path.add(root);
+			return true;
+		}
+
+		return false;
 	}
 
-    // Find nodes at a distance (K - dist) from the root
-    public void subtree_add(TreeNode node, int dist) {
-        if (node == null) 
-        	return;
-        
-        if (dist == K){
-            ans.add(node.data);
-            return;
-        }
+	// Get Nodes at distance K from the root node
+	static void getKLevelsDown(TreeNode root, int k, TreeNode blocker) {
+		if (root == null || root == blocker) {
+			return;
+		}
 
-		if (node.left != null)
-			subtree_add(node.left, dist + 1);
+		if (k == 0) {
+			ans.add(root.data);
+		}
 
-		if (node.right != null)
-			subtree_add(node.right, dist + 1);
-    }
+		if (k > 0) {
+			getKLevelsDown(root.left, k - 1, blocker);
+			getKLevelsDown(root.right, k - 1, blocker);
+		}
+	}
+
+	// Get Nodes at distance K from the target node
+	public static void distanceKNodes(TreeNode root, TreeNode target, int k) {
+		path = new ArrayList<TreeNode>();
+		ans = new ArrayList<Integer>();
+
+		// Populate path with its ancestors
+		find(root, target);
+
+		/*
+		 *  Get path from itself and all of its eligible ancestors
+		 *  Don't forget to add a blocker node
+		 */
+		for (int i = 0; i < path.size(); i++) {
+			getKLevelsDown(path.get(i), k - i, i == 0 ? null : path.get(i - 1));
+		}
+	}
     
     public static void main(String[] args) {
-    	DistanceKFromTarget bt = new DistanceKFromTarget();
     	
     	/*
 		 * Constructed binary tree is
@@ -98,8 +94,10 @@ class DistanceKFromTarget {
         root.right.left = new TreeNode(0); 
         root.right.right = new TreeNode(8); 
         
-        int K = 2;
+        int k = 2;
         
-        System.out.println(bt.distanceK(root, root.left.right, K));
+        // Target is node 2
+        distanceKNodes(root, root.left.right, k);
+		System.out.println(ans);
 	}
 } 

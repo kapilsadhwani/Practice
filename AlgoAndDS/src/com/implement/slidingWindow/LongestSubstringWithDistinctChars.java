@@ -66,7 +66,7 @@ public class LongestSubstringWithDistinctChars {
 			// If this char of right was seen before, i.e its repeating
 			if (charFrequencyMap[rightChar] != -1) {
 				// +1 to ignore instance of right char last seen
-				start = Math.max(start, charFrequencyMap[rightChar] + 1);
+				start = Math.max(start, charFrequencyMap[rightChar]) + 1;
 			}
 
 			charFrequencyMap[rightChar] = end; // Save indices of chars last
@@ -154,6 +154,8 @@ public class LongestSubstringWithDistinctChars {
 			if (hashmap.size() == 3) {
 				// delete the leftmost character
 				int del_idx = Collections.min(hashmap.values());
+				
+				
 				char leftChar = s.charAt(del_idx);
 
 				hashmap.remove(leftChar);

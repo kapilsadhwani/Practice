@@ -21,6 +21,7 @@ class PowerOfTwo {
         
         long x = (long) n;
         
+        // X and its 1's complement
         return (x & (-x)) == x;
     }
 

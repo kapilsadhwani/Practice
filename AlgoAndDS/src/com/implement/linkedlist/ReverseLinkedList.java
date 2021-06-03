@@ -111,7 +111,7 @@ public class ReverseLinkedList {
 	
 	// Reverse a Linked List from position m to n
 	public static ListNode reverseBetween(ListNode head, int m, int n) {
-		if (head == null || m == n)
+		if (head == null || head.next == null || m == n)
 			return head;
 		
 		int count = 1;
@@ -341,8 +341,8 @@ public class ReverseLinkedList {
 		while (current != null) {
 			if(current.val % 2 == 1){
 				ptr.next = current;
-				current = current.next;
 				ptr = ptr.next;
+				current = current.next;
 			}else{
 				/*
 				 * We found start of the sublist to be reversed
@@ -367,8 +367,7 @@ public class ReverseLinkedList {
 				
 				// Attach the even list and adjust pointers
 				ptr.next = revList;
-				ptr = revStart;
-				
+				ptr = revStart;				
 				current = revNext;
 			}
 		}

@@ -28,7 +28,7 @@ class ScrambledString {
 
 		int n = s1.length();
 
-		for (int i = 1; i <= n - 1; i++) {
+		for (int i = 1; i < n; i++) {
 			// Case 1: Swapping
 			if (solve(s1.substring(0, i), s2.substring(n - i, n), map)
 					&& solve(s1.substring(i, n), s2.substring(0, n - i), map)) {
@@ -51,12 +51,11 @@ class ScrambledString {
 
 	// Driver Code
 	public static void main(String[] args) {
-		/*String S1 = "great";
+		String S1 = "great";
 		String S2 = "aterg";
-		*/
 		
-		String S1 = "coder";
-		String S2 = "dcroe";
+		/*String S1 = "coder";
+		String S2 = "dcroe";*/
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		

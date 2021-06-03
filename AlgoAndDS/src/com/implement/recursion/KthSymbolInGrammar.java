@@ -19,7 +19,7 @@ public class KthSymbolInGrammar {
 		if (rowIndex == 2)
 			return "01";
 
-		HashMap<Integer, String> cache = new HashMap<Integer, String>();
+		HashMap<Integer, String> cache = new HashMap<>();
 
 		cache.put(1, "0");
 		cache.put(2, "01");

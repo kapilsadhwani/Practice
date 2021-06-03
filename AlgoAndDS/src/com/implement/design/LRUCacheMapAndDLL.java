@@ -18,7 +18,7 @@ public class LRUCacheMapAndDLL {
 
 	DNode head; 
 	DNode tail;
-	HashMap<Integer,DNode> map;
+	static HashMap<Integer,DNode> map;
 	int capacity;
 	
 	public LRUCacheMapAndDLL(int capacity) {
@@ -53,7 +53,11 @@ public class LRUCacheMapAndDLL {
 		}
 	}*/
 
-	// Remove Node
+	/*
+	 *  Remove a given Node
+	 *  
+	 *  Adjust head, tail and node neighbor pointers
+	 */
 	private void removeNode(DNode node) {
 		if (node.prev != null) {
 			node.prev.next = node.next;
@@ -75,6 +79,7 @@ public class LRUCacheMapAndDLL {
 			return -1;
 		}
 
+		// Get node from Map
 		DNode node = map.get(key);
 
 		// Remove and move to the front
@@ -88,12 +93,14 @@ public class LRUCacheMapAndDLL {
 	public void put(int key, int value) {
 		// If already present, then remove it first. Note that we are going to add later
 		if (keyExists(key)) {
+			// Get node from Map
 			DNode node = map.get(key);
 			
 			// Remove and move to the front
 			removeNode(node);
 
 			node.value = value;
+			
 			insertAtHead(node);
 		} else {
 			// If cache size is full, remove the least recently used.
@@ -117,10 +124,14 @@ public class LRUCacheMapAndDLL {
 	}
 
 	// display contents of map
-	public void display() {
-		Iterator<Map.Entry<Integer, DNode>> itr = map.entrySet().iterator();
+	public static void display() {
+		/*Iterator<Map.Entry<Integer, DNode>> itr = map.entrySet().iterator();
 		while (itr.hasNext()) {
 			System.out.print(itr.next().getValue().value + " ");
+		}*/
+		
+		for(Map.Entry<Integer, DNode> e : map.entrySet()){
+			System.out.println(e.getKey() + ", " + e.getValue().value);
 		}
 	}
 
@@ -130,11 +141,14 @@ public class LRUCacheMapAndDLL {
 		cache.put(1, 1);
 		cache.put(2, 2);
 		System.out.println(cache.get(1));       // returns 1
-		cache.put(3, 3);    // evicts key 2
+		cache.put(3, 3);    					// evicts key 2
 		System.out.println(cache.get(2));       // returns -1 (not found)
-		cache.put(4, 4);    // evicts key 1
+		cache.put(4, 4);    					// evicts key 1
 		System.out.println(cache.get(1));       // returns -1 (not found)
 		System.out.println(cache.get(3));       // returns 3
 		System.out.println(cache.get(4));       // returns 4
+		
+		System.out.println("Map snapshot:");
+		display();
 	}
 }

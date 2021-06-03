@@ -209,7 +209,7 @@ public class PalindromePartitioning {
 						strg[i][j] = 1;
 					}
 				} else {
-					if (dp[i][j]) {
+					if (dp[i][j] == true) {
 						strg[i][j] = 0;
 					} else {
 						int min = Integer.MAX_VALUE;

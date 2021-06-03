@@ -53,12 +53,15 @@ public class StringPermutation {
 		
 		for(int i=pos; i<inputChar.length; i++){
 			
-			// If position is even and is not consonant; continue, pruning
-			if(pos%2 == 0){
-				if(isVowel(inputChar[i])) continue;
-			}else{
-				if(!isVowel(inputChar[i])) continue;
-			}
+			/*
+			 *  If position is even and is not consonant; continue, pruning OR
+			 *  If position is odd and is not vowel; continue, pruning
+			 */
+			
+			if(pos%2 == 0 && isVowel(inputChar[i])) continue;
+			
+			if(pos%2 == 1 && !isVowel(inputChar[i])) continue;
+
 			
 			swap(inputChar, pos, i);
 			printConsoVowelsSeq(inputChar, pos+1);
@@ -119,7 +122,7 @@ public class StringPermutation {
 	public static Set<String> getPermutations(String inputString) {
 		// base case
 		if (inputString.length() <= 1) {
-			HashSet <String> hs = new HashSet<String>();
+			HashSet <String> hs = new HashSet<>();
 			hs.add(inputString);
 			return hs;
 		}
@@ -133,11 +136,11 @@ public class StringPermutation {
 
 		// put the first char in all possible positions for each of the above permutations
 		Set<String> permutations = new HashSet<String>();
-		for (String permutationOfRemainingStr : permutationsOfRemainingStr) {
-			for (int pos = 0; pos <= permutationOfRemainingStr.length(); pos++) {
-				String permutation = permutationOfRemainingStr.substring(0, pos)
+		for (String s : permutationsOfRemainingStr) {
+			for (int pos = 0; pos <= s.length(); pos++) {
+				String permutation = s.substring(0, pos)
 						+ firstChar
-						+ permutationOfRemainingStr.substring(pos);
+						+ s.substring(pos);
 				permutations.add(permutation);
 			}
 		}

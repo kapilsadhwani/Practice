@@ -23,18 +23,21 @@ public class DecodeWays {
 		dp[0] = 1;		// Trivial case
 
 		for (int i = 1; i < dp.length; i++) {
+			char ch1 = s.charAt(i - 1);
+			char ch2 = s.charAt(i);
+			
 			// case 00
-			if (s.charAt(i - 1) == '0' && s.charAt(i) == '0') {
+			if (ch1 == '0' && ch2 == '0') {
 				dp[i] = 0;
 			} 
 			// case 05
-			else if (s.charAt(i - 1) == '0' && s.charAt(i) != '0') {
+			else if (ch1 == '0' && ch2 != '0') {
 				dp[i] = dp[i - 1];
 			} 
 			// case 20, 50
-			else if (s.charAt(i - 1) != '0' && s.charAt(i) == '0') {
+			else if (ch1 != '0' && ch2 == '0') {
 				// case 20
-				if (s.charAt(i - 1) == '1' || s.charAt(i - 1) == '2') {
+				if (ch1 == '1' || ch1 == '2') {
 					dp[i] = i >= 2 ? dp[i - 2] : 1;
 				} else {
 					// case 50

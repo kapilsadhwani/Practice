@@ -1,5 +1,6 @@
 package com.implement.dp;
 
+
 /* Dynamic Programming Java implementation of LCS problem */
 public class LCSS_LongestCommonSubstring {
 	/* Returns length of LCS for X[0..n-1], Y[0..m-1] */
@@ -32,20 +33,20 @@ public class LCSS_LongestCommonSubstring {
 	/* Print the LCS for X[0..m-1], Y[0..n-1] */
 	static void print(char[] X, char[] Y, int n, int m) {
 		int L[][] = iterativeLCSS(X, Y, n, m);
-		int lpssLength = 0;
+		int lcssLength = 0;
 		int r = 0;
 		
 		for (int i = 1; i < n + 1; i++) {
 			for (int j = 1; j < m + 1; j++) {
-				if(L[i][j] > lpssLength){
-					lpssLength = L[i][j];
+				if(L[i][j] > lcssLength){
+					lcssLength = L[i][j];
 					r = i;				
 				}
 			}
 		}
 
 		// Following code is used to print LCS
-		char[] lcss = new char[lpssLength];
+		char[] lcss = new char[lcssLength];
 		int index = lcss.length;
 		
 		int strXPtr = r; 

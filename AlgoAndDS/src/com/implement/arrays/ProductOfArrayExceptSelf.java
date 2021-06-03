@@ -66,8 +66,7 @@ public class ProductOfArrayExceptSelf {
 			// answer[i - 1] already contains the product of elements to the
 			// left of 'i - 1'
 			// Simply multiplying it with nums[i - 1] would give the product of
-			// all
-			// elements to the left of index 'i'
+			// all elements to the left of index 'i'
 			answer[i] = nums[i - 1] * answer[i - 1];
 		}
 

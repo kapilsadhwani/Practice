@@ -1,8 +1,6 @@
 package com.implement.mergeIntervals;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -12,16 +10,20 @@ public class TaskScheduler {
 		for (char c : tasks)
 			map[c - 'A']++;
 		
-		PriorityQueue<Integer> queue = new PriorityQueue<>(26,
-				Collections.reverseOrder());
+		// Map Heap
+		/*PriorityQueue<Integer> queue = new PriorityQueue<>(26,
+				Collections.reverseOrder());*/
 		
-		for (int f : map) {
-			if (f > 0)
-				queue.add(f);
+		PriorityQueue<Integer> queue = new PriorityQueue<>(26,
+				(a,b) -> b - a);
+		
+		for (int num : map) {
+			if (num > 0)
+				queue.add(num);
 		}
 		
 		int totalTime = 0;
-		List<Integer> temp = new ArrayList<>();
+		List<Integer> temp = new LinkedList<>();
 		
 		while (!queue.isEmpty()) {
 			// Do this after every interval of n
@@ -38,13 +40,13 @@ public class TaskScheduler {
 				}
 				
 				totalTime++;
-				
+				cooling++;
+
 				if (queue.isEmpty() && temp.size() == 0)
 					break;
-				
-				cooling++;
 			}
 			
+			// Add executed tasks back in the queue
 			for (int l : temp){
 				queue.add(l);
 			}

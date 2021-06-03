@@ -108,14 +108,14 @@ public class CoinChange {
 		
 		// If there is a single coin and C is divisible by coins[0] 
 		// then (C / coins[0]) else INT_MAX - 1 (Second Row)
-		for (int j = 1; j < C + 1; j++) {
+		/*for (int j = 1; j < C + 1; j++) {
 			if(j % coins[0] == 0)
 				t[1][j] = j / coins[0];
 			else
 				t[1][j] = Integer.MAX_VALUE - 1;
-		}
+		}*/
 
-		for (int i = 2; i < n + 1; i++) {
+		for (int i = 1; i < n + 1; i++) {
 			for (int j = 1; j < C + 1; j++) {
 				if (coins[i - 1] <= j) {
 					t[i][j] = Math.min(1 + t[i][j - coins[i - 1]], // Include this item
@@ -139,6 +139,7 @@ public class CoinChange {
             for (int coin : coins)
                 if (c >= coin)
                     min = Math.min(min, 1 + minCoins[c - coin]);
+            
             minCoins[c] = min;
         }
 

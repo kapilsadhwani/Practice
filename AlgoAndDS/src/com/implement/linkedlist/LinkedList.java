@@ -310,6 +310,9 @@ public class LinkedList {
 		}
 
 		// get the middle of the list
+		/*
+		 * If there are two middle nodes, get the first middle node.
+		 */
 		Node middle = getMiddle(head);
 		Node nextofmiddle = middle.next;
 
@@ -346,7 +349,8 @@ public class LinkedList {
 			count++;
 		}
 		
-		if(count < k) return null;	// As count starts with 0-->k i.e 1st node-->null, if k>lengthOfList
+		// As count starts with 0-->k i.e 1st node-->null, if k>lengthOfList
+		if(count < k) return null;	
 
 		return trailingNode;
 	}
@@ -446,11 +450,14 @@ public class LinkedList {
 
 		Node temp; // keeping it so that last node would be eligible for garbage collection
 
-		while (head.data == val) { // Remove if head is the element with given value
+		while (head != null && head.data == val) { // Remove if head is the element with given value
 			temp = head;
 			head = head.next;
 			temp.next = null;
 		}
+		
+		if (head == null)
+			return head;
 		
 		Node previous = head;
 		Node current = head.next;
@@ -552,12 +559,14 @@ public class LinkedList {
 
 		System.out.println("Cycle found !!!");
 
-		// Calculate the length of cycle. Fast=Slow to begin with
-		int lengthOfCycle = 0;
-		do {
+		// Calculate the length of cycle.
+		// Count all nodes until Slow == Fast again
+		int lengthOfCycle = 1;
+		slow = slow.next;
+		while (slow != fast) {
 			slow = slow.next;
 			lengthOfCycle++;
-		} while (slow != fast); // Count all nodes until Fast == Slow again
+		} 
 
 		// Find the start of the cycle
 		slow = head;
@@ -621,6 +630,10 @@ public class LinkedList {
 		/*
 		 * while (current != null){ count++; current = current.next; }
 		 */
+		
+		if(headA == null || headB == null){
+			return null;
+		}
 
 		Node tailA = getTail(headA);
 		Node tailB = getTail(headB);
@@ -832,6 +845,9 @@ public class LinkedList {
 	public static Node getTail(Node head) {
 		Node current = head;
 
+		if (head == null || head.next == null)
+			return head;
+		
 		while (current.next != null) {
 			current = current.next;
 		}

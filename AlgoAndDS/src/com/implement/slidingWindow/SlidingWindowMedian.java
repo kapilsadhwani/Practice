@@ -74,7 +74,7 @@ class SlidingWindowMedian {
 			/*
 			 * Shrink the window & calculate the median, k starts from 0
 			 */
-			if (end + 1 >= k) {
+			if (end - start + 1 >= k) {
 				result[start] = findMedian();
 				
 				// remove the start number as we move forward the next window size

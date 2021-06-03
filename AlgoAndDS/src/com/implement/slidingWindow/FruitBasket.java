@@ -13,9 +13,8 @@ public class FruitBasket {
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 		
 		int start = 0;
-		int end = 0;
 		
-		while(end < tree.length){
+		for(int end = 0; end < tree.length; end++){
 			// Store index of last seen fruit of that type as a value
 			if(map.size() <= 2){
 				map.put(tree[end], end);
@@ -28,19 +27,19 @@ public class FruitBasket {
 				 *  As indices are overwritten, we cannot simply use start to remove element outside 
 				 *  of sliding window and hence we need a min index from the Map
 				 */
-				int min = tree.length;	//or tree.length;
+				int min = tree.length;
 				
 				for(int value: map.values()){
 					min = Math.min(min, value);
 				}
 				
-				start = min + 1;
+				// Slide window
 				map.remove(tree[min]);
+				start = min + 1;
 			}
 			
 			max = Math.max(max, end - start + 1);
-			
-			end++;
+
 		}
 		
 		return max;

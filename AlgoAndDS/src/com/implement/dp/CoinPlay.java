@@ -71,6 +71,21 @@ public class CoinPlay {
 
 		return t[n][A];
 	}
+	
+	// Unique combinations
+	static long makeChangeUniqueCombo(int[] coins, int A) {
+		long[] dp = new long[A + 1];
+		dp[0] = 1;
+		
+		for(int coin : coins){
+			for (int amt = coin; amt < dp.length; amt++) {
+				dp[amt] = dp[amt] + dp[amt - coin];
+			}
+			
+		}
+
+		return dp[A];
+	}
 
 	// Permutation i.e. Combinations with duplicates allowed - like 2,1,1 is different from 1,1,2
 	static long makeChange(int[] coins, int A) {
@@ -96,6 +111,7 @@ public class CoinPlay {
 		for (int i = 1; i <= 100; ++i)
 			System.out.println(i + " IK: " + makeChange(coins, i)
 					+ " AV - Memo: " + makeChangeAV(coins, i)
-					+ " AV - Iter: " + makeChangeTopDownAV(coins, i));
+					+ " AV - Iter: " + makeChangeTopDownAV(coins, i)
+					+ " Unique Combo - Iter: " + makeChangeUniqueCombo(coins, i));
 	}
 }

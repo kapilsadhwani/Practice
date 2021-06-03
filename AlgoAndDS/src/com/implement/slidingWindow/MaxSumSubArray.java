@@ -6,47 +6,6 @@ package com.implement.slidingWindow;
  */
 
 class MaxSumSubArray {
-	private static int maxSubArraySum(int[] a, int size) {
-		int maxSum = Integer.MIN_VALUE, currentSum = 0;
-		int max_start = 0, max_end = 0, current_start = 0;
-
-		for (int i = 0; i < size; i++) {
-			currentSum = currentSum + a[i];
-			if (maxSum < currentSum) { // We found new max, adjust start and end accordingly
-				maxSum = currentSum;
-				max_start = current_start;
-				max_end = i;
-			}
-			if (currentSum < 0) { // Start with new "start" index, as Sum is -ve
-				currentSum = 0;
-				current_start = i + 1;
-			}
-		}
-
-		System.out.println("Maximum contiguous sum is " + maxSum);
-		System.out.println("Starting index " + max_start);
-		System.out.println("Ending index " + max_end);
-
-		return maxSum;
-	}
-	
-	private static int maxSubArraySumSizeK(int[] a, int size, int k) {
-		int maxSum = Integer.MIN_VALUE, currentSum = 0;
-		int windowStart = 0;
-
-		for (int windowEnd = 0; windowEnd < size; windowEnd++) {
-			currentSum = currentSum + a[windowEnd];
-			if(windowEnd - windowStart + 1 == k){	// i.e window size = k
-				maxSum = Math.max(maxSum, currentSum);
-				currentSum = currentSum - a[windowStart];
-				
-				windowStart++;
-			}
-		}
-
-		return maxSum;
-	}
-
 	static int maxSubArraySum(int nums[]) {
 		int maxSum = nums[0];
 		int currSum = nums[0];
@@ -73,20 +32,92 @@ class MaxSumSubArray {
 		System.out.println("Ending index " + maxEnd);
 		return maxSum;
 	}
+	
+	private static int maxSubArraySumSizeK(int[] a, int size, int k) {
+		int maxSum = Integer.MIN_VALUE, currentSum = 0;
+		int windowStart = 0;
+
+		for (int windowEnd = 0; windowEnd < size; windowEnd++) {
+			currentSum = currentSum + a[windowEnd];
+			if(windowEnd - windowStart + 1 == k){	// i.e window size = k
+				maxSum = Math.max(maxSum, currentSum);
+				currentSum = currentSum - a[windowStart];
+				
+				windowStart++;
+			}
+		}
+
+		return maxSum;
+	}
+	
+	private static int maxSubArraySumSizeAtLeastK(int[] a, int size, int k) {
+		int ans = Integer.MIN_VALUE;
+		int maxSum[] = new int[size];
+		
+		int currSum = a[0];
+		maxSum[0] = currSum;
+		
+		for (int i = 1; i < size; i++) {
+			if(currSum + a[i] < a[i]){
+				currSum = a[i];
+			}else{
+				currSum = currSum + a[i];
+			}
+			
+			maxSum[i] = currSum;
+		}
+		
+		int windowStart = 0;
+		int exactK = 0;
+
+		for (int windowEnd = 0; windowEnd < size; windowEnd++) {
+			exactK = exactK + a[windowEnd];
+			
+			if(windowEnd - windowStart + 1 == k){
+				// Result size = k
+				if(exactK > ans){
+					ans = exactK;
+				}
+				
+				// Result size > k
+				if(windowStart > 0){			// windowEnd >= k
+					if(exactK + maxSum[windowStart - 1] > ans){
+						ans = exactK + maxSum[windowStart - 1];
+					}
+				}
+				
+				// Slide window
+				exactK = exactK - a[windowStart];
+				
+				windowStart++;
+			}
+		}
+
+		return ans;
+	}
 
 	public static void main(String[] args) {
 		int[] a = { -8, -7, -1, -3, -2 };
-		maxSubArraySum(a, a.length);
 		maxSubArraySum(a);
 
 		int[] arr1 = { 8, -1, -3, 4, -1, 2, 1, -5, 4 };
-		maxSubArraySum(arr1, arr1.length);
+		int k = 3;
+
 		maxSubArraySum(arr1);
-		System.out.println("Max Sum of Window Size:3 is " + maxSubArraySumSizeK(arr1, arr1.length, 3));
+		System.out.println("Max Sum of Window Size:3 is " + maxSubArraySumSizeK(arr1, arr1.length, k));
 		
-		int[] arr2 = { 4, 2, 1, 7, 8, 1, 2, 8, 1, 0};
-		maxSubArraySum(arr2, arr2.length);
+		int[] arr2 = { 4, 2, 1, 7, 8, 1, 2, 8, 1, 0 };
 		maxSubArraySum(arr2);
-		System.out.println("Max Sum of Window Size:3 is " + maxSubArraySumSizeK(arr2, arr2.length, 3));
+		System.out.println("Max Sum of Window Size:3 is " + maxSubArraySumSizeK(arr2, arr2.length, k));
+		
+		System.out.println(" ================================================ ");
+		System.out.println(" Maximum Sub Array Sum with at least size K ");
+		System.out.println(" ================================================ ");
+		
+		System.out.println();
+		
+		int[] arr3 = { 2, 3, 1, -7, 6, -5, -4, 4, 3, 3, 2, -9, -5, 6, 1, 2, 1, 4 };
+		k = 4;
+		System.out.println(maxSubArraySumSizeAtLeastK(arr3, arr3.length, k));
 	}
 }
