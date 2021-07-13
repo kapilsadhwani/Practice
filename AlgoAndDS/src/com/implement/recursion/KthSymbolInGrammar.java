@@ -49,8 +49,9 @@ public class KthSymbolInGrammar {
 	}
 
 	public static int kthGrammar(int N, int K) {
-		if (N == 1 && K == 1)
-			return 0;
+		if (N == 1){
+			return K == 1 ? 0 : -1;
+		}
 
 		int result;
 		int currLength = (int) Math.pow(2, N - 1);

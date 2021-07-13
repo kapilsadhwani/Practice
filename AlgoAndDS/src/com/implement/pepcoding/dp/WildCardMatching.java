@@ -10,19 +10,15 @@ public class WildCardMatching {
 
         //replace multiple * with one *
         //e.g a**b***c --> a*b*c
-        int patternIndex = 0;
-        boolean isFirst = true;
-        for ( int i = 0 ; i < pattern.length; i++) {
-            if (pattern[i] == '*') {
-            	if(isFirst){
-            		pattern[patternIndex++] = pattern[i];
-            		isFirst = false;
-            	}
-            } else {
-                pattern[patternIndex++] = pattern[i];
-                isFirst = true;
-            }
-        }
+        
+		int patternIndex = 1;
+		for (int i = 1; i < pattern.length; i++) {
+			if (pattern[i] == '*' && pattern[i] == pattern[i - 1]) {
+				continue;
+			}
+
+			pattern[patternIndex++] = pattern[i];
+		}
 
         // Dim1 = pattern; Dim2 = string
         boolean dp[][] = new boolean[patternIndex + 1][str.length + 1];
@@ -67,14 +63,14 @@ public class WildCardMatching {
     public static void main(String args[]) {
         WildCardMatching wcm = new WildCardMatching();
         String str = "xaylmz";
-        String p = "x?y*z";
+        String p = "*****x****?y*z";
         
         System.out.println("Is Match (" + str + ", " + p + ") ? --> "
         		+ "Is Match: " + wcm.isMatch(str, p));
         
         System.out.println("================================================================");
         
-        str = "";
+        /*str = "";
         p = "?";
         
         System.out.println("Is Match (" + str + ", " + p + ") ? --> "
@@ -94,6 +90,6 @@ public class WildCardMatching {
         p = "ba*b?*";
         
         System.out.println("Is Match (" + str + ", " + p + ") ? --> "
-        		+ "Is Match: " + wcm.isMatch(str, p));
+        		+ "Is Match: " + wcm.isMatch(str, p));*/
     }
 }

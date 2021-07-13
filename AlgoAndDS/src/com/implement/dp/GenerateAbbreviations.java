@@ -18,6 +18,7 @@ public class GenerateAbbreviations {
 
 		/*
 		 * Include letter If count > 0, add it before considering next character
+		 * Reset count to 0
 		 */
 		if (count > 0)
 			abbr = abbr + count;

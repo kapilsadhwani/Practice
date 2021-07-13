@@ -39,7 +39,7 @@ public class SubstringByRecursion {
 		return sb.toString();
 	}
 
-	private static void permuteLetterCase(char[] input, int pos, char[] result,
+	private static void permuteLetterSpace(char[] input, int pos, char[] result,
 			int r_size, List<String> list) {
 		if (pos == input.length) {
 			list.add(String.valueOf(result, 0 ,r_size));
@@ -51,7 +51,7 @@ public class SubstringByRecursion {
 		 * Do not add space
 		 */
 		result[r_size] = input[pos];
-		permuteLetterCase(input, pos + 1, result, r_size + 1, list);
+		permuteLetterSpace(input, pos + 1, result, r_size + 1, list);
 
 		/*
 		 * Add space
@@ -59,17 +59,17 @@ public class SubstringByRecursion {
 		if (pos > 0) {
 			result[r_size] = '_';
 			result[r_size + 1] = input[pos];
-			permuteLetterCase(input, pos + 1, result, r_size + 2, list);
+			permuteLetterSpace(input, pos + 1, result, r_size + 2, list);
 		}
 	}
 
-	private static List<String> letterCasePermutation(String input) {
+	private static List<String> letterSpacePermutation(String input) {
 		char[] inputChar = input.toCharArray();
 		char[] result = new char[inputChar.length * 2 - 1];
 
 		List<String> list = new ArrayList<String>();
 
-		permuteLetterCase(inputChar, 0, result, 0, list);
+		permuteLetterSpace(inputChar, 0, result, 0, list);
 
 		return list;
 
@@ -89,7 +89,7 @@ public class SubstringByRecursion {
 
 		substring(inputChar, 0, result, 0);
 
-		List<String> list = letterCasePermutation(input);
+		List<String> list = letterSpacePermutation(input);
 		System.out.println(list);
 	}
 

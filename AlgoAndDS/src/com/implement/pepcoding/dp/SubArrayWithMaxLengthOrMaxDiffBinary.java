@@ -30,6 +30,7 @@ public class SubArrayWithMaxLengthOrMaxDiffBinary {
 					int j = map.get(count);
 					maxlen = Math.max(maxlen, i - j);
 				} else {
+					// Update only if not present already
 					map.put(count, i);
 				}
 			}
