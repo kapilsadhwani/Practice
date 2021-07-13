@@ -55,6 +55,7 @@ public class DistinctTransformations {
 					dp[i][j] = 1;
 				} else if (i == 0) {
 					// Trivial case: First Row, i.e. Source is empty
+					// as only delete operation is allowed
 					dp[i][j] = 0;
 				} else if (j == 0) {
 					// Trivial case: First Column, i.e. Target is empty
