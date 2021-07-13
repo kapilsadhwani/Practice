@@ -3,7 +3,7 @@ package com.implement.pepcoding.dp;
 import java.util.HashMap;
 import java.util.Map;
 
-//Java program to count number of Subsequences of type a+b+c+
+//Count of distinct and non-empty subsequences of the given string
 
 public class CountDistinctSubsequences {
 	public static long countStrings(String str) {
